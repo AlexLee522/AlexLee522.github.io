@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CTF,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="周末打了ctftime上的比赛，记录一下 webCookie Monster这题很无聊，cookie处flag直接解MD5，得到两个字符，抓包set-cookie处的flag解MD5得到两个字符，拼起来是pctf，将set-cookie处的flag发回去得到新的MD5，继续解MD5直到得到flag即可提供一个很好用的解MD5的网站：https://www.somd5.com/ Game of Fa">
+<meta name="keywords" content="CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pragyan CTF writeup">
+<meta property="og:url" content="http://yoursite.com/2019/03/01/pragyan/index.html">
+<meta property="og:site_name" content="Moyu&#39;s blog">
+<meta property="og:description" content="周末打了ctftime上的比赛，记录一下 webCookie Monster这题很无聊，cookie处flag直接解MD5，得到两个字符，抓包set-cookie处的flag解MD5得到两个字符，拼起来是pctf，将set-cookie处的flag发回去得到新的MD5，继续解MD5直到得到flag即可提供一个很好用的解MD5的网站：https://www.somd5.com/ Game of Fa">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/pragyan/cookie.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/pragyan/result-1.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/pragyan/php.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/pragyan/zip.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/pragyan/flag.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/pragyan/head.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/pragyan/idat.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/pragyan/you_cant_see_me.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/pragyan/usb.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/pragyan/crack.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/pragyan/pdf.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/pragyan/decode.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/pragyan/openssl.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/pragyan/findout.PNG">
+<meta property="og:updated_time" content="2019-07-07T03:46:17.336Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pragyan CTF writeup">
+<meta name="twitter:description" content="周末打了ctftime上的比赛，记录一下 webCookie Monster这题很无聊，cookie处flag直接解MD5，得到两个字符，抓包set-cookie处的flag解MD5得到两个字符，拼起来是pctf，将set-cookie处的flag发回去得到新的MD5，继续解MD5直到得到flag即可提供一个很好用的解MD5的网站：https://www.somd5.com/ Game of Fa">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/01/pragyan/cookie.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/01/pragyan/">
+
+
+
+
+
+  <title>Pragyan CTF writeup | Moyu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Moyu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/01/pragyan/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/wlp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moyu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Pragyan CTF writeup</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-01T08:00:00+08:00">
+                2019-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2.3k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>周末打了ctftime上的比赛，记录一下</p>
+<h1 id="web"><a href="#web" class="headerlink" title="web"></a>web</h1><h2 id="Cookie-Monster"><a href="#Cookie-Monster" class="headerlink" title="Cookie Monster"></a>Cookie Monster</h2><p>这题很无聊，cookie处flag直接解MD5，得到两个字符，抓包set-cookie处的flag解MD5得到两个字符，拼起来是pctf，将set-cookie处的flag发回去得到新的MD5，继续解MD5直到得到flag即可<br><img src="cookie.PNG" alt="cookie"><br>提供一个很好用的解MD5的网站：<a href https: www.somd5.com "">https://www.somd5.com/</a></p>
+<h2 id="Game-of-Faces"><a href="#Game-of-Faces" class="headerlink" title="Game of Faces"></a>Game of Faces</h2><p>看一下源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css&quot;</span><br><span class="line">        integrity=&quot;sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T&quot; crossorigin=&quot;anonymous&quot;&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;index.css&quot;&gt;</span><br><span class="line">    &lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;row&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;col-lg-4&quot; id=&quot;item1&quot;&gt;</span><br><span class="line">            &lt;div class=&quot;container&quot;&gt;</span><br><span class="line">                &lt;div class=&quot;form_img&quot;&gt;\t &lt;form action=&apos;#&apos; method=&quot;GET&quot; target=&quot;resultFrame&quot;&gt; Upload Your Profile Picture</span><br><span class="line">                        : &lt;input type=&quot;file&quot; name=&quot;profile_pic&quot;&gt; &lt;input type=&quot;submit&quot; value=&quot;Upload Image&quot;</span><br><span class="line">                            name=&quot;submit&quot;&gt; &lt;/form&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;col-lg-4&quot; id=&quot;item2&quot;&gt; &lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;col-lg-4&quot; id=&quot;item3&quot;&gt; &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/javascript&quot; src=&quot;index.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;div class=&quot;row&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;col-lg-12&quot;&gt; &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>发现有一个GET方法，参数是<code>profile_pic</code>，随便提交点东西，得到一串base64<br><img src="result-1.PNG" alt="result-1"><br>解码得到<code>The_scroll_says=the_night_kingVSvalyrian.txt</code>，访问即可得到flag<br>ps:这题纯脑洞，pure sh*t</p>
+<h2 id="Mandatory-PHP"><a href="#Mandatory-PHP" class="headerlink" title="Mandatory PHP"></a>Mandatory PHP</h2><p>题目给出了源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="keyword">include</span> <span class="string">'flag.php'</span>;</span><br><span class="line">highlight_file(<span class="string">'index.php'</span>);</span><br><span class="line">$a = $_GET[<span class="string">"val1"</span>];</span><br><span class="line">$b = $_GET[<span class="string">"val2"</span>];</span><br><span class="line">$c = $_GET[<span class="string">"val3"</span>];</span><br><span class="line">$d = $_GET[<span class="string">"val4"</span>];</span><br><span class="line"><span class="keyword">if</span> (preg_match(<span class="string">'/[^A-Za-z]/'</span>, $a)) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'oh my gawd...'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$a = hash(<span class="string">"sha256"</span>, $a);</span><br><span class="line">$a = (log10($a ** (<span class="number">0.5</span>))) ** <span class="number">2</span>;</span><br><span class="line"><span class="keyword">if</span> ($c &gt; <span class="number">0</span> &amp;&amp; $d &gt; <span class="number">0</span> &amp;&amp; $d &gt; $c &amp;&amp; $a == $c * $c + $d * $d) &#123;</span><br><span class="line">    $s1 = <span class="string">"true"</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"Bye..."</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ($s1 === <span class="string">"true"</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> $flag1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt;= <span class="number">10</span>; $i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> ($b == urldecode($b)) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">'duck'</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $b = urldecode($b);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> ($b === <span class="string">"WoAHh!"</span>) &#123;</span><br><span class="line">    $s2 = <span class="string">"true"</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'oops..'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ($s2 === <span class="string">"true"</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> $flag2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">die</span>(<span class="string">'end...'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>可以分析出需要提交四个参数，且满足<code>$a == $c * $c + $d * $d</code><br>当val1传入字母时，经过<code>hash(&quot;sha256&quot;,$a)</code>和<code>(log10($a**(0.5)))**2</code>后会得到<code>INF</code><br><code>$a == $c * $c + $d * $d</code>里是<code>==</code>，经过尝试，发现特别大的数==INF会返回true<br><img src="php.PNG" alt="php"><br>所以可以构造如下payload绕过第一步判断<br><code>val1=a&amp;val2=b&amp;val3=8e99999999999999999999999999999999999999999&amp;val4=9e99999999999999999999999999999999999999999</code><br>得到前半段flag<code>pctf{b3_c4r3fu1_duck</code><br>再看后半段，发现只需要满足val2经过10次urldecode后等于<code>WoAHh!</code>即可</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$b = <span class="string">"WoAHh!"</span>;</span><br><span class="line"><span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt;= <span class="number">10</span>; $i++) &#123;$b = urlencode($b);&#125;</span><br><span class="line"><span class="keyword">echo</span> $b;</span><br></pre></td></tr></table></figure>
+
+<p>得到结果为<code>WoAHh%25252525252525252521</code>，将四个参数提交就可以得到flag<br><code>pctf{b3_c4r3fu1_w1th_pHp_f31145}</code></p>
+<h1 id="Forensics"><a href="#Forensics" class="headerlink" title="Forensics"></a>Forensics</h1><h2 id="welcome"><a href="#welcome" class="headerlink" title="welcome"></a>welcome</h2><p>首先得到一张图片，用foremost看一下，得到一个zip<br><img src="zip.PNG" alt="zip"><br>打开发现是一个加密的zip和secret.bmp，用010editor可以打开secret.bmp发现一串base64<br><code>dGhlIHBhc3N3b3JkIGlzOiBoMzExMF90aDNyMyE==</code>，解码后得到<code>the password is: h3110_th3r3!</code><br>打开加密的zip文件可以看到一张图片，用stegsolve打开，切换通道可以看到flag<br><img src="flag.PNG" alt="flag"></p>
+<h2 id="Magic-PNGs"><a href="#Magic-PNGs" class="headerlink" title="Magic PNGs"></a>Magic PNGs</h2><p>题目给了一张图片和一个加密的zip文件，无法直接查看图片，用010editor打开后发现文件头有问题<br><img src="head.PNG" alt="head"><br>改成正确的文件头<code>89 50 4E 47 0D 0A 1A 0A</code>，保存后发现还是打不开，再看IDAT数据块，发现有问题<br><img src="idat.PNG" alt="idat"><br>改成正确的IDAT<code>49 44 41 54</code>，保存后就可以打开了<br><img src="you_cant_see_me.png" alt="you_cant_see_me"><br>根据提示将得到的<code>h4CK3RM4n</code>根据提示MD5就可以得到压缩包密码了，解开得到flag <code>pctf{y0u_s33_m33_n0w!}</code></p>
+<h2 id="Late-PR"><a href="#Late-PR" class="headerlink" title="Late PR"></a>Late PR</h2><p>给了一个特别大的文件，尝试用<code>strings DELTAFORCE-PC-20190308-204453.raw | grep pctf</code>找一下，结果直接出来了？？？<br><code>flag: pctf{Late_submissions_can_be_good}</code><br>下载3小时，做题3分钟？只能说这题pure sh*t</p>
+<h2 id="Save-Earth"><a href="#Save-Earth" class="headerlink" title="Save Earth"></a>Save Earth</h2><p>用wireshark打开发现是usb流量，尝试用tshark分离一下<br><code>tshark -r SaveEarth.pcap -T fields -e usb.capdata &gt; usbdata.txt</code><br>得到了一组8字节的流量<br><img src="usb.PNG" alt="usb"><br>尝试用<a href https: github.com wangyihang usbkeyboarddatahacker"">王一航师傅的脚本</a>解一下，失败<br>这题真的服气，看了别人的writeup发现第二个字节提取出来<code>24241214424144414444214442144422</code><br>然后转成摩斯电码<code>-.-. - ..-. ... ....- ...- ...--.</code>，解码后<code>CTFS4V3</code><br>这脑洞我服了，只能说pure sh*t +1</p>
+<h2 id="Slow-Realization"><a href="#Slow-Realization" class="headerlink" title="Slow Realization"></a>Slow Realization</h2><p>题目给了一个加密的pdf文件和一张图片，尝试用kali下的pdfcrack爆破一下，得到了密码<br><img src="crack.PNG" alt="crack"><br>解开pdf就得到了flag<code>pctf{y0u_h34rd_m3_r1ght}</code></p>
+<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="EXORcism"><a href="#EXORcism" class="headerlink" title="EXORcism"></a>EXORcism</h2><p>题目给了一个只有01的txt，看起来非常熟悉，推测是二维码的01，用脚本试试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># version = python 3.6</span><br><span class="line">from PIL import Image</span><br><span class="line"></span><br><span class="line">#去掉换行</span><br><span class="line">e = open(&quot;encoded.txt&quot;, &quot;r&quot;)</span><br><span class="line">n = open(&quot;new.txt&quot;, &quot;w&quot;)</span><br><span class="line">r = e.read()</span><br><span class="line">r = r.replace(&quot;\n&quot;,&quot;&quot;)</span><br><span class="line">n.write(r)</span><br><span class="line">e.close()</span><br><span class="line">n.close()</span><br><span class="line"></span><br><span class="line">#将01转成图片</span><br><span class="line">img = Image.new(&apos;1&apos;, (100,100))</span><br><span class="line">d = img.load()</span><br><span class="line">f = open(&quot;new.txt&quot;,&quot;r&quot;)</span><br><span class="line">data = f.read()</span><br><span class="line">for n, i in enumerate(data):    </span><br><span class="line">    d[(n % 100, n/100)] = int(i)*255</span><br><span class="line">    f = open(&apos;out.png&apos;, &apos;wb&apos;)</span><br><span class="line">    img.save(f)</span><br></pre></td></tr></table></figure>
+
+<p>得到的二维码扫描出一串<code>160f15011d1b095339595138535f135613595e1a</code><br>根据题目猜测是异或，将flag作为key进行尝试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s = bytes.fromhex(&apos;160f15011d1b095339595138535f135613595e1a&apos;).decode(&quot;utf-8&quot;)</span><br><span class="line">key = &quot;flag&quot;</span><br><span class="line">decode = &quot;&quot;.join(chr(ord(c1) ^ ord(c2)) for (c1, c2) in zip(s, key))</span><br><span class="line">print(decode)</span><br></pre></td></tr></table></figure>
+
+<p>得到了<code>pctf</code>，将key换成<code>flagflagflagflagflagflag</code>就可以得到flag<code>pctf{wh4_50_53r1u5?}</code></p>
+<h1 id="Cryptography"><a href="#Cryptography" class="headerlink" title="Cryptography"></a>Cryptography</h1><h2 id="Spoiler"><a href="#Spoiler" class="headerlink" title="Spoiler"></a>Spoiler</h2><p>题目给了一个pdf文件，里面有一行意义不明的字符串，这里有个脑洞，把文件下载下来会在pdf文件后边看到一串字符<br><img src="pdf.PNG" alt="pdf"><br>尝试解码<br><img src="decode.PNG" alt="decode"><br>尝试将两个字符串异或一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s = &quot;jonsnowisdragonbybirth&quot;</span><br><span class="line">key = bytes.fromhex(&apos;3a2c3a35152538272c2d213e332e3c25383030373a15&apos;).decode(&quot;utf-8&quot;)</span><br><span class="line">decode = &quot;&quot;.join(chr(ord(c1)^ord(c2)) for (c1,c2) in zip(s,key))</span><br><span class="line">print(decode)</span><br></pre></td></tr></table></figure>
+
+<p>解得flag<code>PCTF{JON_IS_TARGARYEN}</code></p>
+<h2 id="easy-RSA"><a href="#easy-RSA" class="headerlink" title="easy RSA"></a>easy RSA</h2><p>看到题目里的e非常大，想到RSA wiener attack，找个<a href https: github.com pablocelayes rsa-wiener-attack"">脚本</a>试一下<br>解出了私钥d<code>12978409760901509356642421072925801006324287746872153539187221529835976408177</code><br>然后常规RSA解密即可得到flag<code>pctf{Sup3r_st4nd4rd_W31n3r_4tt4ck}</code></p>
+<h2 id="Help-Rabin"><a href="#Help-Rabin" class="headerlink" title="Help Rabin"></a>Help Rabin</h2><p>题目给了三个文件，一个加密代码，一个公钥文件，以及密文文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">import random</span><br><span class="line">def nextPrime(prim): </span><br><span class="line">    if isPrime(prim):    </span><br><span class="line">        return prim  </span><br><span class="line">    else: </span><br><span class="line">        return nextPrime(prim+1)</span><br><span class="line"></span><br><span class="line">p = getPrime(512)</span><br><span class="line">q = nextPrime(p+1)</span><br><span class="line"></span><br><span class="line">while p%4 != 3 or q%4 !=3:   </span><br><span class="line">    p = getPrime(512)    </span><br><span class="line">    q = nextPrime(p+1)</span><br><span class="line">    n = p*q</span><br><span class="line"></span><br><span class="line">m = open(&apos;secret.txt&apos;).read()</span><br><span class="line">m = bytes_to_long(m)</span><br><span class="line">m = m**e</span><br><span class="line">c = (m*m)%n</span><br><span class="line">c = long_to_bytes(c)</span><br><span class="line">c = c.encode(&apos;hex&apos;)</span><br><span class="line">cipherfile = open(&apos;ciphertext.txt&apos;,&apos;w&apos;)</span><br><span class="line">cipherfile.write(c)</span><br></pre></td></tr></table></figure>
+
+<p>分析加密代码可以知道，p和q是两个连续的素数，密文为<code>m^(2*e) mod n</code>，此时我们并不知道n和e<br>根据题目的Rabin和代码生成p和q的方式，推测是Rabin密码体制，而Rabin密码体制是对RSA的修正，可以尝试用openssl来读取公钥<br><img src="openssl.PNG" alt="openssl"><br>发现e等于1，证明确实是Rabin密码体制<br>将公钥的16进制转换成10进制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">print(int(&apos;&apos;&apos;61:5b:e0:98:72:7a:e6:10:de:9c:10:48:19:f3:a1: </span><br><span class="line">   f7:cc:5b:31:44:81:0b:38:d4:f4:d5:1b:be:11:d9:   </span><br><span class="line">   ca:20:f2:87:ee:d0:23:6b:ce:d1:fe:44:3a:33:5a:    </span><br><span class="line">   2f:33:c7:a8:ac:68:f0:9f:c5:f3:8b:fe:37:4a:92:    </span><br><span class="line">   07:d3:07:3d:40:2c:7a:65:a3:0b:60:f7:5b:10:e4:    </span><br><span class="line">   3a:29:67:30:aa:22:d3:25:27:f7:20:3e:c9:be:cc:    </span><br><span class="line">   6a:7a:0d:d7:0a:5c:e3:d1:d5:f2:a8:db:98:68:e8:    </span><br><span class="line">   a4:53:4e:ef:70:5f:2c:6a:83:26:c8:8a:53:6b:82:    </span><br><span class="line">   7c:88:bc:00:05:22:7a:c9&apos;&apos;&apos;.replace(&quot; &quot;,&quot;&quot;).replace(&quot;\n&quot;,&quot;&quot;).replace(&quot;:&quot;,&quot;&quot;),16))</span><br></pre></td></tr></table></figure>
+
+<p>得到公钥n为<code>68367741643352408657735068643514841659753216083862769094847066695306696933618090026602354837201210914348646470450259642887798188510482019698636160200778870456236361521880907328722252080005877088416283896813311117096542977573101128888124000494645965045855288082328139311932783360168599377647677632122110245577</code><br>脚本解密，<a href="https://github.com/rsa-ctf/write-ups/tree/master/2019/pragyanctf/crypto/help_rabin" target="_blank" rel="noopener">感谢大佬的分享</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">import gmpy2</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line"></span><br><span class="line">#openssl rsa -noout -text -inform PEM -in publickey.pem -pubin</span><br><span class="line">n = 68367741643352408657735068643514841659753216083862769094847066695306696933618090026602354837201210914348646470450259642887798188510482019698636160200778870456236361521880907328722252080005877088416283896813311117096542977573101128888124000494645965045855288082328139311932783360168599377647677632122110245577</span><br><span class="line">sq,b = gmpy2.iroot(n,2)</span><br><span class="line">while n%sq != 0:</span><br><span class="line">    sq += 1</span><br><span class="line">p = sq</span><br><span class="line">q = n / sq</span><br><span class="line"></span><br><span class="line">with open(&quot;ciphertext.txt&quot;) as f:</span><br><span class="line">    ct = f.read()</span><br><span class="line">ct = ct.decode(&apos;hex&apos;)</span><br><span class="line">ct = bytes_to_long(ct)</span><br><span class="line"></span><br><span class="line">q = int(q)</span><br><span class="line">p = int(p)</span><br><span class="line">assert(p * q == n)</span><br><span class="line"></span><br><span class="line">mp = pow(ct, (p+1)/4, p)</span><br><span class="line">mq = pow(ct, (q+1)/4, q)</span><br><span class="line"></span><br><span class="line">from rsasim.gcd_utils import xgcd</span><br><span class="line">g, yp, yq = xgcd(p, q)</span><br><span class="line"></span><br><span class="line">r = (yp*p*mq + yq*q*mp) % n</span><br><span class="line">mr = n - r</span><br><span class="line">s = (yp*p*mq - yq*q*mp) % n</span><br><span class="line">ms = n - s</span><br><span class="line">for num in [r,mr,s,ms]:</span><br><span class="line">    print(long_to_bytes(num))</span><br></pre></td></tr></table></figure>
+
+<p>其中一组得到<code>Hey Rabin, would you like to be the front end to my back end? Here is your flag: pctf{R4b1n_1s_th3_cut3st}</code></p>
+<h2 id="Decode-This"><a href="#Decode-This" class="headerlink" title="Decode This"></a>Decode This</h2><p>题目给了加密代码和密文，首先分析一下加密代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">file = open(<span class="string">"secret.txt"</span>,<span class="string">"r"</span>)</span><br><span class="line">secret = file.read()</span><br><span class="line"></span><br><span class="line">flag = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> secret:</span><br><span class="line">    <span class="keyword">if</span> i.isalpha():</span><br><span class="line">        flag += i</span><br><span class="line">l = len(flag)</span><br><span class="line"></span><br><span class="line">key = [[int(random.random()*<span class="number">10000</span>) <span class="keyword">for</span> e <span class="keyword">in</span> range(<span class="number">2</span>)] <span class="keyword">for</span> e <span class="keyword">in</span> range(<span class="number">2</span>)]</span><br><span class="line"></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line">ciphertext = <span class="string">""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> i &lt;= (l<span class="number">-2</span>):</span><br><span class="line">    x = ord(flag[i]) - <span class="number">97</span></span><br><span class="line">    y = ord(flag[i+<span class="number">1</span>]) - <span class="number">97</span></span><br><span class="line">    z = (x*key[<span class="number">0</span>][<span class="number">0</span>] + y*key[<span class="number">0</span>][<span class="number">1</span>])%<span class="number">26</span> + <span class="number">97</span></span><br><span class="line">    w = (x*key[<span class="number">1</span>][<span class="number">0</span>] + y*key[<span class="number">1</span>][<span class="number">1</span>])%<span class="number">26</span> + <span class="number">97</span></span><br><span class="line">    ciphertext = ciphertext + chr(z) + chr(w)</span><br><span class="line">    i = i+<span class="number">2</span></span><br><span class="line"></span><br><span class="line">cipherfile = open(<span class="string">'ciphertext.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line">cipherfile.write(ciphertext)</span><br></pre></td></tr></table></figure>
+
+<p>根据代码我们可以知道flag都是小写字母，key是一个2x2的数组且无法爆破，密文是两个两个一组的，明文里边有pctf，应该是二维hill密码的已知明文攻击<br>由于我们不知道pctf的位置，所以只能选择爆破，这里选择用sagemath<br>脚本来<a 2019 href https: github.com rsa-ctf write-ups tree master pragyanctf crypto decode_this"">Kaushik S Kalmady</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env sage -python</span><br><span class="line"></span><br><span class="line">import binascii</span><br><span class="line">from sage.all import *</span><br><span class="line"></span><br><span class="line">R = IntegerModRing(26)</span><br><span class="line"></span><br><span class="line">def solve(inputs, res):</span><br><span class="line">	M = Matrix(R, inputs)</span><br><span class="line">	b = vector(R, res)</span><br><span class="line">	return M.solve_right(b)</span><br><span class="line"></span><br><span class="line">def verifyflag(c, key):</span><br><span class="line">	#print &quot;Verifying&quot;</span><br><span class="line">	i = 0</span><br><span class="line">	l = len(c)</span><br><span class="line">	ans = &quot;&quot;</span><br><span class="line">	while i &lt;= (l - 2):</span><br><span class="line">		z = ord(c[i]) - 97</span><br><span class="line">		w = ord(c[i+1]) - 97</span><br><span class="line"></span><br><span class="line">		res = [z, w]</span><br><span class="line">		try:</span><br><span class="line">			c1, c2 = solve(key, res)</span><br><span class="line">			ans = ans +  chr(int(c1) + 97) + chr(int(c2)+ 97)</span><br><span class="line">			i += 2</span><br><span class="line"></span><br><span class="line">		except:</span><br><span class="line">			print &quot;Couldn&apos;t Solve&quot;</span><br><span class="line">			return False</span><br><span class="line"></span><br><span class="line">	print ans</span><br><span class="line">	return True</span><br></pre></td></tr></table></figure>
+
+<p>运行结果<br><img src="findout.PNG" alt="findout"><br>得到flag <code>pctf{ilikeclimbinghillswhataboutyou}</code></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/04/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/wlp.jpg" alt="Moyu">
+            
+              <p class="site-author-name" itemprop="name">Moyu</p>
+              <p class="site-description motion-element" itemprop="description">hack for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#web"><span class="nav-number">1.</span> <span class="nav-text">web</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie-Monster"><span class="nav-number">1.1.</span> <span class="nav-text">Cookie Monster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Game-of-Faces"><span class="nav-number">1.2.</span> <span class="nav-text">Game of Faces</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mandatory-PHP"><span class="nav-number">1.3.</span> <span class="nav-text">Mandatory PHP</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Forensics"><span class="nav-number">2.</span> <span class="nav-text">Forensics</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#welcome"><span class="nav-number">2.1.</span> <span class="nav-text">welcome</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Magic-PNGs"><span class="nav-number">2.2.</span> <span class="nav-text">Magic PNGs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Late-PR"><span class="nav-number">2.3.</span> <span class="nav-text">Late PR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Save-Earth"><span class="nav-number">2.4.</span> <span class="nav-text">Save Earth</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Slow-Realization"><span class="nav-number">2.5.</span> <span class="nav-text">Slow Realization</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MISC"><span class="nav-number">3.</span> <span class="nav-text">MISC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#EXORcism"><span class="nav-number">3.1.</span> <span class="nav-text">EXORcism</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cryptography"><span class="nav-number">4.</span> <span class="nav-text">Cryptography</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spoiler"><span class="nav-number">4.1.</span> <span class="nav-text">Spoiler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#easy-RSA"><span class="nav-number">4.2.</span> <span class="nav-text">easy RSA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Help-Rabin"><span class="nav-number">4.3.</span> <span class="nav-text">Help Rabin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Decode-This"><span class="nav-number">4.4.</span> <span class="nav-text">Decode This</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

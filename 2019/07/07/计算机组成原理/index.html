@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NEU,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="计算机系统概论翻译与解释翻译：先用转换程序将高一级机器级的程序整个地变换成低一级机器级上可运行的等效程序，然后再在低一级机器级上去实现的技术解释：在低一级机器级上用它的一串语句或指令来仿真高一级机器级上的一条语句或指令的功能，通过对高一级机器语言程序中的每条语句或指令逐条解释来实现的技术 冯诺依曼机特点 计算机由运算器、控制器、存储器、输入设备和输出设备五部分组成 采用存储程序的方式，程序和数据放">
+<meta name="keywords" content="NEU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机组成原理">
+<meta property="og:url" content="http://yoursite.com/2019/07/07/计算机组成原理/index.html">
+<meta property="og:site_name" content="Moyu&#39;s blog">
+<meta property="og:description" content="计算机系统概论翻译与解释翻译：先用转换程序将高一级机器级的程序整个地变换成低一级机器级上可运行的等效程序，然后再在低一级机器级上去实现的技术解释：在低一级机器级上用它的一串语句或指令来仿真高一级机器级上的一条语句或指令的功能，通过对高一级机器语言程序中的每条语句或指令逐条解释来实现的技术 冯诺依曼机特点 计算机由运算器、控制器、存储器、输入设备和输出设备五部分组成 采用存储程序的方式，程序和数据放">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-07T03:06:58.726Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机组成原理">
+<meta name="twitter:description" content="计算机系统概论翻译与解释翻译：先用转换程序将高一级机器级的程序整个地变换成低一级机器级上可运行的等效程序，然后再在低一级机器级上去实现的技术解释：在低一级机器级上用它的一串语句或指令来仿真高一级机器级上的一条语句或指令的功能，通过对高一级机器语言程序中的每条语句或指令逐条解释来实现的技术 冯诺依曼机特点 计算机由运算器、控制器、存储器、输入设备和输出设备五部分组成 采用存储程序的方式，程序和数据放">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/07/计算机组成原理/">
+
+
+
+
+
+  <title>计算机组成原理 | Moyu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Moyu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/07/计算机组成原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/wlp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moyu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">计算机组成原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-07T11:04:43+08:00">
+                2019-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  6.8k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="计算机系统概论"><a href="#计算机系统概论" class="headerlink" title="计算机系统概论"></a>计算机系统概论</h2><h3 id="翻译与解释"><a href="#翻译与解释" class="headerlink" title="翻译与解释"></a>翻译与解释</h3><p><strong>翻译</strong>：先用转换程序将高一级机器级的程序整个地变换成低一级机器级上可运行的等效程序，然后再在低一级机器级上去实现的技术<br><strong>解释</strong>：在低一级机器级上用它的一串语句或指令来仿真高一级机器级上的一条语句或指令的功能，通过对高一级机器语言程序中的每条语句或指令逐条解释来实现的技术</p>
+<h3 id="冯诺依曼机特点"><a href="#冯诺依曼机特点" class="headerlink" title="冯诺依曼机特点"></a>冯诺依曼机特点</h3><ul>
+<li>计算机由运算器、控制器、存储器、输入设备和输出设备五部分组成</li>
+<li>采用存储程序的方式，程序和数据放在同一存储器中，由指令组成的程序可以修改</li>
+<li>数据以二进制码表示</li>
+<li>指令由操作码和地址码组成</li>
+<li>指令在存储器中按执行顺序存放，由指令计数器指明要执行的指令所在的单元地址，一般按顺序递增</li>
+<li>机器以运算器为中心，数据传送都经过运算器</li>
+</ul>
+<h3 id="计算机系统结构、组成与实现"><a href="#计算机系统结构、组成与实现" class="headerlink" title="计算机系统结构、组成与实现"></a>计算机系统结构、组成与实现</h3><p><strong>计算机体系结构</strong>：从计算机系统的层次结构上定义，系统结构是对计算机系统中每个机器级之间界面的划分和定义，以及对各级界面上、下的功能进行分配<br><strong>计算机组成</strong>：计算机组成指的是计算机系统结构的逻辑实现，包括机器级内的数据流和控制流的组成以及逻辑设计等<br><strong>计算机实现</strong>：计算机实现指的是计算机组成的物理实现，它着眼于器件技术和微组装技术，其中器件技术起主导作用<br><strong>计算机系统结构、组成、实现的关系</strong>：是三个不同的概念，互相联系又互相影响，具有相同结构的计算机可以有不同的组成方式，一种计算机的组成也可以采用不同的计算机实现，反过来，计算机组成也会影响系统结构。</p>
+<h3 id="计算机系统设计的主要方法"><a href="#计算机系统设计的主要方法" class="headerlink" title="计算机系统设计的主要方法"></a>计算机系统设计的主要方法</h3><ul>
+<li><strong>由下往上设计</strong>：根据硬件技术条件，特别是器件水平，首先把微程序机器级和传统机器研制出来。在此基础上再设计操作系统、汇编语言、高级语言等虚拟机器级。最后设计面向应用的虚拟机器级。</li>
+<li><strong>由上往下设计</strong>：首先确定用户级虚拟机器的基本特征、数据类型和基本命令等，而后再逐级向下设计，直到硬件执行或解释那级为止。当然每级设计过程中，既要考虑实现的方法，也要考虑如何使上一级能优化实现</li>
+<li><strong>由中间开始</strong>  ：“中间”是指多级层次结构的某两级的界面。多数计算机设计时把“中间”取在传统机器级与操作系统机器级之间。首先对这个界面进行详尽的功能描述与软、硬件功能分配。再由中间点往上、往下同时进行设计。软件系统从操作系统、汇编、编译系统设计，硬件从传统机器级、微程序机器级、数字逻辑级进行设计。软件设计与硬件设计同时进行这是中间开始设计的一个优点</li>
+</ul>
+<h3 id="计算机性能指标"><a href="#计算机性能指标" class="headerlink" title="计算机性能指标"></a>计算机性能指标</h3><ul>
+<li><strong>吞吐量</strong>：一台计算机在某一时间间隔内能够处理的信息量</li>
+<li><strong>响应时间</strong>：用户输入一个作业至输出开始之间的时间</li>
+<li><strong>主频</strong>：主频f：是描述计算机运算速度最重要的一个指标。通常所说的计算机运算速度是指计算机在每秒钟所能执行的指令条数，即中央处理器在单位时间内平均“运行”的次数，其速度单位为MHz或GHz</li>
+<li><strong>时钟周期</strong>：主频的倒数，T=1/f，度量单位μs，ns 1μs=10^-6s,1ns=10^-9s</li>
+<li><strong>CPI</strong>：表示每条指令周期数，即执行每条指令所需的平均时钟周期数，计算公式:CPI=执行某段程序所需的CPU时钟周期数/程序包含的指令条数</li>
+<li><strong>CPU执行时间</strong>：表示CPU执行一段程序所占用的CPU时间，计算公式：CPU执行时间=CPU时钟周期数CPU时钟周期</li>
+<li><strong>MIPS(Million Instructions Per Second)</strong> ：单字长定点指令平均执行速度 Million Instructions Per Second的缩写，每秒处理的百万级的机器语言指令数。这是衡量CPU速度的一个指标，计算公式：MIPS=指令数/(程序执行时间10^6)</li>
+<li><strong>FLOPS</strong>:Floating-point Operations Per Second每秒所执行的浮点运算次数的英文缩写。它是一个衡量计算机计算能力的量，这个量经常使用在那些需要大量浮点运算的科学运算中。有时也会被记为flop/s</li>
+<li><strong>处理机字长</strong>：一般来说，计算机在同一时间内处理的一组二进制数称为一个计算机的“字”，而这组二进制数的位数就是“字长”，在其他指标相同的情况下，字长越长，计算机处理数据的速度就越快</li>
+<li><strong>总线宽度</strong>：一般指CPU中运算器与存储器之间进行互连的内部总线二进制位数。总线宽度分为地址总线宽度和数据总线宽度，其中，地址总线宽度决定了CPU能够使用多大容量的主存储器</li>
+<li><strong>存储器容量</strong>： 存储器中所有存储单元的总数，通常用KB,MB,GB,TB来表示。有内存储器和外存储器之分：内存储器：是CPU可以直接访问的存储器，需要执行的程序与需要处理的数据就是存放在主存中的。内存的性能指标主要包括存储容量和存取速度；外存储器：通常是指硬盘容量。外存储器容量越大，可存储的信息就越多，可安装的应用软件就越丰富</li>
+<li><strong>存储器带宽</strong>：单位时间内从存储器读出的二进制数信息量，一般用字节数/秒表示</li>
+<li><strong>利用率</strong>：在给定的时间间隔内系统被实际使用的时间所占的比率，用百分比表示。即在一段时间内被使用的时间（次数）占总时间（总使用次数）的百分比，有硬件利用率、软件利用率、指令利用率等。</li>
+</ul>
+<h2 id="数据表示与运算方法"><a href="#数据表示与运算方法" class="headerlink" title="数据表示与运算方法"></a>数据表示与运算方法</h2><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>数据类型可分为数据表示与数据结构<br><strong>数据表示</strong>；计算机硬件能够直接识别，可以被指令系统直接调用的那些数据类型<br><strong>数据结构</strong>：面向系统软件，面向应用领域所需要处理的各种数据类型，以及这些数据类型的逻辑结构和物理结构之间的关系<br><strong>确定数据表示的原则</strong>：缩短运行时间、减少CPU与主存储器之间的通信量、数据表示的通用性和利用率</p>
+<h2 id="存储系统"><a href="#存储系统" class="headerlink" title="存储系统"></a>存储系统</h2><h3 id="评价存储器性能的主要指标"><a href="#评价存储器性能的主要指标" class="headerlink" title="评价存储器性能的主要指标"></a>评价存储器性能的主要指标</h3><ul>
+<li><strong>存储容量</strong>：能存放二进制位的总量</li>
+<li><strong>存取时间</strong>：孤立地考察某一次R/W操作所需要的时间，以TA表示</li>
+<li><strong>存储周期</strong>：指连续访存中必须间隔所需的最少时间，以TM表示，TM&gt;TA</li>
+<li><strong>频带宽度</strong>：Bm=W/TM(位/秒)，其中W指每次R/W数据的宽度，一般等于Memory字长，按此定义Bm也被叫做存储器的数据传输率</li>
+<li><strong>价格</strong>：以每位价格来衡量。P=C/S C指存储芯片价格，S指存储芯片容量</li>
+</ul>
+<h3 id="存储器分类"><a href="#存储器分类" class="headerlink" title="存储器分类"></a>存储器分类</h3><ul>
+<li><strong>随机存取存储器RAM</strong>：按地址码编址，地址译码线对应唯一确定的存储单元，按照给定地址可以随时访问。速度较快，常用作cache和主存</li>
+<li><strong>只读存储器ROM</strong>：也按地址译码访问，但只能随机读取，不能随机写入</li>
+<li><strong>直接存取存储器DAS</strong>：信息所在地址按控制字编码形式给出，然后以字符、记录形式成块存取。存取时间与信息所在物理位置有关。容量大，寻址慢，常用作磁盘</li>
+<li><strong>串行存取存储器SAM</strong>：以记录、字节形式成块、成组存取信息。地址以块号和块间间隔给出，要顺序找到块号，再依次存取，用作磁带</li>
+</ul>
+<h3 id="多层次存储结构"><a href="#多层次存储结构" class="headerlink" title="多层次存储结构"></a>多层次存储结构</h3><p><strong>cache</strong>：高速缓冲存储器，是在CPU和主存之间的小容量快速存储器，速度与CPU相当。依据程序运行的局部性，把主存中部分信息映射到cache中，CPU与之打交道，弥补了主存在速度上的不足。一般为SRAM<br><strong>虚拟存储器</strong>：建立在主-辅物理结构基础之上，由附加的硬件装置及操作系统的存储管理软件组成的一种存储体系。它将主存和辅存地址空间统一编制，用户在这个空间里编程，如同拥有一个容量很大的内存<br><strong>注：无论cache还是虚存对应用程序员都是透明的</strong></p>
+<h3 id="多体交叉存储器"><a href="#多体交叉存储器" class="headerlink" title="多体交叉存储器"></a>多体交叉存储器</h3><p>并行主存系统的两种组成方式：单体多字与多体并行<br><strong>单体多字</strong>：并行的存储器共用一套地址寄存及译码线路</p>
+<p><strong>多体并行</strong>：n个并行的存储体具有各自的地址寄存器的地址译码、驱动、读写等电路，形成可同时工作又独立编址的同容量n个分存储体，称为多体并行方式</p>
+<p><strong>高位交叉访问存储器</strong>：地址码高位区分存储体号，低位体内寻址，可以扩大存储容量</p>
+<p><strong>低位交叉访问存储器</strong>：用地址码的低位区分存储体号，高位体内寻址，并采用分时启动方式，可以提高存储器的访问速度</p>
+<h3 id="存储系统-1"><a href="#存储系统-1" class="headerlink" title="存储系统"></a>存储系统</h3><p>两个或两个以上容量、速度、价格各不相同的存储器用硬件、软件或软件与硬件相结合的方法连接起来成为一个存储系统<br><strong>存储系统单位容量平均价格</strong>：C=(C1<em>S1+C2</em>S2)/(S1+S2)</p>
+<p><strong>命中率</strong>：在M1存储器中访问到的概率 H=N1/(N1+N2) 其中N1是对M1存储器的访问次数，N2是对M2存储器的访问次数</p>
+<p><strong>访问周期与命中率的关系</strong>：T=H<em>T1+(1-H)</em>T2</p>
+<p><strong>存储系统的访问效率</strong>：e=T1/T</p>
+<h3 id="cache存储器"><a href="#cache存储器" class="headerlink" title="cache存储器"></a>cache存储器</h3><p><strong>cache工作机制原理(多级存储器可以提高速度的原理)</strong>：在一小段时间内运行的程序只使用少量的指令和少量的数据，而这少量的指令和数据集中存储到一个高速小容量存储器中，使CPU在这一段时间内直接访问它，以减少或不去访问慢速的DRAM，程序运行速度将明显提高</p>
+<p><strong>cache如何解释处理器地址</strong>：当CPU给定一个内存地址访问cache时，首先用块号域的低d位找到cache的相应组，然后将块号域的高s-d位与该组v行中的所有标记同时进行比较。哪行的标记与之相符，哪行即命中。此后再以内存地址的w位字域部分检索此行的具体字，并完成所需要求的存取操作。如果此组没有一行的标记与之相符，即cache未命中，此时需按内存地址访问主存</p>
+<p><strong>cache存储器的构成</strong>：cache存储器中，把cache和主存各分成若干块。主存与cache中块的数目不同但块的大小相等。块的大小通常以在主存的一个读/写周期中能访问的数据长度为限，常为几十字节</p>
+<p><strong>MAR</strong>：主存地址寄存器</p>
+<p><strong>CAR</strong>：cache地址寄存器</p>
+<p><strong>主存–cache地址映射</strong>：把存放在主存中的程序按某种规则装入cache中，并依次建立主存地址与cache地址的对应关系</p>
+<p><strong>主存–cache地址变换</strong>：程序运行时，根据地址映射把主存地址即MAR内容变换成cache地址即CAR内容</p>
+<p><strong>全相联映射</strong>：主存中任一块能够映射到cache中任一块的位置。块的冲突率最小，cache利用率高；代价较高，相联比较的时间较长，影响cache的速度</p>
+<p><strong>直接映射</strong>：首先将主存按cache的大小分区，然后各区仍与cache一样分成块，各区内的块数、块长均同cache，主存各区中相同序号的块只能映射到cache中相应序号的块中。硬件实现简单，访问速度较快，cache的空间利用率低，常有块冲突，命中率也低</p>
+<p><strong>组相联映射</strong>：主存先按cache大小分成若干区，主存与cache的各区内再分成大小相等的组，各组再分成大小相等的块。组间采用直接映射，即主存不同区中同序号的组只能映射到cache中同序号的组。组内各块采用全相联映射，即一个组内各个块可映射到cache中同序号的组。避免了全相联方式分配页面时的大量计算，也减少了直接映射方式下块的冲突，提高了存储体系的效率，因此使用广泛</p>
+<p><strong>替换</strong>：主存–cache地址变换中一旦发生不命中，即需将主存中一个新的块调入cache，而一般情况此时cache中相应位置的块中已经装满数据，需找出一个不常用的块将其放入主存或丢弃，空出来的cache位置放入新调入的块，此为替换</p>
+<p><strong>常用替换算法</strong></p>
+<ul>
+<li>LFU(Least Frequently Used)</li>
+<li>LRU(Least Recently Used)</li>
+<li>FIFO(First In First Out)</li>
+</ul>
+<h3 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h3><p><strong>虚拟存储器</strong>：建立在主存–辅存物理结构的基础之上，由附加的硬件装置及操作系统存储管理软件组成的一种存储体系。它将主存和辅存的物理空间统一编址，形成一个庞大的存储空间，用户可在其中自由编程，感到的不再是处处受主存容量限制的存储系统。但是，实质上CPU仍只能执行调入主存的程序，所以称这种存储体系为虚拟存储器</p>
+<p><strong>虚地址</strong>：引入虚拟存储器后用户编程时使用的指令地址叫做虚地址，该地址允许涉及的空间范围叫做虚存空间</p>
+<h2 id="指令系统"><a href="#指令系统" class="headerlink" title="指令系统"></a>指令系统</h2><p><strong>指令</strong>：命令计算机直接进行某种基本操作的二进制代码串，也叫机器语言代码。每条指令可以完成一个独立的算术运算或逻辑运算操作</p>
+<p><strong>指令的分类</strong>：从计算机组成的层次结构来说，计算机的指令有微指令、机器指令和宏指令。微指令是微程序级的命令，属于硬件；宏指令是由若干条机器指令组成的软件指令，它属于软件；而机器指令则介于微指令与宏指令之间</p>
+<p><strong>指令系统</strong>： 一台计算机能直接理解与执行的全部指令的集合称为该机的指令系统，也叫机器语言。指令系统是进行计算机逻辑设计和编制程序的基本依据。它直接说明了这台计算机的功能</p>
+<p><strong>指令的结构</strong>：操作码OP–指明操作性质的命令码，提供指令的操作控制信息；操作对象A–说明操作数存放的地址</p>
+<p><strong>机器字长</strong>：指计算机能直接处理的二进制数据的位数，它与计算机的功能和用途有很大关系，是计算机的一个重要技术指标</p>
+<p><strong>指令字长度</strong>：指一个指令字中包含二进制代码的位数，如果指令字长度等于机器字长度的指令，称为单字长指令</p>
+<p><strong>指令的长度取决于</strong></p>
+<ul>
+<li>操作码的长度</li>
+<li>操作数地址的长度</li>
+<li>操作数地址的个数</li>
+</ul>
+<p><strong>通常把最常用的指令设计成短格式指令，以便节省存储空间和提高指令的执行速度</strong></p>
+<p><strong>RISC(精简指令系统计算机)特点</strong></p>
+<ul>
+<li>仅选使用频率高的一些简单指令和很有用但不复杂指令，指令条数少</li>
+<li>指令长度固定，指令格式少，寻址方式少</li>
+<li>只有取数/存数指令访问存储器，其余指令都在寄存器中进行，即限制内存访问</li>
+<li>CPU中通用寄存器数量相当多，大部分指令都在一个机器周期内完成</li>
+<li>以硬布线逻辑为主，不用或少用微程序控制</li>
+<li>特别重视编译工作，以简单有效的方式支持高级语言，减少程序执行时间</li>
+</ul>
+<p><strong>CISC(复杂指令系统计算机)特点</strong></p>
+<ul>
+<li>指令系统比较丰富，有专用指令来完成特定的功能，处理特殊任务效率较高</li>
+<li>存储器操作指令多，操作直接</li>
+<li>CPU包含有丰富的电路单元，因而功能强、面积大、功耗大</li>
+<li>CISC微处理器结构复杂，设计周期长</li>
+<li>微处理器结构复杂，功能强大，实现特殊功能容易</li>
+<li>以微程序控制技术为主</li>
+</ul>
+<h2 id="中央处理器"><a href="#中央处理器" class="headerlink" title="中央处理器"></a>中央处理器</h2><p><strong>CPU的功能</strong></p>
+<ul>
+<li>指令控制</li>
+<li>操作控制</li>
+<li>时间控制</li>
+<li>数据加工</li>
+</ul>
+<p><strong>控制器主要部件</strong></p>
+<ul>
+<li>程序计数器PC：存放待执行指令在存储器中的地址，又叫指令地址寄存器</li>
+<li>指令寄存器IR：用来存放从存储器中取出的待执行指令</li>
+<li>指令译码器ID：对指令的操作码即IR(OP)进行译码，识别出当前指令的操作性质，结果送到操作控制部件</li>
+<li>时序部件：用来产生计算机工作过程中需要的各种时序信号，送给操作控制部件</li>
+<li>操作控制部件：任何指令的执行过程都是一个微操作序列产生的过程；操作控制部件就是用来产生与各条指令对应的微操作控制信号</li>
+<li>中断系统：用来处理计算机出现的一些不可预知的事件</li>
+<li>操作控制台console：人机联系的桥梁</li>
+</ul>
+<p><strong>指令周期</strong>：一条指令从主存储器中取出来到执行完毕所需要的时间，常分为两个阶段–取指令、分析和执行指令</p>
+<p><strong>机器周期(CPU周期)</strong>：完成一个基本操作所需要的时间称为机器周期。常定义机器周期的长度为主存的存取周期，一个指令周期由若干个机器周期构成，每条指令的第一个机器周期都是取指令周期，然后有一个或几个执行周期</p>
+<p><strong>节拍(时钟周期)</strong>：计算机操作的最小时间单位。一个机器周期由几个节拍构成，具体个数可以是固定的，也可以是变化的</p>
+<h3 id="微程序设计方法"><a href="#微程序设计方法" class="headerlink" title="微程序设计方法"></a>微程序设计方法</h3><p><strong>微程序设计方法</strong>：将机器指令分解成若干基本操作后，将有关控制信息以微码形式编成微指令输入到控制存储器中，于是一条机器指令对应一个微指令序列构成的一段微程序，取出微指令就产生微命令，进而实现机器指令要求的信息传送和加工</p>
+<p><strong>微程序设计控制器的实质</strong>：将组合逻辑设计中的硬件软化为微程序</p>
+<p><strong>微程序设计方法的好处</strong>：解决设计的规整性问题，即将不规则的微操作命令变成有规则的微程序；利用存储逻辑概念可以解决可修改性问题。由上引出微程序设计控制器的方法，简化了控制器设计的任务，实现容易，成本较低</p>
+<p><strong>微程序控制器的相关术语</strong></p>
+<ul>
+<li>微命令：即微操作控制信号，是构成控制信号序列的最小单位</li>
+<li>微操作：由微命令控制实现的最基本的操作</li>
+<li>微指令：若干微命令的组合，每个微周期的操作所需的控制命令，控制存储器中每个单元存放的编码字信息。实质是把一条机器指令中一个机器周期的微操作所需命令信息放在一条微指令中</li>
+<li>微周期：即微指令周期，从控存中取出一条微指令并执行相应的微操作所需要的时间</li>
+<li>微程序：一系列微指令的有序集合，一段微程序常对应实现一条机器指令的功能</li>
+<li>控制存储器CM：存放微程序的存储器，又名微程序存储器，一般用ROM实现</li>
+</ul>
+<p><strong>机器指令与微指令</strong>：机器指令是提供给用户编程的基本单位，一条机器指令表明CPU能完成的一项功能；微指令是实现机器指令中的一个步骤所需的微命令的组合</p>
+<p><strong>程序与微程序</strong>：程序由机器指令构成，编好后放在主存中运行，可改写；微程序由微指令构成，事先编好放在CM中，一般不可改写；微程序解释执行程序</p>
+<p><strong>主存与控存</strong>：主存存放系统程序与用户程序，容量很大；控存存放对应于机器指令系统的全部微程序，容量有限</p>
+<p><strong>后继微地址的产生方法</strong></p>
+<ul>
+<li>计数器方式：在微程序控制器中设置一个硬件计数器叫微程序计数器MPC</li>
+<li>断定方式(多路转移)：后继微程序的地址可由设计者指定或由设计者指定的测试判别字段控制产生；可实现快速多路分支；微指令字较长，形成后继微地址的机构较复杂</li>
+</ul>
+<p><strong>微程序技术的应用</strong></p>
+<ul>
+<li>计算机实现</li>
+<li>仿真：在A计算机上用微程序去模仿B计算机的指令系统，使两种不兼容的计算机的软件可以兼容</li>
+</ul>
+<h3 id="硬布线控制器"><a href="#硬布线控制器" class="headerlink" title="硬布线控制器"></a>硬布线控制器</h3><p><strong>组合逻辑控制器设计实例</strong></p>
+<ul>
+<li>DR：主存数据缓冲寄存器</li>
+<li>AR：主存地址寄存器</li>
+<li>PC：程序计数器</li>
+<li>IR：指令寄存器</li>
+<li>IR(OP)：指令的操作码部分</li>
+<li>IR(ADR)：指令的地址码部分</li>
+<li>ALU：算术/逻辑运算单元</li>
+<li>AC：累加寄存器</li>
+<li>F：状态寄存器</li>
+</ul>
+<h3 id="流水线技术"><a href="#流水线技术" class="headerlink" title="流水线技术"></a>流水线技术</h3><p><strong>流水线技术</strong>：在程序执行时多条指令重叠进行操作的一种准并行处理实现技术</p>
+<p><strong>指令流水线阶段划分</strong></p>
+<ul>
+<li>IF(Instruction Fetch)：取指</li>
+<li>ID(Instruction Decode)：译码</li>
+<li>EX(Execute)：执行</li>
+<li>MEM(Memory Access)：访存</li>
+<li>WB(Write Back)：写回</li>
+</ul>
+<p><strong>delay slot</strong>：计算机体系结构中一个指令间隙，在前一条指令没有执行完毕的情况下，处理器内部指令流水线上该指令间隙的执行不会修改处理器的状态</p>
+<p><strong>流水线的相关</strong>：在流水线中，如果某指令的某个阶段必须等到它前面另一条指令的某个阶段后才能开始，则这两条指令存在相关</p>
+<p><strong>指令流水线的相关</strong></p>
+<ul>
+<li>数据相关：使用同一个寄存器引起的相关</li>
+<li>控制相关：与PC有关的相关，每条指令取值用到PC，转移指令修改PC</li>
+<li>结构相关：多条指令同时使用一个功能部件</li>
+</ul>
+<p><strong>数据相关</strong></p>
+<ul>
+<li>RAW：后面指令用到前面指令所写的数据。用Forwarding技术解决</li>
+<li>WAW：两条指令写同一个单元</li>
+<li>WAR：后面指令覆盖前面指令所读的单元</li>
+</ul>
+<p><strong>解决PC相关的方法</strong></p>
+<ul>
+<li>转移指令计算的下一条指令地址在EX阶段计算</li>
+<li>下一条指令等2拍</li>
+<li>使用专门的地址运算部件把地址计算提前到译码阶段可以少等一拍</li>
+<li>使用一个delay slot可以不用等待</li>
+</ul>
+<p><strong>解决转移条件相关的方法</strong></p>
+<ul>
+<li>阻塞</li>
+<li>用delay slot容忍延迟</li>
+<li>编译器优化：产生条件的指令和转移指令隔得足够远</li>
+<li>预测</li>
+</ul>
+<p><strong>精确中断</strong>：在处理中断时，发生中断指令前面的所有指令都执行完，中断指令后面的所有指令还未执行</p>
+<p><strong>动态调度特点</strong></p>
+<ul>
+<li>前面指令的stall不影响后面指令继续前进</li>
+<li>把译码分成两个阶段–发射和读操作数：发射：指令译码，检查结构相关；读操作数：检查操作时是否准备好，准备好就读数，否则等待；当一条指令在读操作数阶段等待时，后面指令的发射可以继续进行</li>
+<li>指令进入是有序的，执行可以乱序，结束可以乱序也可以有序</li>
+</ul>
+<p><strong>CDC6600的记分板技术</strong></p>
+<ul>
+<li>指令有序进入、乱序执行、乱序结束</li>
+<li>把ID,EX,WB分成issue,read operand,execution,write back四个流水级</li>
+<li>记分板记录保存指令执行过程中的有关信息用以解决相关</li>
+</ul>
+<p><strong>记分板的流水级</strong></p>
+<ul>
+<li>发射：译码并检查结构相关</li>
+<li>读操作数：等待操作数可用并读操作数</li>
+<li>执行：对操作数进行操作</li>
+<li>写回：指令结束</li>
+</ul>
+<p><strong>记分板技术的相关问题</strong></p>
+<ul>
+<li>数据相关：RAW</li>
+<li>名字相关：WAW和WAR，通过Tomasulo算法消除</li>
+<li>控制相关：条件转移</li>
+</ul>
+<p><strong>Tomasulo算法</strong></p>
+<ul>
+<li>控制逻辑和缓冲区分布在功能部件中</li>
+<li>在功能部件中设置保留站，操作数没有准备的操作在保留站中等待</li>
+<li>结果通过结果总线送到寄存器和保留站</li>
+<li>用保留站号索引操作数，保留站数目多于寄存器数目，通过寄存器重命名解决WAR和WAW相关</li>
+<li>硬件复杂，结果总线成为瓶颈</li>
+</ul>
+<p><strong>Tomasulo算法的流水阶段</strong></p>
+<ul>
+<li>发射：把操作队列的指令根据操作类型送到保留站，发射过程中读寄存器的值和结果状态域</li>
+<li>执行：如果所需的操作数都准备好则执行，否则侦听结果总线并接收结果总线的值</li>
+<li>写回：把结果送到结果总线，释放保留站</li>
+</ul>
+<p><strong>硬件实现精确例外处理</strong>：用一些缓冲器(Reorder Buffer)来临时保存执行结果，当前面所有指令执行完后，再把保存在缓冲器中的结果写回到寄存器或存储器</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NEU/" rel="tag"># NEU</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/07/wakanda/" rel="next" title="wakanda writeup">
+                <i class="fa fa-chevron-left"></i> wakanda writeup
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/wlp.jpg" alt="Moyu">
+            
+              <p class="site-author-name" itemprop="name">Moyu</p>
+              <p class="site-description motion-element" itemprop="description">hack for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机系统概论"><span class="nav-number">1.</span> <span class="nav-text">计算机系统概论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#翻译与解释"><span class="nav-number">1.1.</span> <span class="nav-text">翻译与解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冯诺依曼机特点"><span class="nav-number">1.2.</span> <span class="nav-text">冯诺依曼机特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机系统结构、组成与实现"><span class="nav-number">1.3.</span> <span class="nav-text">计算机系统结构、组成与实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机系统设计的主要方法"><span class="nav-number">1.4.</span> <span class="nav-text">计算机系统设计的主要方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机性能指标"><span class="nav-number">1.5.</span> <span class="nav-text">计算机性能指标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据表示与运算方法"><span class="nav-number">2.</span> <span class="nav-text">数据表示与运算方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据类型"><span class="nav-number">2.1.</span> <span class="nav-text">数据类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储系统"><span class="nav-number">3.</span> <span class="nav-text">存储系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#评价存储器性能的主要指标"><span class="nav-number">3.1.</span> <span class="nav-text">评价存储器性能的主要指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储器分类"><span class="nav-number">3.2.</span> <span class="nav-text">存储器分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多层次存储结构"><span class="nav-number">3.3.</span> <span class="nav-text">多层次存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多体交叉存储器"><span class="nav-number">3.4.</span> <span class="nav-text">多体交叉存储器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储系统-1"><span class="nav-number">3.5.</span> <span class="nav-text">存储系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cache存储器"><span class="nav-number">3.6.</span> <span class="nav-text">cache存储器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟存储器"><span class="nav-number">3.7.</span> <span class="nav-text">虚拟存储器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指令系统"><span class="nav-number">4.</span> <span class="nav-text">指令系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中央处理器"><span class="nav-number">5.</span> <span class="nav-text">中央处理器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#微程序设计方法"><span class="nav-number">5.1.</span> <span class="nav-text">微程序设计方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#硬布线控制器"><span class="nav-number">5.2.</span> <span class="nav-text">硬布线控制器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流水线技术"><span class="nav-number">5.3.</span> <span class="nav-text">流水线技术</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

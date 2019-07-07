@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NEU,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="编译程序基本概念 编译程序是一种翻译程序，它特指把某种高级程序设计语言翻译成与之等价的具体计算机上的低级程序设计语言 解释程序也是一种翻译程序，它将源语言书写的源程序作为输入，解释一句后就提交计算机执行一句，并不形成目标程序 编译程序与解释程序的主要区别：前者有目标程序而后者无目标程序，前者运行效率高而后者便于人机对话 编译程序的五个阶段 遍(pass)：编译程序对源程序或等价程序从头至尾扫描的次">
+<meta name="keywords" content="NEU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理">
+<meta property="og:url" content="http://yoursite.com/2019/07/07/编译原理/index.html">
+<meta property="og:site_name" content="Moyu&#39;s blog">
+<meta property="og:description" content="编译程序基本概念 编译程序是一种翻译程序，它特指把某种高级程序设计语言翻译成与之等价的具体计算机上的低级程序设计语言 解释程序也是一种翻译程序，它将源语言书写的源程序作为输入，解释一句后就提交计算机执行一句，并不形成目标程序 编译程序与解释程序的主要区别：前者有目标程序而后者无目标程序，前者运行效率高而后者便于人机对话 编译程序的五个阶段 遍(pass)：编译程序对源程序或等价程序从头至尾扫描的次">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/编译原理/1.PNG">
+<meta property="og:updated_time" content="2019-07-07T02:07:31.435Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编译原理">
+<meta name="twitter:description" content="编译程序基本概念 编译程序是一种翻译程序，它特指把某种高级程序设计语言翻译成与之等价的具体计算机上的低级程序设计语言 解释程序也是一种翻译程序，它将源语言书写的源程序作为输入，解释一句后就提交计算机执行一句，并不形成目标程序 编译程序与解释程序的主要区别：前者有目标程序而后者无目标程序，前者运行效率高而后者便于人机对话 编译程序的五个阶段 遍(pass)：编译程序对源程序或等价程序从头至尾扫描的次">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/07/编译原理/1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/07/编译原理/">
+
+
+
+
+
+  <title>编译原理 | Moyu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Moyu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/07/编译原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/wlp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moyu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">编译原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-07T10:01:26+08:00">
+                2019-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2.4k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="编译程序基本概念"><a href="#编译程序基本概念" class="headerlink" title="编译程序基本概念"></a>编译程序基本概念</h2><ol>
+<li>编译程序是一种翻译程序，它特指把某种高级程序设计语言翻译成与之等价的具体计算机上的低级程序设计语言</li>
+<li>解释程序也是一种翻译程序，它将源语言书写的源程序作为输入，解释一句后就提交计算机执行一句，并不形成目标程序</li>
+<li>编译程序与解释程序的主要区别：<br>前者有目标程序而后者无目标程序，前者运行效率高而后者便于人机对话</li>
+<li>编译程序的五个阶段<br><img src="1.PNG" alt="&quot;1&quot;"></li>
+<li>遍(pass)：编译程序对源程序或等价程序从头至尾扫描的次数</li>
+</ol>
+<h2 id="形式语言基础"><a href="#形式语言基础" class="headerlink" title="形式语言基础"></a>形式语言基础</h2><ol>
+<li>形式语言的基本观点是：语言是符号串的集合</li>
+<li>形式语言理论研究的基本问题是：研究符号串集合的表示方法、结构特性以及运算规律</li>
+<li>形式语言是<strong>字母表</strong>上的符号按一定的<strong>规则</strong>组成的所有<strong>符号串集合</strong>；其中每个符号串称为一个<strong>句子</strong><br>字母表：元素的非空有限集合<br>符号串：符号的有限序列<br>符号串集合：有限个或者无限个符号串组成的集合<br>规则：符号串的组成规则</li>
+<li>文法：用有穷的集合刻画无穷的集合的工具</li>
+<li>文法(grammar)是规则的有限集，通常可以表示为四元组G(Z)=(VN, VT, Z, P)<br>VN：非终结符集(定义的对象集)<br>VT：终结符集(字母表)<br>Z：开始符号(研究范畴中最大的定义对象)<br>P：规则集(又称产生式集)</li>
+<li>一个文法所定义的<strong>语言</strong>，就是该文法开始符号推导出的所有仅含终结符的所有符号串的集合。其中的每个符号串皆称为句子</li>
+<li>从开始符号出发，对符号串中的定义对象，采用推导的方法产生新的符号串，如此进行。直到新符号串中不再出现定义的对象为止，则最终的符号串就是一个句子</li>
+<li>直接推导：指用产生式的右部符号串替换左部非终结符<br>加推导：指一步或一步以上的直接推导运算<br>星推导：指零步或零步以上的直接推导运算</li>
+<li>直接归约：直接归约式直接推导的逆运算，用产生式的左部非终结符替换右部符号串<br>加归约：指一步或一步以上的直接归约运算<br>星归约：指零步或零步以上的直接归约运算</li>
+<li>最左推导：每次推导皆最左非终结符优先<br>最左归约：每次归约皆最左可归约串优先<br>最右推导也称为规范推导<br>最左归约也成为规范归约<br>最左归约是最右推导的逆过程</li>
+<li>句型是由文法开始符号加推导出的任一符号串<br>句子是由开始符号加推导出的任一终结符号串</li>
+<li>语法树：句型(句子)产生过程的一种树结构表示<br>子树：由某一结点连同所有分支组成的部分<br>简单子树：仅具有单层分支的子树<br>短语：任一子树的树叶全体(具有共同祖先的叶节点符号串)皆为短语<br>简单短语：任一简单子树的树叶全体(具有共同父亲的叶节点符号串)皆为简单短语<br>句柄：一个句型的最左简单短语称为该句型的句柄</li>
+<li>若A-&gt;Aα，称文法具有直接左递归性；A-&gt;αA，称文法具有直接右递归性<br>递归文法是定义无限语言的工具，递归文法定义的语言有无限个句子</li>
+<li>若文法中存在这样的句型，它具有两棵不同的语法树，则称该文法是二义性文法</li>
+<li>文法的等价性是指它们所定义的语言是一样的；一个语言，其描述文法并不唯一</li>
+<li>BNF(巴科斯范式)表示法，()必选项，[]可选项，{}重复可选项</li>
+<li>形式语言的分类：<br>0型语言(无限制文法)：α-&gt;β<br>1型语言(上下文有关文法)：αAβ-&gt;αuβ<br>2型语言(上下文无关文法)：A-&gt;β<br>3型语言(正规文法)：A-&gt;aB或A-&gt;a 右线性文法；A-&gt;Ba或A-&gt;a 左线性文法</li>
+</ol>
+<h2 id="自动机基础"><a href="#自动机基础" class="headerlink" title="自动机基础"></a>自动机基础</h2><ol>
+<li>正规语言无法描述a和b数量上相等</li>
+<li>正规式表示的语言是该正规式所有值的集合</li>
+<li>正规语言的三种表示法：正规文法、正规式、有限自动机</li>
+<li>有限自动机是一种数学模型，用于描述正规语言，可定义为五元组FA=(Q,Σ,S,F,δ)<br>Q(有限状态集)；Σ(字母表)；S(开始状态集)；F(结束状态集)；δ变换(二元函数)</li>
+<li>确定的有限自动机(DFA)：开始状态唯一；变换函数单值；不带ε边</li>
+</ol>
+<h2 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h2><ol>
+<li>递归子程序法的设计原理：对每一个非终结符，构造一个子程序，用以识别该非终结符所定义的符号串。每个子程序以产生式左部非终结符命名，以产生式右部构造子程序内容</li>
+<li>LL(1)分析法：从左到右扫描，最左推导，只查看一个当前符号。又称预测分析法，属于自顶向下确定性语法分析方法</li>
+<li>LR()分析法：从左到右扫描，最左归约，自底向上</li>
+<li>SLR(1)分析法：LR(0)分析的改进与扩充，当句柄识别器发生了移进和归约冲突或者归约和归约冲突时，通过查看1个当前符号就可解决</li>
+</ol>
+<h2 id="中间代码及其翻译"><a href="#中间代码及其翻译" class="headerlink" title="中间代码及其翻译"></a>中间代码及其翻译</h2><ol>
+<li>中间代码设置的目的：便于进行与机器无关的代码优化；使编译程序改变目标机更容易；使编译程序的结构在逻辑上更为简单明确，以中间语言为界面，编译前端和后端的接口更清晰</li>
+<li>属性文法：上下文无关文法在<strong>语义</strong>上的扩展，是一种接近形式化的语义描述方法，可定义为如下三元组：A=(G, V, E);G(文法)，V(属性集)，E(语义规则集)</li>
+<li>属性代表与文法符号相关的信息，这里主要指语义信息；文法产生式中的每个文法符号都附有若干个这样的属性</li>
+<li>属性可以计算和传递，语义规则就是在同一产生式中，相互关联的属性求值规则</li>
+<li>属性可以分两类：综合属性，其值由子女属性值来计算(自底向上求值)；继承属性，其值由父兄属性值来计算(自顶向下求值)</li>
+<li>语法制导翻译技术：在语法分析过程中，随着分析的逐步进展，每识别出一个语法结构，根据文法的每个规则所对应的语义子程序进行翻译的方法<br>语法制导翻译技术=语法分析技术+属性翻译文法构造技术</li>
+<li>自顶向下属性翻译文法的要求：<br>原文法应满足自顶向下分析要求<br>属性式自顶向下可求值的</li>
+</ol>
+<p><strong>动作符号可插入到产生式右部任何位置</strong></p>
+<ol start="8">
+<li>自底向上属性翻译文法的要求：<br>原文法应满足自底向上分析要求<br>属性是自底向上可求值的</li>
+</ol>
+<p><strong>动作符号只能位于产生式的最右端</strong></p>
+<h2 id="符号表组织"><a href="#符号表组织" class="headerlink" title="符号表组织"></a>符号表组织</h2><ol>
+<li>符号表是标识符的动态语义词典，属于编译中语义分析的知识库，主要包括名字、类型、种类、地址</li>
+<li>符号表的作用：<br>定义和重定义检查<br>类型匹配校验<br>数据的越界和溢出检查<br>值单元存储分配信息<br>函数的参数传递与校验</li>
+<li>一个源文件有若干个函数组成，通常每个函数对应一个符号表，此外还有一个公用符号表</li>
+</ol>
+<h2 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h2><ol>
+<li>优化的分类：<br>(1) 与机器无关的优化：全局优化、局部优化、循环优化<br>(2) 与机器有关的优化：寄存器分配的优化、消除无用代码</li>
+<li>常见的局部优化方法：<br>常值表达式节省(常数合并)<br>公共子表达式节省(删除多余运算)<br>删除无用赋值<br>不变表达式外提<br>削减运算强度</li>
+<li>基本块：程序中一段顺序执行的语句序列，其中只有一个入口和一个出口</li>
+<li>基本块划分算法：<br>入口语句：程序的第一个语句或转向语句转移到的语句；紧跟在转向语句后面的语句<br>出口语句：下一个入口语句的前导语句；转向语句(包括自身)；停语句(包括自身)</li>
+<li>DAG(Directed Acyclic Graph)无环有向图</li>
+</ol>
+<h2 id="目标代码及其生成"><a href="#目标代码及其生成" class="headerlink" title="目标代码及其生成"></a>目标代码及其生成</h2><ol>
+<li>活跃变量：一个变量从某时刻(q)起，到下一个定义点止，其间若有应用点，则称变量在q是活跃的，否则称该变量在q是非活跃的</li>
+<li>假定临时变量在基本块出口后是非活跃的，非临时变量在基本块出口后是活跃的</li>
+<li>RDV 寄存器状态变量</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NEU/" rel="tag"># NEU</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/04/RCTF-nextphp/" rel="next" title="RCTF-nextphp">
+                <i class="fa fa-chevron-left"></i> RCTF-nextphp
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/07/2019-0ctf/" rel="prev" title="0ctf wallbreaker easy writeup">
+                0ctf wallbreaker easy writeup <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/wlp.jpg" alt="Moyu">
+            
+              <p class="site-author-name" itemprop="name">Moyu</p>
+              <p class="site-description motion-element" itemprop="description">hack for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编译程序基本概念"><span class="nav-number">1.</span> <span class="nav-text">编译程序基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#形式语言基础"><span class="nav-number">2.</span> <span class="nav-text">形式语言基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动机基础"><span class="nav-number">3.</span> <span class="nav-text">自动机基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语法分析"><span class="nav-number">4.</span> <span class="nav-text">语法分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中间代码及其翻译"><span class="nav-number">5.</span> <span class="nav-text">中间代码及其翻译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#符号表组织"><span class="nav-number">6.</span> <span class="nav-text">符号表组织</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码优化"><span class="nav-number">7.</span> <span class="nav-text">代码优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目标代码及其生成"><span class="nav-number">8.</span> <span class="nav-text">目标代码及其生成</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

