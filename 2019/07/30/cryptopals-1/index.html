@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CTF,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="题目链接 https://cryptopals.com 以及大佬的wp https://cedricvanrompay.gitlab.io/cryptopals/ 菜鸡日常挖坑，随缘填坑 运行环境：linux + python3.7 challenge 1题目描述：convert hex to base64 这个比较简单，就是两个库的使用，直接上代码了 12345678import binasci">
+<meta name="keywords" content="CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零开始的密码学学习之旅（一）">
+<meta property="og:url" content="http://yoursite.com/2019/07/30/cryptopals-1/index.html">
+<meta property="og:site_name" content="Moyu&#39;s blog">
+<meta property="og:description" content="题目链接 https://cryptopals.com 以及大佬的wp https://cedricvanrompay.gitlab.io/cryptopals/ 菜鸡日常挖坑，随缘填坑 运行环境：linux + python3.7 challenge 1题目描述：convert hex to base64 这个比较简单，就是两个库的使用，直接上代码了 12345678import binasci">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-31T07:13:07.130Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从零开始的密码学学习之旅（一）">
+<meta name="twitter:description" content="题目链接 https://cryptopals.com 以及大佬的wp https://cedricvanrompay.gitlab.io/cryptopals/ 菜鸡日常挖坑，随缘填坑 运行环境：linux + python3.7 challenge 1题目描述：convert hex to base64 这个比较简单，就是两个库的使用，直接上代码了 12345678import binasci">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/30/cryptopals-1/">
+
+
+
+
+
+  <title>从零开始的密码学学习之旅（一） | Moyu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Moyu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/30/cryptopals-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/wlp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moyu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从零开始的密码学学习之旅（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-30T22:03:53+08:00">
+                2019-07-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1.5k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>题目链接 <a href="https://cryptopals.com/" target="_blank" rel="noopener">https://cryptopals.com</a></p>
+<p>以及大佬的wp <a href="https://cedricvanrompay.gitlab.io/cryptopals/" target="_blank" rel="noopener">https://cedricvanrompay.gitlab.io/cryptopals/</a></p>
+<p>菜鸡日常挖坑，随缘填坑</p>
+<p>运行环境：linux + python3.7</p>
+<h2 id="challenge-1"><a href="#challenge-1" class="headerlink" title="challenge 1"></a>challenge 1</h2><p>题目描述：convert hex to base64</p>
+<p>这个比较简单，就是两个库的使用，直接上代码了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">i = <span class="string">''</span></span><br><span class="line">o = <span class="string">''</span></span><br><span class="line">result = base64.b64encode(binascii.unhexlify(i))</span><br><span class="line"><span class="keyword">if</span> result==o:</span><br><span class="line">    print(<span class="string">'ok'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="challenge-2"><a href="#challenge-2" class="headerlink" title="challenge 2"></a>challenge 2</h2><p>题目描述：Write a function that takes two equal-length buffers and produces their XOR combination.</p>
+<p>异或两个长度相等的字符串，这个是接下来几个的基础，主要是对byte的操作</p>
+<p>代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bxor</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> bytes([ x^y <span class="keyword">for</span> (x,y) <span class="keyword">in</span> zip(a, b)])</span><br><span class="line"></span><br><span class="line">a = binascii.unhexlify(<span class="string">'1c0111001f010100061a024b53535009181c'</span>)</span><br><span class="line">b = binascii.unhexlify(<span class="string">'686974207468652062756c6c277320657965'</span>)</span><br><span class="line">c = binascii.unhexlify(<span class="string">'746865206b696420646f6e277420706c6179'</span>)</span><br><span class="line"><span class="keyword">if</span> bxor(a,b)==c:</span><br><span class="line">    print(<span class="string">'ok'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="challenge-3"><a href="#challenge-3" class="headerlink" title="challenge 3"></a>challenge 3</h2><p>题目描述：has been XOR’d against a single character. Find the key, decrypt the message.</p>
+<p>单字符异或，可以直接爆破得到明文</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line">c = <span class="string">'1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bxor</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> bytes([ x^y <span class="keyword">for</span> (x,y) <span class="keyword">in</span> zip(a, b)])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 判断是否是可打印字符，此处只判断了大小写字母和空格单引号</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_printable</span><span class="params">(cipher)</span>:</span></span><br><span class="line">    ascii_text_chars = list(range(<span class="number">65</span>, <span class="number">90</span>)) + list(range(<span class="number">97</span>, <span class="number">122</span>)) + [<span class="number">32</span>] +[<span class="number">39</span>]</span><br><span class="line">    <span class="comment"># 判断判断当前字符是否在list里，返回的是True或False的list，求和之后可以当作是正确的概率</span></span><br><span class="line">    letters = sum([ x <span class="keyword">in</span> ascii_text_chars <span class="keyword">for</span> x <span class="keyword">in</span> cipher])</span><br><span class="line">    p = letters/len(cipher)</span><br><span class="line">    <span class="comment"># 忽略一些误差，所以让p&gt;0.9</span></span><br><span class="line">    <span class="keyword">if</span> p &gt; <span class="number">0.9</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">attack_single_byte_xor</span><span class="params">(cipher)</span>:</span></span><br><span class="line">    <span class="comment"># 直接循环爆破</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">127</span>):</span><br><span class="line">        <span class="comment"># 将数字转成bytes并对齐长度</span></span><br><span class="line">        tmp_key = i.to_bytes(<span class="number">1</span>,byteorder=<span class="string">'big'</span>)*len(cipher)</span><br><span class="line">        plaintext = bxor(tmp_key,binascii.unhexlify(cipher))</span><br><span class="line">        <span class="keyword">if</span> check_printable(plaintext):</span><br><span class="line">            print(plaintext)</span><br><span class="line">        </span><br><span class="line">attack_single_byte_xor(c)</span><br></pre></td></tr></table></figure>
+
+<h2 id="challenge-4"><a href="#challenge-4" class="headerlink" title="challenge 4"></a>challenge 4</h2><p>题目描述：One of the 60-character strings in this file has been encrypted by single-character XOR.</p>
+<p>和上一题一样，只不过多了个逐行读文件的操作，代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> open(<span class="string">"s1-4.txt"</span>):</span><br><span class="line">    n += <span class="number">1</span></span><br><span class="line">    c = line.strip()</span><br><span class="line">    <span class="keyword">if</span> attack_single_byte_xor(c):</span><br><span class="line">        print(n)</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="challenge-5"><a href="#challenge-5" class="headerlink" title="challenge 5"></a>challenge 5</h2><p>题目描述：Implement repeating-key XOR</p>
+<p>给出明文和key，将key和明文对齐，异或得到密文</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bxor</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> bytes([ x^y <span class="keyword">for</span> (x,y) <span class="keyword">in</span> zip(a, b)])</span><br><span class="line"></span><br><span class="line">plaintext = <span class="string">b'''Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal'''</span></span><br><span class="line">key = <span class="string">b"ICE"</span></span><br><span class="line">keystream = key*(len(plaintext)//len(key)+<span class="number">1</span>) <span class="comment"># 按照明文长度对齐密钥</span></span><br><span class="line">ciphertext = bxor(plaintext,keystream)</span><br><span class="line">o = <span class="string">'0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a26226324272765272a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27282f'</span></span><br><span class="line"><span class="keyword">if</span> ciphertext == binascii.unhexlify(o):</span><br><span class="line">    print(<span class="string">'ok'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="challenge-6"><a href="#challenge-6" class="headerlink" title="challenge 6"></a>challenge 6</h2><p>题目描述：There’s a file here. It’s been base64’d after being encrypted with repeating-key XOR. Decrypt it.</p>
+<p>根据题目描述，要求很简单，给了密文和加密方式异或，求明文，但是不知道密钥长度，直接爆破显然不可以</p>
+<p>这里引入了一个概念<code>Hamming distance</code>，表示两个等长字符串在对应位置上不同字符的数目，通过计算最小Hamming distance，就可以确定密钥长度，然后根据密钥长度将密文分组，每一组可以直接用上边写完的单字节异或爆破的函数，最后再将结果组合到一起即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上边写过的异或，直接拿来用</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bxor</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> bytes([ x^y <span class="keyword">for</span> (x,y) <span class="keyword">in</span> zip(a, b)])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 判断是否是可打印字符，这里根据英语的规则，选择了大小写字母和,'?!- 换行等</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_printable</span><span class="params">(ciphertext)</span>:</span></span><br><span class="line">    ascii_text_chars = list(range(<span class="number">65</span>, <span class="number">90</span>)) + list(range(<span class="number">97</span>, <span class="number">122</span>)) + [<span class="number">32</span>] + [<span class="number">33</span>] + [<span class="number">39</span>] +list(range(<span class="number">44</span>, <span class="number">57</span>)) + [<span class="number">63</span>] + [<span class="number">10</span>]</span><br><span class="line">    letters = sum([ x <span class="keyword">in</span> ascii_text_chars <span class="keyword">for</span> x <span class="keyword">in</span> ciphertext])</span><br><span class="line">    p = letters/len(ciphertext)</span><br><span class="line">    <span class="comment"># 这里选择调高p，因为可能会出现多个结果，理论上应该选择最大的，这里偷懒直接选0.95了</span></span><br><span class="line">    <span class="keyword">if</span> p &gt; <span class="number">0.95</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 先将两个字符串异或之后计算Hamming distance</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_distance</span><span class="params">(a,b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> sum(bin(byte).count(<span class="string">'1'</span>) <span class="keyword">for</span> byte <span class="keyword">in</span> bxor(a,b))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 之前写好的爆破单字节异或的函数，但是要改一下返回值</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">attack_single_byte_xor</span><span class="params">(cipher)</span>:</span></span><br><span class="line">    p = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">127</span>):</span><br><span class="line">        tmp_key = i.to_bytes(<span class="number">1</span>,byteorder=<span class="string">'big'</span>)*len(cipher)</span><br><span class="line">        plaintext = bxor(tmp_key,cipher)</span><br><span class="line">        <span class="keyword">if</span> check_printable(plaintext):</span><br><span class="line">            p = &#123;<span class="string">'key'</span>:i.to_bytes(<span class="number">1</span>,byteorder=<span class="string">'big'</span>),<span class="string">'message'</span>:plaintext&#125;</span><br><span class="line">    <span class="keyword">return</span> p</span><br><span class="line"></span><br><span class="line"><span class="comment">#  计算每个密钥长度的得分</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">score_vigenere_key_size</span><span class="params">(candidate_key_size, ciphertext)</span>:</span></span><br><span class="line">    slice_size = <span class="number">2</span>*candidate_key_size <span class="comment"># 根据题目，分片长度选择候选密钥长度的二倍</span></span><br><span class="line">    nb_measurements = len(ciphertext) // slice_size - <span class="number">1</span> <span class="comment"># 将密文分片</span></span><br><span class="line">    score = <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 计算每个密钥长度的得分，越小说明越有可能是密钥长度</span></span><br><span class="line">    <span class="comment"># 循环累计每一个分片的距离，最后再标准化</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(nb_measurements):</span><br><span class="line">        s = slice_size</span><br><span class="line">        k = candidate_key_size</span><br><span class="line">        slice_1 = slice(i*s, i*s + k)</span><br><span class="line">        slice_2 = slice(i*s + k, i*s + <span class="number">2</span>*k)</span><br><span class="line">        score += get_distance(ciphertext[slice_1], ciphertext[slice_2])</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># 标准化score</span></span><br><span class="line">    score /= candidate_key_size</span><br><span class="line">    score /= nb_measurements</span><br><span class="line">    <span class="keyword">return</span> score</span><br><span class="line"></span><br><span class="line"><span class="comment"># 寻找最可能的密钥长度</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_key_length</span><span class="params">(ciphertext,min_length=<span class="number">2</span>,max_length=<span class="number">30</span>)</span>:</span></span><br><span class="line">    key = <span class="keyword">lambda</span> x: score_vigenere_key_size(x,ciphertext)</span><br><span class="line">    <span class="keyword">return</span> min(range(min_length,max_length),key=key) <span class="comment"># 以key的方式求最小值</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">attack_repeating_key_xor</span><span class="params">(ciphertext)</span>:</span></span><br><span class="line">    key_size = find_key_length(ciphertext)</span><br><span class="line">    key = bytes()</span><br><span class="line">    message_part = list()</span><br><span class="line">    <span class="comment"># 循环爆破单个</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(key_size):</span><br><span class="line">        part = attack_single_byte_xor(bytes(ciphertext[i::key_size])) <span class="comment"># 步长为keysize</span></span><br><span class="line">        key += part[<span class="string">"key"</span>]</span><br><span class="line">        message_part.append(part[<span class="string">"message"</span>])</span><br><span class="line">    message = bytes()</span><br><span class="line">    <span class="comment"># 按照位置循环，将明文正确排列</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(max(map(len, message_part))):</span><br><span class="line">        message += bytes([part[i] <span class="keyword">for</span> part <span class="keyword">in</span> message_part <span class="keyword">if</span> len(part)&gt;=i+<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">return</span> &#123;”key_size<span class="string">":key_size,"</span>key<span class="string">":key,"</span>message<span class="string">":message&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">f = open('s1-6.txt','r')</span></span><br><span class="line"><span class="string">cipher = f.read()</span></span><br><span class="line"><span class="string">tmp = base64.b64decode(cipher)</span></span><br><span class="line"><span class="string">print(attack_repeating_key_xor(tmp))</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="challenge-7"><a href="#challenge-7" class="headerlink" title="challenge 7"></a>challenge 7</h2><p>题目描述：The Base64-encoded content in this file has been encrypted via AES-128 in ECB mode under the key. Decrypt it. </p>
+<p>给了密文的加密方式和key，可以直接使用python的解密库来进行操作，直接按照<a href="https://cryptography.io/en/latest/hazmat/primitives/symmetric-encryption/" target="_blank" rel="noopener">官方文档</a>来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> cryptography.hazmat.primitives.ciphers <span class="keyword">import</span> Cipher, algorithms, modes</span><br><span class="line"><span class="keyword">from</span> cryptography.hazmat.backends <span class="keyword">import</span> default_backend</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">backend = default_backend()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decrypt_aes_128_ecb</span><span class="params">(ciphertxt, key)</span>:</span></span><br><span class="line">    cipher = Cipher(algorithms.AES(key), modes.ECB(), backend=backend)</span><br><span class="line">    decryptor = cipher.decryptor()</span><br><span class="line">    decrypted_data =  decryptor.update(ciphertxt) + decryptor.finalize()</span><br><span class="line">    message = decrypted_data</span><br><span class="line">    <span class="keyword">return</span> message</span><br><span class="line"></span><br><span class="line">f = open(<span class="string">"s1-7.txt"</span>,<span class="string">"r"</span>)</span><br><span class="line">data = f.read()</span><br><span class="line">print(decrypt_aes_128_ecb(ciphertxt = base64.b64decode(data),key=<span class="string">b"YELLOW SUBMARINE"</span>).decode())</span><br></pre></td></tr></table></figure>
+
+<h2 id="challenge-8"><a href="#challenge-8" class="headerlink" title="challenge 8"></a>challenge 8</h2><p>题目描述：In this file are a bunch of hex-encoded ciphertexts. One of them has been encrypted with ECB. Detect it.</p>
+<p>给了一堆密文，其中一个是用ECB模式加密的，找到密文，这道题主要想考的是ECB模式的特点是会保留明文的重复，可以根据这一特点来找到明文</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'s1-8.txt'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    ctxts = [binascii.unhexlify(line.strip()) <span class="keyword">for</span> line <span class="keyword">in</span> f]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">has_repeated_blocks</span><span class="params">(ctxt, blocksize=<span class="number">16</span>)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(ctxt) % blocksize != <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">'ciphertext length is not a multiple of block size'</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        num_blocks = len(ctxt) // blocksize</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># 将密文分块</span></span><br><span class="line">    blocks = [ctxt[i*blocksize:(i+<span class="number">1</span>)*blocksize] <span class="keyword">for</span> i <span class="keyword">in</span> range(num_blocks)]</span><br><span class="line">    <span class="comment"># 判断是否有重复</span></span><br><span class="line">    <span class="keyword">if</span> len(set(blocks)) != num_blocks:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">hits = [ctxt <span class="keyword">for</span> ctxt <span class="keyword">in</span> ctxts <span class="keyword">if</span> has_repeated_blocks(ctxt)]</span><br><span class="line">print(hits)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/25/buu-online-tool-wp/" rel="next" title="BUUCTF online tool writeup">
+                <i class="fa fa-chevron-left"></i> BUUCTF online tool writeup
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/wlp.jpg" alt="Moyu">
+            
+              <p class="site-author-name" itemprop="name">Moyu</p>
+              <p class="site-description motion-element" itemprop="description">hack for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#challenge-1"><span class="nav-number">1.</span> <span class="nav-text">challenge 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#challenge-2"><span class="nav-number">2.</span> <span class="nav-text">challenge 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#challenge-3"><span class="nav-number">3.</span> <span class="nav-text">challenge 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#challenge-4"><span class="nav-number">4.</span> <span class="nav-text">challenge 4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#challenge-5"><span class="nav-number">5.</span> <span class="nav-text">challenge 5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#challenge-6"><span class="nav-number">6.</span> <span class="nav-text">challenge 6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#challenge-7"><span class="nav-number">7.</span> <span class="nav-text">challenge 7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#challenge-8"><span class="nav-number">8.</span> <span class="nav-text">challenge 8</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
