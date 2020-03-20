@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="开发,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="继续填坑，学习一下java web基础以及spring框架 主要参考： https://www.docs4dev.com/docs/zh/spring-framework/5.1.3.RELEASE/reference https://www.mi1k7ea.com/ https://github.com/h2pl/Java-Tutorial Spring基本框架Spring是一个轻量级的Java">
+<meta name="keywords" content="开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java web基础以及Spring框架">
+<meta property="og:url" content="http://yoursite.com/2020/03/17/spring-demo/index.html">
+<meta property="og:site_name" content="Moyu&#39;s blog">
+<meta property="og:description" content="继续填坑，学习一下java web基础以及spring框架 主要参考： https://www.docs4dev.com/docs/zh/spring-framework/5.1.3.RELEASE/reference https://www.mi1k7ea.com/ https://github.com/h2pl/Java-Tutorial Spring基本框架Spring是一个轻量级的Java">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2020/03/17/spring-demo/1.png">
+<meta property="og:updated_time" content="2020-03-20T11:16:46.987Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java web基础以及Spring框架">
+<meta name="twitter:description" content="继续填坑，学习一下java web基础以及spring框架 主要参考： https://www.docs4dev.com/docs/zh/spring-framework/5.1.3.RELEASE/reference https://www.mi1k7ea.com/ https://github.com/h2pl/Java-Tutorial Spring基本框架Spring是一个轻量级的Java">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/17/spring-demo/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/17/spring-demo/">
+
+
+
+
+
+  <title>java web基础以及Spring框架 | Moyu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Moyu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/17/spring-demo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Moyu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/wlp.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moyu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java web基础以及Spring框架</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-17T10:10:45+08:00">
+                2020-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  3k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>继续填坑，学习一下java web基础以及spring框架</p>
+<p>主要参考：</p>
+<p><a href="https://www.docs4dev.com/docs/zh/spring-framework/5.1.3.RELEASE/reference" target="_blank" rel="noopener">https://www.docs4dev.com/docs/zh/spring-framework/5.1.3.RELEASE/reference</a></p>
+<p><a href="https://www.mi1k7ea.com/" target="_blank" rel="noopener">https://www.mi1k7ea.com/</a></p>
+<p><a href="https://github.com/h2pl/Java-Tutorial" target="_blank" rel="noopener">https://github.com/h2pl/Java-Tutorial</a></p>
+<h2 id="Spring基本框架"><a href="#Spring基本框架" class="headerlink" title="Spring基本框架"></a>Spring基本框架</h2><p>Spring是一个轻量级的Java Web开发框架，采用分层架构，根据不同的功能被划分成了多个模块，这些模块大体可分为Data Access/Integration、Web、AOP、Aspects、Messaging、Instrumentation、Core Container和Test</p>
+<p><img src="1.png" alt="img"></p>
+<h3 id="Core-Container"><a href="#Core-Container" class="headerlink" title="Core Container"></a>Core Container</h3><p>Spring的核心容器是其他模块建立的基础，由Beans模块、Core核心模块、Context上下文模块和Expression Language表达式语言模块组成，具体介绍如下：</p>
+<ul>
+<li><strong>Core模块</strong>：提供了框架的基本组成部分，包括IoC和依赖注入功能；</li>
+<li><strong>Beans模块</strong> ：提供BeanFactory，是工厂模式的经典实现，Spring将管理对象称为Bean；</li>
+<li><strong>Context模块</strong>：是在Core和Beans模块的基础上建立起来的，以一种类似于JNDI注册的方式访问对象，是访问定义和配置任何对象的媒介。ApplicationContext接口是上下文模块的焦点；</li>
+<li><strong>SpEL模块</strong>：提供了强大的表达式语言，用于在运行时查询和操作对象图；</li>
+</ul>
+<h3 id="Data-Access-Integration"><a href="#Data-Access-Integration" class="headerlink" title="Data Access/Integration"></a>Data Access/Integration</h3><p>数据访问/集成层包括JDBC、ORM、OXM、JMS和Transactions模块（注：JDBC=Java Data Base Connectivity，ORM=Object Relational Mapping，OXM=Object XML Mapping，JMS=Java Message Service），它们的细节如下：</p>
+<ul>
+<li><strong>JDBC模块</strong>：提供了JDBC抽象层，大幅度减少了在开发过程中对数据库操作的编码；</li>
+<li><strong>ORM模块</strong>：提供了对流行的对象关系映射API的集成，包括JPA、JDO和Hibernate等。通过此模块可以让这些ORM框架和spring的其它功能整合，比如前面提及的事务管理；</li>
+<li><strong>OXM模块</strong>：提供了一个支持对象/XML映射的抽象层实现，如JAXB、Castor、XMLBeans、JiBX和XStream；</li>
+<li><strong>JMS模块</strong>：指Java消息服务，包含的功能为生产和消费的信息。从Spring 4.1开始，集成了spring-messaging模块；</li>
+<li><strong>Transactions事务模块</strong>：为实现特殊接口类及所有的POJO支持编程式和声明式事务管理（注：编程式事务需要自己写beginTransaction()、commit()、rollback()等事务管理方法，声明式事务是通过注解或配置由spring自动处理，编程式事务粒度更细）；</li>
+</ul>
+<h3 id="Web模块"><a href="#Web模块" class="headerlink" title="Web模块"></a>Web模块</h3><p>Spring的Web层包括Web、Servlet、Struts和Portlet组件，具体介绍如下：</p>
+<ul>
+<li><strong>Web模块</strong>：提供面向Web的基本功能和面向Web的应用上下文，比如多部分（multipart）文件上传功能、使用Servlet监听器初始化IoC容器等。它还包括HTTP客户端以及Spring远程调用中与web相关的部分；</li>
+<li><strong>Servlet模块</strong>：包括Spring模型—视图—控制器（MVC）实现Web应用程序；</li>
+<li><strong>MVC模块</strong>：为Web应用提供了模型视图控制（MVC）和REST Web服务的实现。Spring的MVC框架可以使领域模型代码和Web表单完全地分离，且可以与Spring框架的其它所有功能进行集成；</li>
+<li><strong>WebSocket模块</strong>：为WebSocket-based提供了支持，而且在Web应用程序中提供了客户端和服务器端之间通信的两种方式；</li>
+<li><strong>Struts模块</strong>：包含支持类内的Spring应用程序，集成了经典的Struts Web层；</li>
+<li><strong>Portlet模块</strong>：提供了在Portlet环境中使用MVC实现，类似Web-Servlet模块的功能，并反映了spring-webmvc模块的功能；</li>
+</ul>
+<h3 id="其他模块"><a href="#其他模块" class="headerlink" title="其他模块"></a>其他模块</h3><p>Spring的其他模块还有 AOP、Aspects、Instrumentation 以及 Test 模块，具体介绍如下：</p>
+<ul>
+<li><strong>AOP模块</strong>：提供了面向切面编程实现，允许定义方法拦截器和切入点，将代码按照功能进行分离，以降低耦合性；</li>
+<li><strong>Aspects模块</strong>：提供与AspectJ的集成，是一个功能强大且成熟的面向切面编程（AOP）框架；</li>
+<li><strong>Instrumentation模块</strong>：提供了类工具的支持和类加载器的实现，可以在特定的应用服务器中使用；</li>
+<li><strong>Test模块</strong>：支持Spring组件使用JUnit或TestNG框架的测试；</li>
+<li><strong>Messaging模块</strong>：为STOMP提供了支持作为在应用程序中WebSocket子协议的使用。它也支持一个注解编程模型，它是为了选路和处理来自WebSocket客户端的STOMP信息；</li>
+</ul>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>上边这些如果没有相关基础，看完应该是一脸懵逼，这里简单介绍一下这些相关概念，先从java web开始说起</p>
+<h3 id="servlet与servlet容器"><a href="#servlet与servlet容器" class="headerlink" title="servlet与servlet容器"></a>servlet与servlet容器</h3><p>servlet是一个java接口，定义的是一套处理网络请求的规范，所有实现servlet的类，都需要实现它的方法，或者说，所有想要处理网络请求的类，都需要回答这三个问题：</p>
+<ul>
+<li>初始化时要做什么</li>
+<li>销毁时要做什么</li>
+<li>接受到请求时要做什么</li>
+</ul>
+<p>然而只实现了servlet的类是无法处理请求的，还需要servlet容器的帮助，比如tomcat</p>
+<p>tomcat直接与客户端交互，它监听了端口，请求过来后，根据url等信息，确定要将请求交给哪个servlet去处理，然后调用那个servlet的service方法，service方法返回一个response对象，tomcat再把这个response返回给客户端。我们只需要实现业务逻辑，而具体的通信过程tomcat已经帮我们完成了。</p>
+<p>Servlet 生命周期：</p>
+<ul>
+<li>Servlet 通过调用 init () 方法进行初始化。</li>
+<li>Servlet 调用 service() 方法来处理客户端的请求。</li>
+<li>Servlet 通过调用 destroy() 方法终止（结束）。</li>
+<li>最后，Servlet 是由 JVM 的垃圾回收器进行垃圾回收的。</li>
+</ul>
+<h3 id="jsp"><a href="#jsp" class="headerlink" title="jsp"></a>jsp</h3><p>jsp应该是过时了的技术，但是这里还是简单提一下吧。</p>
+<p>在jsp之前，服务端想返回html需要在servlet中自己手动输出out.println，简直自闭。于是在html语句中写入动态数据这种思想下，jsp诞生了。jsp全称Java Server Page，当有人请求jsp时，服务器内部会将jsp转化为html，也就是说jsp运行在服务器端，但最终发给客户端的都已经是转换好的html静态页面。在这个过程中服务器并没有把jsp文件发给浏览器。</p>
+<p>jsp经编译后就变成了Servlet.(JSP的本质就是Servlet，JVM只能识别java的类，不能识别JSP的代码,Web容器将JSP的代码编译成JVM能够识别的java类)</p>
+<h3 id="java-bean"><a href="#java-bean" class="headerlink" title="java bean"></a>java bean</h3><p>Java语言欠缺属性、事件、多重继承功能。所以，如果要在Java程序中实现一些面向对象编程的常见需求，只能手写大量胶水代码。Java Bean正是编写这套胶水代码的惯用模式或约定。这些约定包括getXxx、setXxx、isXxx、addXxxListener、XxxEvent等。遵守上述约定的类可以用于若干工具或库。</p>
+<h3 id="MVC模式"><a href="#MVC模式" class="headerlink" title="MVC模式"></a>MVC模式</h3><p>JSP和Servlet都有自身的适用环境，那么有没有什么办法能够让它们发挥各自的优势呢？答案是肯有的，MVC模式就能够完美解决这一问题。</p>
+<p>MVC模式，是Model-View-Controller的简称，是软件工程中的一种软件架构模式，分为三个基本部分，分别是：模型（Model）、视图（View）和控制器（Controller）：</p>
+<ul>
+<li>Controller——负责转发请求，对请求进行处理</li>
+<li>View——负责界面显示</li>
+<li>Model——业务功能编写（例如算法实现）、数据库设计以及数据存取操作实现</li>
+</ul>
+<p>在JSP/Servlet开发的软件系统中，这三个部分的描述如下所示：</p>
+<ol>
+<li>Web浏览器发送HTTP请求到服务端，然后被Controller(Servlet)获取并进行处理（例如参数解析、请求转发）</li>
+<li>Controller(Servlet)调用核心业务逻辑——Model部分，获得结果</li>
+<li>Controller(Servlet)将逻辑处理结果交给View（JSP），动态输出HTML内容</li>
+<li>动态生成的HTML内容返回到浏览器显示</li>
+</ol>
+<p>Servlet 充当Controller ,  jsp 充当 View ，Java bean 充当Model </p>
+<p>业务逻辑， 页面显示和处理过程做了很好的分离。 </p>
+<p>基于这个模型的扩展和改进，  很多Web开发框架开始如雨后春笋一样出现。</p>
+<h3 id="Enterprise-Java-bean"><a href="#Enterprise-Java-bean" class="headerlink" title="Enterprise Java bean"></a>Enterprise Java bean</h3><p>越来越多企业程序员提出诉求：要分布式、要安全、要事务、要高可用性。</p>
+<p>诉求可以归结为：“我们只想关注我们的业务逻辑， 我们不想， 也不应该由我们来处理‘低级’的事务， 多线程，连接池，以及其他各种各种的‘低级’API， 此外Java帝国一定得提供集群功能， 这样我们的一台机器死机以后，整个系统还能运转。 ”</p>
+<p>于是推出了J2EE， 像Java bean 一样， 这还是一个规范， 但是比Java bean 复杂的多， 其中有：</p>
+<p><strong>JDBC</strong>:  Java 数据库连接</p>
+<p><strong>JNDI</strong> :  Java 命名和目录接口， 通过一个名称就可以定位到一个数据源， 连jdbc连接都不用了</p>
+<p><strong>RMI</strong>：  远程过程调用，  让一个机器上的java 对象可以调用另外一个机器上的java 对象 </p>
+<p><strong>JMS</strong> :  Java 消息服务，  可以使用消息队列了</p>
+<p><strong>JTA</strong>：  Java 事务管理， 支持分布式事务， 能在访问、更新多个数据库的时候，仍然保证事务， 还是分布式。</p>
+<p><strong>Java mail</strong> : 收发邮件</p>
+<p>这一套叫做EJB，使用EJB，就可以把精力放在业务上了</p>
+<h3 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h3><p>然而由于EJB十分繁琐笨重，轻量级的spring框架诞生了</p>
+<p>对于一个Bean 来说，如果你依赖别的Bean , 只需要声明即可， spring 容器负责把依赖的bean 给“注入进去“， 起初大家称之为控制反转(IoC)。</p>
+<p>后来 Martin flower 给这种方式起来个更好的名字，叫“依赖注入”（DI）。</p>
+<p>如果一个Bean 需要一些像事务，日志，安全这样的通用的服务， 也是只需要声明即可， spring 容器在运行时能够动态的“织入”这些服务， 这叫面向切面（AOP）。</p>
+<p>几个概念 </p>
+<p>1、应用程序：是能完成我们所需要功能的成品，比如购物网站、OA系统。</p>
+<p>2、框架：是能完成一定功能的半成品，比如我们可以使用框架进行购物网站开发；框架做一部分功能，我们自己做一部分功能，这样应用程序就创建出来了。而且框架规定了你在开发应用程序时的整体架构，提供了一些基础功能，还规定了类和对象的如何创建、如何协作等，从而简化我们开发，让我们专注于业务逻辑开发。</p>
+<p>3、非侵入式设计：从框架角度可以这样理解，无需继承框架提供的类，这种设计就可以看作是非侵入式设计，如果继承了这些框架类，就是侵入设计，如果以后想更换框架之前写过的代码几乎无法重用，如果非侵入式设计则之前写过的代码仍然可以继续使用。</p>
+<p>4、轻量级及重量级：轻量级是相对于重量级而言的，轻量级一般就是非入侵性的、所依赖的东西非常少、资源占用非常少、部署简单等等，其实就是比较容易使用，而重量级正好相反。</p>
+<p>5、POJO：POJO（Plain Old Java Objects）简单的Java对象，它可以包含业务逻辑或持久化逻辑，但不担当任何特殊角色且不继承或不实现任何其它Java框架的类或接口。</p>
+<p>6、容器：在日常生活中容器就是一种盛放东西的器具，从程序设计角度看就是装对象的的对象，因为存在放入、拿出等操作，所以容器还要管理对象的生命周期。</p>
+<p>7、控制反转：即Inversion of Control，缩写为IoC，控制反转还有一个名字叫做依赖注入（Dependency Injection），就是由容器控制程序之间的关系，而非传统实现中，由程序代码直接操控。</p>
+<p>8、Bean：一般指容器管理对象，在Spring中指Spring IoC容器管理对象。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/开发/" rel="tag"># 开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/15/windows-auth/" rel="next" title="Windows认证机制学习">
+                <i class="fa fa-chevron-left"></i> Windows认证机制学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/18/tongdaoa-11-3-RCE/" rel="prev" title="通达oa 11.3 前台RCE">
+                通达oa 11.3 前台RCE <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/wlp.jpg" alt="Moyu">
+            
+              <p class="site-author-name" itemprop="name">Moyu</p>
+              <p class="site-description motion-element" itemprop="description">hack for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring基本框架"><span class="nav-number">1.</span> <span class="nav-text">Spring基本框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Core-Container"><span class="nav-number">1.1.</span> <span class="nav-text">Core Container</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Access-Integration"><span class="nav-number">1.2.</span> <span class="nav-text">Data Access/Integration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web模块"><span class="nav-number">1.3.</span> <span class="nav-text">Web模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他模块"><span class="nav-number">1.4.</span> <span class="nav-text">其他模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#servlet与servlet容器"><span class="nav-number">2.1.</span> <span class="nav-text">servlet与servlet容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jsp"><span class="nav-number">2.2.</span> <span class="nav-text">jsp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java-bean"><span class="nav-number">2.3.</span> <span class="nav-text">java bean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MVC模式"><span class="nav-number">2.4.</span> <span class="nav-text">MVC模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Enterprise-Java-bean"><span class="nav-number">2.5.</span> <span class="nav-text">Enterprise Java bean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring"><span class="nav-number">2.6.</span> <span class="nav-text">Spring</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
